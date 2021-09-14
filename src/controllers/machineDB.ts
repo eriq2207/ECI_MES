@@ -1,11 +1,11 @@
-import { MongoClient} from 'mongodb'
+import { MongoClient, Db} from 'mongodb'
 import config from '../config.json'
 import * as MachineDBModels from "../models/MachineDBModels"
 
 const url = config.MongoDB.ConnString;
 class MachineDB {
     public client: MongoClient;
-    public db;
+    public db: Db;
     constructor(){
         this.client = new MongoClient(url);
     }
@@ -20,10 +20,14 @@ class MachineDB {
         await this.db.collection("Users").deleteMany({})
         await this.db.collection("Users").insertMany(Users)
     }
+    public async GetUsers(): Promise<any> {
+        return this.db.collection("Users").find({}).project({name: 1, _id: 0}).toArray()
+    }
     public async SaveReferences(References: MachineDBModels.Reference[] | any[]): Promise<any> {
         await this.db.collection("References").deleteMany({})
         await this.db.collection("References").insertMany(References)
     }
+    
 }
 const MachineDataBase = new MachineDB()
 export {MachineDataBase}

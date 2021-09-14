@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as Machine from "../models/MachineData"
+import { MachineDataBase } from "../controllers/machineDB"; 
 import * as config from "../config.json"
 
 const router = Router()
@@ -39,6 +40,10 @@ router.get('/logout', function (req, res) {
 router.get('/LoginData', function (req, res) {
     MachineData.ActivePage = Machine.Page.Login
     return res.json(JSON.stringify(MachineData.toJSON()))
+});
+router.get('/Users', async function (req, res) {
+    const UsersAct = await MachineDataBase.GetUsers()
+    return res.json(UsersAct)
 });
 
 export { StartRouting };

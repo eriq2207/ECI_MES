@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
     <!-- comboList styles-->
     <link rel="stylesheet" href="./css/comboList.css">
-    
-    
+
+
 </head>
 
 <body style="background-color: #f4f6f9">
@@ -41,9 +41,10 @@
                 <div class="card-body login-card-body">
                     <p class="login-box-msg">Zeskanuj kod operatora lub wybierz operatora z listy!</p>
 
-                    <form autocomplete ="off" action="/login" method="post">
+                    <form autocomplete="off" action="/login" method="post">
                         <div class="input-group mb-3">
-                            <input id="loginInput" type="text" class="form-control input" placeholder="Nazwa operatora" name="user">
+                            <input id="loginInput" type="text" class="form-control input" placeholder="Nazwa operatora"
+                                name="user">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fa fa-user"></span>
@@ -69,36 +70,50 @@
     </div>
     <!-- /.login-box -->
     <script src="./js/comboList.js"></script>
+    <script src="./js/jquery.js"></script>
     <script>
-        
-        var users = ["H111", "H222", "H333"]
-        autocomplete(document.getElementById("loginInput"), users);
-        function LoginStatusPolling(){
+        var users = []
+        function GetUsers() {
             $.ajax({
-                url: window.location.origin + '/LoginData',
+                url: '/Users',
                 type: 'GET',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
-                    try{
+                    users = response.map((obj)=>{
+                        return obj.name
+                    })
+                    autocomplete(document.getElementById("loginInput"), users);
+                },
+                timeout: 2000
+            });
+        }
+        function LoginStatusPolling() {
+            $.ajax({
+                url: '/LoginData',
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    try {
                         var MachineData = JSON.parse(response)
-                        if(MachineData.User != "")
-                            window.location.reload() 
-                    }catch(ex)
-                    {
+                        if (MachineData.User != "")
+                            window.location.reload()
+                    } catch (ex) {
                         console.log("Błąd parsowania JSON")
                     }
-                    
+
                 },
                 error: function (err) {
-                   
+
                 },
-                complete: function() {
+                complete: function () {
                     setTimeout(LoginStatusPolling, 500)
                 },
                 timeout: 2000
             });
         }
         setTimeout(LoginStatusPolling, 500)
+        GetUsers()
     </script>
 </body>
+
 </html>
