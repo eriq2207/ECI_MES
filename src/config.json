@@ -1,0 +1,34 @@
+{
+    "MongoDB": {
+        "ConnString": "mongodb://localhost:27017",
+        "DbName": "Machine"
+    },
+    "Users": [
+        {
+            "name": "Eryk"
+        },
+        {
+            "name": "Maciek"
+        },
+        {
+            "name": "Przemek"
+        }
+    ],
+    "References": [
+        {
+            "name": "H111",
+            "RefTime": 1000,
+            "ActualTime": 0
+        },
+        {
+            "name": "H222",
+            "RefTime": 2000,
+            "ActualTime": 0
+        },
+        {
+            "name": "H333",
+            "RefTime": 3000,
+            "ActualTime": 0
+        }
+    ]
+}

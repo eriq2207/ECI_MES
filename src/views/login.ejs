@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ECI MES | Login</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="../img/eci_logo.png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dist/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="../dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- KeyBoard-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <!-- comboList styles-->
+    <link rel="stylesheet" href="./css/comboList.css">
+    
+    
+</head>
+
+<body style="background-color: #f4f6f9">
+    <div class="container-fluid row mt-4 ">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="login-logo">
+                <img src="../img/eci_logo.png" alt="ECI Logo" class="brand-image">
+                <a href="/"><b>ECI MES</b></a>
+            </div>
+            <!-- /.login-logo -->
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">Zeskanuj kod operatora lub wybierz operatora z listy!</p>
+
+                    <form autocomplete ="off" action="/login" method="post">
+                        <div class="input-group mb-3">
+                            <input id="loginInput" type="text" class="form-control input" placeholder="Nazwa operatora" name="user">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fa fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.col -->
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary btn-block mb-2">Zaloguj się!</button>
+                            <p class="mb-0" style='color: red;'>
+                                <%= locals.error %>
+                            </p>
+                        </div>
+                        <!-- /.col -->
+                    </form>
+                </div>
+                <!-- /.login-card-body -->
+            </div>
+
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <!-- /.login-box -->
+    <script src="./js/comboList.js"></script>
+    <script>
+        
+        var users = ["H111", "H222", "H333"]
+        autocomplete(document.getElementById("loginInput"), users);
+        function LoginStatusPolling(){
+            $.ajax({
+                url: window.location.origin + '/LoginData',
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    try{
+                        var MachineData = JSON.parse(response)
+                        if(MachineData.User != "")
+                            window.location.reload() 
+                    }catch(ex)
+                    {
+                        console.log("Błąd parsowania JSON")
+                    }
+                    
+                },
+                error: function (err) {
+                   
+                },
+                complete: function() {
+                    setTimeout(LoginStatusPolling, 500)
+                },
+                timeout: 2000
+            });
+        }
+        setTimeout(LoginStatusPolling, 500)
+    </script>
+</body>
+</html>
