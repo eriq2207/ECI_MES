@@ -29,7 +29,8 @@
 </head>
 
 <body style="background-color: #f4f6f9">
-    <div class="container-fluid row mt-4 ">
+    
+    <div class="container-fluid row mt-4 mx-0">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="login-logo">
@@ -51,11 +52,10 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- /.col -->
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-primary btn-block mb-2">Zaloguj się!</button>
-                            <p class="mb-0" style='color: red;'>
+                            <p id="errorText" class="mb-0" style='color: red; text-align: center;'>
                                 <%= locals.error %>
                             </p>
                         </div>
@@ -96,6 +96,10 @@
                 success: function (response) {
                     try {
                         var MachineData = JSON.parse(response)
+                        if (MachineData.LastScannedText.text != "")
+                        {
+                            $('#errorText').text('Brak operatora "' + MachineData.LastScannedText.text + '" na liście zarejestrowanych operatorów!')
+                        }
                         if (MachineData.User != "")
                             window.location.reload()
                     } catch (ex) {

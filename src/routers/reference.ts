@@ -1,5 +1,7 @@
 import { Router } from "express";
 import * as Machine from "../models/MachineData"
+import { MachineDataBase } from "../controllers/machineDB"; 
+import * as config from "../config.json"
 
 const router = Router()
 let MachineData: Machine.MachineData;
@@ -11,33 +13,41 @@ function StartRouting(MachineDataParam: Machine.MachineData): Router {
 
 router.get('/reference', function (req, res) {
     if (MachineData.User === "")
-        return res.render('login')
-    if (MachineData)
-    return res.redirect('reference')
+        return res.redirect('login')
+
+    if(MachineData.Reference.Name != "")
+        return res.redirect('main')
+
+    return res.render('reference', MachineData.toJSON())
+    
 });
 
 router.post('/reference', function (req, res) {
-    if (MachineData.User != "")
+    if (MachineData.User === "")
         return res.redirect('login');
 
-    const user: String = req.body.user;
-    MachineData.User = user;
-    return res.redirect('reference')
+    const reference: String = req.body.reference;
+    const ReferenceInList = config.References.filter((obj)=>{
+        return obj.name === reference
+    })
+    if(ReferenceInList.length == 0)
+    {
+        res.statusCode = 500;
+        return res.end()
+    }
+    MachineData.Reference.Name = reference
+    res.statusCode = 200
+    return res.end()
 })
 
-router.get('/logout', function (req, res) {
-    req.session.destroy((err)=>{
-        if(err)
-            console.log("Session destroy error occured: " + err.stack)
-
-        MachineData.User = ""
-        return res.redirect('login')
-    });
+router.get('/ReferenceData', function (req, res) {
+    MachineData.ActivePage = Machine.Page.Reference
+    return res.json(JSON.stringify(MachineData.toJSON()))
 });
 
-router.get('/LoginData', function (req, res) {
-    MachineData.ActivePage = Machine.Page.Login
-    return res.json(JSON.stringify(MachineData.toJSON()))
+router.get('/References', async function (req, res) {
+    const ReferencesAct = await MachineDataBase.GetReferences()
+    return res.json(ReferencesAct)
 });
 
 export { StartRouting };

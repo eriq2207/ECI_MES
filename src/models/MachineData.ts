@@ -6,11 +6,15 @@ enum MachineState {
     Failure = "Awaria", 
     Standstill = "Postój"
 }
-enum Page {Login, References, Main}
+enum Page {Login, Reference, Main}
 
 class MachineData {
     
     private _User: any = "";
+    public LastScannedText = {
+        text: "",
+        page: Page.Login
+    }
     private _Reference: Reference.Reference = new Reference.Reference()
     private _MachineState: MachineState = MachineState.Standstill
     private _MachineStateFromTime: Date = new Date
@@ -19,6 +23,7 @@ class MachineData {
     toJSON() : object{
         return {
             "User": this._User,
+            "LastScannedText": this.LastScannedText,
             "ReferenceName": this._Reference.Name,
             "ReferenceTargetAmount": this._Reference.TargetTime,
             "ReferenceActualAmount": this._Reference.ActualTime,

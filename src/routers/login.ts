@@ -23,6 +23,14 @@ router.post('/login', function (req, res) {
         return res.redirect('login');
 
     const user: String = req.body.user;
+    const UserInList = config.Users.filter((obj)=>{
+        return obj.name === user
+    })
+    if(UserInList.length == 0)
+        return res.render('login', {
+            error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
+        })
+
     MachineData.User = user;
     return res.redirect('reference')
 })
@@ -32,6 +40,7 @@ router.get('/logout', function (req, res) {
         if(err)
             console.log("Session destroy error occured: " + err.stack)
 
+        MachineData.LastScannedText.text = ""
         MachineData.User = ""
         return res.redirect('login')
     });
@@ -39,6 +48,7 @@ router.get('/logout', function (req, res) {
 
 router.get('/LoginData', function (req, res) {
     MachineData.ActivePage = Machine.Page.Login
+
     return res.json(JSON.stringify(MachineData.toJSON()))
 });
 router.get('/Users', async function (req, res) {

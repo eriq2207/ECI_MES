@@ -23,6 +23,9 @@ class MachineDB {
     public async GetUsers(): Promise<any> {
         return this.db.collection("Users").find({}).project({name: 1, _id: 0}).toArray()
     }
+    public async GetReferences(): Promise<any> {
+        return this.db.collection("References").find({}).project({name: 1, _id: 0}).toArray()
+    }
     public async SaveReferences(References: MachineDBModels.Reference[] | any[]): Promise<any> {
         await this.db.collection("References").deleteMany({})
         await this.db.collection("References").insertMany(References)

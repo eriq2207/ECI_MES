@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ECI MES | Referencje</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="../img/eci_logo.png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../dist/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="../dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- KeyBoard-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <!-- comboList styles-->
+    <link rel="stylesheet" href="./css/comboList.css">
+
+
+</head>
+
+<body style="background-color: #f4f6f9">
+    <div class="container-fluid pt-2">
+        <div class="row" style="min-height: 50px;">
+            <div class="col-12">
+                <div class="row container-fluid p-2 mb-3 mx-0 rounded border bg-white">
+                    <img src="../img/eci_logo_big.png" style="max-height: 75px;">
+                    <div class="flex-grow-1">
+                        <div class="row">
+                            <h2 class="ml-4">Electrical Components International</h2>
+                        </div>
+                        <div class="row">
+                            <h3 class="ml-4">System zbierania danych</h2>
+                                <h3 id="ActualDate" class="ml-auto mr-2">
+                                    </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid row mt-4 mx-0">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="login-logo">
+                <a href="/"><b>Witaj <%= locals.User %> !</b></a>
+            </div>
+            <!-- /.login-logo -->
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">Zeskanuj kod produkowanej referencji lub wybierz ją z listy!</p>
+
+                    <div class="input-group mb-3">
+                        <input id="referenceInput" type="text" class="form-control input" placeholder="Nazwa referencji"
+                            name="reference">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.col -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <form action="/logout" method="GET">
+                                <button type="submit" class="btn btn-primary btn-block mb-2">Zmień operatora!</button>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <button id="startProductionBtn" type="submit" class="btn btn-primary btn-block mb-2">Rozpocznij
+                                produkcje!</button>
+                        </div>
+                        <p id="errorText" class="mb-0" style='color: red; text-align: center;'>
+                            <%= locals.error %>
+                        </p>
+                        </row>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.login-card-body -->
+                </div>
+
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <!-- /.login-box -->
+        <script src="./js/comboList.js"></script>
+        <script src="./js/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+        <script>
+            function SetActData() {
+                moment.locale("pl")
+                $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
+            }
+            SetActData()
+            setInterval(SetActData, 1000)
+            function StartProduction()
+            {
+                var dataToSend = {
+                    reference: $('#referenceInput').val()
+                }
+                $.ajax({
+                    url: '/reference',
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataToSend),
+                    success: function (response) {
+                        location.reload()
+                    },
+                    error: function (response) {
+                        $('#errorText').text('Brak referencji "' + $('#referenceInput').val() + '" w liście referencji!')
+                    },
+                    timeout: 2000
+                });
+            }
+            $('#startProductionBtn').on('click',StartProduction)
+            var references = []
+            function GetReferences() {
+                $.ajax({
+                    url: '/References',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        references = response.map((obj) => {
+                            return obj.name
+                        })
+                        autocomplete(document.getElementById("referenceInput"), references);
+                    },
+                    timeout: 2000
+                });
+            }
+            var LastRcvScannedText = ""
+            function ReferenceStatusPolling() {
+                $.ajax({
+                    url: '/ReferenceData',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        try {
+                            var MachineData = JSON.parse(response)
+                            if (MachineData.LastScannedText.text != "" &&
+                                MachineData.LastScannedText.page == 1 &&
+                                LastRcvScannedText != MachineData.LastScannedText.text) {
+                                LastRcvScannedText = MachineData.LastScannedText.text;
+                                $('#referenceInput').val(MachineData.LastScannedText.text)
+                            }
+                            if (MachineData.User === "")
+                                window.location.reload()
+                        } catch (ex) {
+                            console.log("Błąd parsowania JSON")
+                        }
+
+                    },
+                    error: function (err) {
+
+                    },
+                    complete: function () {
+                        setTimeout(ReferenceStatusPolling, 500)
+                    },
+                    timeout: 2000
+                });
+            }
+            setTimeout(ReferenceStatusPolling, 500)
+            GetReferences()
+        </script>
+</body>
+</html>

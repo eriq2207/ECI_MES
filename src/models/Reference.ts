@@ -1,12 +1,12 @@
 export class Reference {
-    private _Name: string = "BOBCAT-H"
+    private _Name: String = ""
     private _TargetTime: number = 150
     private _ActualTime: number = 50
 
-    get Name(): string {
+    get Name(): String {
         return this._Name
     }
-    set Name(value: string) {
+    set Name(value: String) {
         this._Name = value
     }
 

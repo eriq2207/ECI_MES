@@ -1,5 +1,6 @@
 import * as readline from "readline";
 import * as Machine from "../models/MachineData"
+import * as config from "../config.json"
 
 let MachineData: Machine.MachineData;
 
@@ -10,7 +11,18 @@ const rl = readline.createInterface({
 
 rl.on('line', (data) => {
     if (MachineData.ActivePage == Machine.Page.Login) {
-        MachineData.User = data;
+        MachineData.LastScannedText.text = data;
+        MachineData.LastScannedText.page = Machine.Page.Login;
+        const UserInList = config.Users.filter((obj) => {
+            return obj.name === data
+        })
+        if (UserInList.length == 1)
+            MachineData.User = data;
+    }
+    else if (MachineData.ActivePage == Machine.Page.Reference)
+    {
+        MachineData.LastScannedText.text = data;
+        MachineData.LastScannedText.page = Machine.Page.Reference;
     }
 })
 
