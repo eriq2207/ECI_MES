@@ -16,7 +16,7 @@ router.get('/reference', function (req, res) {
         return res.redirect('login')
 
     if(MachineData.Reference.Name != "")
-        return res.redirect('main')
+        return res.redirect('/')
 
     return res.render('reference', MachineData.toJSON())
     

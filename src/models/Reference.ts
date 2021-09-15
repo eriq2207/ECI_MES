@@ -1,5 +1,6 @@
 export class Reference {
     private _Name: String = ""
+    private _Description: String = "Opis referencji"
     private _TargetTime: number = 150
     private _ActualTime: number = 50
 
@@ -8,6 +9,12 @@ export class Reference {
     }
     set Name(value: String) {
         this._Name = value
+    }
+    get Description(): String {
+        return this._Description
+    }
+    set Description(value: String) {
+        this._Description = value
     }
 
     get TargetTime(): number {

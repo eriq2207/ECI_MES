@@ -25,6 +25,7 @@ class MachineData {
             "User": this._User,
             "LastScannedText": this.LastScannedText,
             "ReferenceName": this._Reference.Name,
+            "ReferenceDescription": this._Reference.Description,
             "ReferenceTargetAmount": this._Reference.TargetTime,
             "ReferenceActualAmount": this._Reference.ActualTime,
             "MachineState": this.MachineState,

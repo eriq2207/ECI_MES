@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>ECI ERP</title>
+
+  <link rel="icon" href="../img/eci_logo.png">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../css/adminlte.css">
+  <!-- Google Font: Source Sans Pro  -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4  -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App  -->
+  <script src="../js/adminlte.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+</head>
+
+<body>
+  <div class="content-wrapper m-0" style="min-height: 300px;">
+    <div class="container-fluid pt-2">
+      <div class="row" style="min-height: 50px;">
+        <div class="col-12">
+          <div class="row container-fluid p-2 mb-3 mx-0 rounded border bg-white">
+            <img src="../img/eci_logo_big.png" style="max-height: 75px;">
+            <div class="flex-grow-1">
+              <div class="row">
+                <h2 class="ml-4">Electrical Components International</h2>
+              </div>
+              <div class="row">
+                <h3 class="ml-4">System zbierania danych</h2>
+                  <h3 id="ActualDate" class="ml-auto mr-2">
+                    </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <% if(locals.MachineState=="Praca" ) { %>
+            <div id="MachineStateDiv" class="small-box bg-success">
+              <% } else if(locals.MachineState=="Przezbrojenie" ) { %>
+                <div id="MachineStateDiv" class="small-box bg-secondary">
+                  <% } else if(locals.MachineState=="Awaria" ) { %>
+                    <div id="MachineStateDiv" class="small-box bg-danger">
+                      <% } else if(locals.MachineState=="Postój" ) { %>
+                        <div id="MachineStateDiv" class="small-box bg-light">
+                          <% } %>
+                            <div class="inner">
+                              <h3>Stan maszyny:</h3>
+                              <div class="row">
+                                <% if(locals.MachineState=="Praca" ) { %>
+                                  <h4 class="pt-2 ml-2">Praca: &nbsp</h4>
+                                  <% } else if(locals.MachineState=="Przezbrojenie" ) { %>
+                                    <h4 class="pt-2 ml-2">Przezbrojenie: &nbsp</h4>
+                                    <% } else if(locals.MachineState=="Awaria" ) { %>
+                                      <h4 class="pt-2 ml-2">Awaria: &nbsp</h4>
+                                      <% } else if(locals.MachineState=="Postój" ) { %>
+                                        <h4 class="pt-2 ml-2">Postój: &nbsp</h4>
+                                        <% } %>
+                                          <h3 id="MachineStateTimeDiv">
+                                            <% if (((locals.MachineStateToTime-locals.MachineStateFromTime)/60000).toFixed(1)==0 )
+                                              { %>
+                                              0.0
+                                              <% } else { %>
+                                                <%=
+                                                  ((locals.MachineStateToTime-locals.MachineStateFromTime)/60000).toFixed(1)
+                                                  %>
+                                                  <% } %>
+                                          </h3>
+                                          <h4 class="pt-2"> &nbsp min.</h4>
+
+                              </div>
+                            </div>
+                            <div class="icon">
+                              <i class="ion ion-gear-a"></i>
+                            </div>
+                        </div>
+                        <div class="card card-primary">
+                          <div class="card-header bg-info">
+                            <h3 style="text-align: center;" class="m-0">STAN MASZYNY</h3>
+                          </div>
+                          <div class="card-body">
+                            <button type="button" name="Praca" class="StatusBtn btn btn-block btn-success p-3">
+                              <h3 class="m-0">PRACA</h3>
+                            </button>
+                            <button type="button" name="Przezbrojenie"
+                              class="StatusBtn btn btn-block btn-secondary p-3">
+                              <h3 class="m-0">PRZEZBROJENIE</h3>
+                            </button>
+                            <button type="button" name="Awaria" class="StatusBtn btn btn-block btn-danger p-3">
+                              <h3 class="m-0">AWARIA</h3>
+                            </button>
+                            <button type="button" name="Postój" class="StatusBtn btn btn-block btn-light p-3">
+                              <h3 class="m-0">POSTÓJ</h3>
+                            </button>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="far fa-chart-bar"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">
+                            <h2><b>Zamówienie: </b></h2>
+                          </span>
+                          <span class="info-box-number">
+                            <h3 id="ReferenceAmount" class="mb-0">
+                              <%= ReferenceActualAmount %>/<%=ReferenceTargetAmount %>
+                            </h3>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">
+                            <h2><b>Referencja: </b></h2>
+                          </span>
+                          <span class="info-box-number">
+                            <h3 id="ReferenceName" class="mb-0">
+                              <%= locals.ReferenceName %>
+                            </h3>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="info-box" id="chartdiv">
+
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="small-box bg-secondary">
+                        <div class="inner">
+                          <h3>Operator:</h3>
+
+                          <h4 id="user">
+                            <%= locals.User %>
+                          </h4>
+                        </div>
+                        <div class="icon">
+                          <i class="ion ion-person"></i>
+                        </div>
+                        <a href="/logout" class="small-box-footer">Wyloguj się <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+        <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+        <script>
+          var chart = undefined;
+          var chartDataTemplate = [{
+            "State": "Praca",
+            "time": 0
+          }, {
+            "State": "Przezbrojenie",
+            "time": 0
+          }, {
+            "State": "Awaria",
+            "time": 0
+          }, {
+            "State": "Postój",
+            "time": 0
+          },]
+          function ChartDataPolling() {
+
+            $.ajax({
+              url: window.location.origin + '/GetUserStateTimes',
+              type: 'GET',
+              data: {
+                'user': $('#user').text().trim()
+              },
+              contentType: 'application/json; charset=utf-8',
+              success: function (response) {
+                var Data = JSON.parse(response)
+                var ChartData = JSON.parse(JSON.stringify(chartDataTemplate))
+                for (var i = 0; i < Data.length; i++) {
+                  var index = ChartData.findIndex(obj => obj.State == Data[i].machineState)
+                  if (index >= 0) {
+                    ChartData[index].time += Data[i].stopTimestamp - Data[i].startTimestamp
+                  }
+                }
+
+                if (chart == undefined) {
+                  chart = am4core.create("chartdiv", am4charts.PieChart);
+                  var pieSeries = chart.series.push(new am4charts.PieSeries());
+                  pieSeries.dataFields.value = "time";
+                  pieSeries.dataFields.category = "State";
+                  pieSeries.alignLabels = false;
+                  pieSeries.labels.template.bent = true;
+                  var colorSet = new am4core.ColorSet();
+                  colorSet.list = ["#28a745", "#5a6268", "#dc3545", "#e2e6ea"].map(function (color) {
+                    return new am4core.color(color);
+                  });
+                  pieSeries.colors = colorSet;
+                  pieSeries.ticks.template.events.on("ready", hideSmall);
+                  pieSeries.ticks.template.events.on("visibilitychanged", hideSmall);
+                  pieSeries.labels.template.events.on("ready", hideSmall);
+                  pieSeries.labels.template.events.on("visibilitychanged", hideSmall);
+                  function hideSmall(ev) {
+                    if (ev.target.dataItem && (ev.target.dataItem.values.value.percent < 20)) {
+                      ev.target.hide();
+                    }
+                    else {
+                      ev.target.show();
+                    }
+                  }
+
+                }
+                chart.data = ChartData
+
+              },
+              error: function (err) {
+                console.log("Błąd")
+              },
+              complete: function () {
+                setTimeout(ChartDataPolling, 5000)
+              },
+              timeout: 2000
+            });
+          }
+          setTimeout(ChartDataPolling, 0)
+
+
+          moment.locale("pl")
+          $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
+          setInterval(() => {
+            $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
+          }, 1000)
+          function MachineDataPolling() {
+            $.ajax({
+              url: window.location.origin + '/MachineData',
+              type: 'GET',
+              contentType: 'application/json; charset=utf-8',
+              success: function (response) {
+                try {
+                  var MachineData = JSON.parse(response)
+                  if (MachineData.User == "")
+                    window.location.reload();
+                  $("#ReferenceName").text(MachineData.ReferenceName)
+                  $("#ReferenceAmount").text(MachineData.ReferenceActualAmount + "/" + MachineData.ReferenceTargetAmount)
+                  if (((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1) == 0)
+                    $("#MachineStateTimeDiv").text("0.0")
+                  else
+                    $("#MachineStateTimeDiv").text(((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1))
+                } catch (ex) {
+                  console.log("Bład parsowania JSON")
+                }
+
+              },
+              error: function (err) {
+                console.log("Błąd")
+              },
+              complete: function () {
+                setTimeout(MachineDataPolling, 500)
+              },
+              timeout: 2000
+            });
+          }
+          setTimeout(MachineDataPolling, 500)
+
+          $(".StatusBtn").on("click", (e) => {
+            console.log(e.target)
+            ChangeStatus(e.target.getAttribute('name'))
+          })
+          function ChangeStatus(state) {
+            $.ajax({
+              url: window.location.origin + '/ChangeMachineState',
+              type: 'POST',
+              data: {
+                "MachineState": state
+              },
+              success: function (response) {
+                location.reload()
+
+              },
+              timeout: 2000
+            });
+          }
+
+        </script>
+        <style>
+          button>* {
+            pointer-events: none;
+          }
+
+          #chartdiv {
+            width: 100%;
+            height: 285px;
+          }
+        </style>
+</body>
