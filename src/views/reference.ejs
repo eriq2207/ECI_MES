@@ -96,13 +96,10 @@
         <script src="./js/comboList.js"></script>
         <script src="./js/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+        <script src="./js/actTime.js"></script>
         <script>
-            function SetActData() {
-                moment.locale("pl")
-                $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
-            }
-            SetActData()
-            setInterval(SetActData, 1000)
+        SetActData()
+        setInterval(SetActData, 1000)
             function StartProduction()
             {
                 var dataToSend = {

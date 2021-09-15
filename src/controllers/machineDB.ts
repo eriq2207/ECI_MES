@@ -1,6 +1,7 @@
 import { MongoClient, Db} from 'mongodb'
 import config from '../config.json'
 import * as MachineDBModels from "../models/MachineDBModels"
+import * as Machine from "../models/MachineData"
 
 const url = config.MongoDB.ConnString;
 class MachineDB {
@@ -18,7 +19,7 @@ class MachineDB {
     }
     public async SaveUsers(Users: MachineDBModels.User[] | String[]): Promise<any> {
         await this.db.collection("Users").deleteMany({})
-        await this.db.collection("Users").insertMany(Users)
+        return await this.db.collection("Users").insertMany(Users)
     }
     public async GetUsers(): Promise<any> {
         return this.db.collection("Users").find({}).project({name: 1, _id: 0}).toArray()
@@ -28,7 +29,29 @@ class MachineDB {
     }
     public async SaveReferences(References: MachineDBModels.Reference[] | any[]): Promise<any> {
         await this.db.collection("References").deleteMany({})
-        await this.db.collection("References").insertMany(References)
+        return await this.db.collection("References").insertMany(References)
+    }
+    public async UpdateMachineState(MachineData: Machine.MachineData): Promise<any> {
+        return await this.db.collection("MachineStates").updateOne(
+            {FromTime: MachineData.MachineStateFromTime},
+            {$set: {
+                State: MachineData.MachineState, 
+                ToTime: MachineData.MachineStateToTime,
+                FromTime: MachineData.MachineStateFromTime,
+                Operator: MachineData.User
+            }},
+            {upsert: true})
+    }
+    public async UpdateReference(MachineData: Machine.MachineData): Promise<any> {
+        return await this.db.collection("References").updateOne(
+            {FromTime: MachineData.Reference.FromTime},
+            {$set: {
+                Reference: MachineData.Reference.Name, 
+                ToTime: MachineData.Reference.ToTime,
+                FromTime: MachineData.Reference.FromTime,
+                Operator: MachineData.User
+            }},
+            {upsert: true})
     }
     
 }

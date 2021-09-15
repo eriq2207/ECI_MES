@@ -164,86 +164,10 @@
       </div>
       <script src="//cdn.amcharts.com/lib/4/core.js"></script>
       <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+      <script src="./js/actTime.js"></script>
       <script>
-        var chart = undefined;
-        var chartDataTemplate = [{
-          "State": "Praca",
-          "time": 0
-        }, {
-          "State": "Przezbrojenie",
-          "time": 0
-        }, {
-          "State": "Awaria",
-          "time": 0
-        }, {
-          "State": "Postój",
-          "time": 0
-        },]
-        function ChartDataPolling() {
-
-          $.ajax({
-            url: window.location.origin + '/GetUserStateTimes',
-            type: 'GET',
-            data: {
-              'user': $('#user').text().trim()
-            },
-            contentType: 'application/json; charset=utf-8',
-            success: function (response) {
-              var Data = JSON.parse(response)
-              var ChartData = JSON.parse(JSON.stringify(chartDataTemplate))
-              for (var i = 0; i < Data.length; i++) {
-                var index = ChartData.findIndex(obj => obj.State == Data[i].machineState)
-                if (index >= 0) {
-                  ChartData[index].time += Data[i].stopTimestamp - Data[i].startTimestamp
-                }
-              }
-
-              if (chart == undefined) {
-                chart = am4core.create("chartdiv", am4charts.PieChart);
-                var pieSeries = chart.series.push(new am4charts.PieSeries());
-                pieSeries.dataFields.value = "time";
-                pieSeries.dataFields.category = "State";
-                pieSeries.alignLabels = false;
-                pieSeries.labels.template.bent = true;
-                var colorSet = new am4core.ColorSet();
-                colorSet.list = ["#28a745", "#5a6268", "#dc3545", "#e2e6ea"].map(function (color) {
-                  return new am4core.color(color);
-                });
-                pieSeries.colors = colorSet;
-                pieSeries.ticks.template.events.on("ready", hideSmall);
-                pieSeries.ticks.template.events.on("visibilitychanged", hideSmall);
-                pieSeries.labels.template.events.on("ready", hideSmall);
-                pieSeries.labels.template.events.on("visibilitychanged", hideSmall);
-                function hideSmall(ev) {
-                  if (ev.target.dataItem && (ev.target.dataItem.values.value.percent < 20)) {
-                    ev.target.hide();
-                  }
-                  else {
-                    ev.target.show();
-                  }
-                }
-
-              }
-              chart.data = ChartData
-
-            },
-            error: function (err) {
-              console.log("Błąd")
-            },
-            complete: function () {
-              setTimeout(ChartDataPolling, 5000)
-            },
-            timeout: 2000
-          });
-        }
-        setTimeout(ChartDataPolling, 0)
-
-
-        moment.locale("pl")
-        $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
-        setInterval(() => {
-          $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
-        }, 1000)
+        SetActData()
+        setInterval(SetActData, 1000)
         // function MachineDataPolling() {
         //   $.ajax({
         //     url: window.location.origin + '/MachineData',
@@ -280,9 +204,10 @@
           console.log(e.target)
           ChangeStatus(e.target.getAttribute('name'))
         })
+
         function ChangeStatus(state) {
           $.ajax({
-            url: window.location.origin + '/ChangeMachineState',
+            url: '/ChangeMachineState',
             type: 'POST',
             data: {
               "MachineState": state
@@ -294,16 +219,10 @@
             timeout: 2000
           });
         }
-
       </script>
       <style>
         button>* {
           pointer-events: none;
-        }
-
-        #chartdiv {
-          width: 100%;
-          height: 285px;
         }
       </style>
 </body>

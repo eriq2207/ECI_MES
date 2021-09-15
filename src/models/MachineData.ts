@@ -1,4 +1,5 @@
 import * as Reference from "../models/Reference";
+import { MachineDataBase } from "src/controllers/machineDB";
 
 enum MachineState {
     Work = "Praca", 
@@ -9,12 +10,18 @@ enum MachineState {
 enum Page {Login, Reference, Main}
 
 class MachineData {
-    
-    private _User: any = "";
+    constructor(){
+        this.SetMachineStateTimer()
+        this.SetReferenceTimer()
+    }
+    public MachineStateTimer: any;
+    public ReferenceTimer: any;
+    public UpdateInterval: number = 10000;
     public LastScannedText = {
         text: "",
         page: Page.Login
     }
+    private _User: any = "";
     private _Reference: Reference.Reference = new Reference.Reference()
     private _MachineState: MachineState = MachineState.Standstill
     private _MachineStateFromTime: Date = new Date
@@ -26,8 +33,8 @@ class MachineData {
             "LastScannedText": this.LastScannedText,
             "ReferenceName": this._Reference.Name,
             "ReferenceDescription": this._Reference.Description,
-            "ReferenceTargetAmount": this._Reference.TargetTime,
-            "ReferenceActualAmount": this._Reference.ActualTime,
+            "ReferenceFromTime": this._Reference.FromTime.getTime(),
+            "ReferenceToTime": this._Reference.ToTime.getTime(),
             "MachineState": this.MachineState,
             "MachineStateFromTime": this._MachineStateFromTime.getTime(),
             "MachineStateToTime": this._MachineStateToTime.getTime(),
@@ -59,22 +66,38 @@ class MachineData {
     set MachineStateFromTime(value: Date) {
         this._MachineStateFromTime = value
     }
-
     get MachineStateToTime(): Date {
         return this._MachineStateToTime
     }
-    // updateMachineStateToTime(NewMachineStateToTime: Date) : Promise<any> {
-    //     this._MachineStateToTime = NewMachineStateToTime
-    //     //return MachineDB.UpdateMachineState(this)
-    // }
-    
+    set MachineStateToTime(value: Date) {
+        this._MachineStateToTime = value
+    }
     get ActivePage(): Page {
         return this._ActivePage
     }
     set ActivePage(value: Page) {
         this._ActivePage = value
     }
-    
+    private async MachineStateIncTimer(UpdateTime: number) {
+        if (this.User == "") 
+            return;
+        this.MachineStateToTime = new Date(this.MachineStateToTime.getTime() + UpdateTime)
+        const res = await MachineDataBase.UpdateMachineState(this)  
+    }
+    private async ReferenceIncTimer(UpdateTime: number) {
+        if (this.Reference.Name == "") 
+            return;
+        this.Reference.ToTime = new Date(this.Reference.ToTime.getTime() + UpdateTime)
+        const res = await MachineDataBase.UpdateReference(this)
+    }
+    public SetMachineStateTimer() {
+        clearInterval(this.MachineStateTimer);
+        this.MachineStateTimer = setInterval(this.MachineStateIncTimer.bind(this), this.UpdateInterval, this.UpdateInterval)
+    }
+    public SetReferenceTimer() {
+        clearInterval(this.ReferenceTimer);
+        this.ReferenceTimer = setInterval(this.ReferenceIncTimer.bind(this), this.UpdateInterval, this.UpdateInterval)
+    }
 
 }
 

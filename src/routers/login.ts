@@ -15,10 +15,11 @@ router.get('/login', function (req, res) {
     if (MachineData.User === "")
         return res.render('login')
 
+    
     return res.redirect('reference')
 });
 
-router.post('/login', function (req, res) {
+router.post('/login', async function (req, res) {
     if (MachineData.User != "")
         return res.redirect('login');
 
@@ -30,20 +31,24 @@ router.post('/login', function (req, res) {
         return res.render('login', {
             error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
         })
-
     MachineData.User = user;
+    MachineData.MachineStateFromTime = new Date;
+    MachineData.MachineStateToTime = new Date;
+    await MachineDataBase.UpdateMachineState(MachineData)
+    MachineData.SetMachineStateTimer()
     return res.redirect('reference')
 })
 
-router.get('/logout', function (req, res) {
-    req.session.destroy((err)=>{
+router.get('/logout', async function (req, res) {
+    await req.session.destroy((err)=>{
         if(err)
             console.log("Session destroy error occured: " + err.stack)
-
-        MachineData.LastScannedText.text = ""
-        MachineData.User = ""
-        return res.redirect('login')
     });
+    MachineData.MachineStateToTime = new Date
+    await MachineDataBase.UpdateMachineState(MachineData)
+    MachineData.LastScannedText.text = ""
+    MachineData.User = ""
+    return res.redirect('login')
 });
 
 router.get('/LoginData', function (req, res) {
