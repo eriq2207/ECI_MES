@@ -22,7 +22,7 @@ router.get('/reference', function (req, res) {
     
 });
 
-router.post('/reference', function (req, res) {
+router.post('/reference', async function (req, res) {
     if (MachineData.User === "")
         return res.redirect('login');
 
@@ -35,7 +35,19 @@ router.post('/reference', function (req, res) {
         res.statusCode = 500;
         return res.end()
     }
+    //Set correct machine state
+    MachineData.MachineStateToTime = new Date;
+    await MachineDataBase.UpdateMachineState(MachineData)
+    MachineData.MachineStateFromTime = new Date;
+    MachineData.MachineStateToTime = new Date;
+    MachineData.MachineState = Machine.MachineState.Work;
+    await MachineDataBase.UpdateMachineState(MachineData)
+    MachineData.SetMachineStateTimer()
+    //Set reference
     MachineData.Reference.Name = reference
+    MachineData.Reference.FromTime = new Date;
+    MachineData.Reference.ToTime = new Date;
+    await MachineDataBase.UpdateReference(MachineData)
     res.statusCode = 200
     return res.end()
 })

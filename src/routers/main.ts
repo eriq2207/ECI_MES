@@ -5,7 +5,7 @@ import * as Machine from "../models/MachineData"
 //import * as MachineDB from "../controllers/sqlcomm"
 
 let router = Router()
-let  MachineData: Machine.MachineData;
+let MachineData: Machine.MachineData;
 
 function StartRouting(MachineDataParam: Machine.MachineData): Router {
     MachineData = MachineDataParam
@@ -33,16 +33,14 @@ router.post('/ChangeMachineState', async function (req, res, next) {
     if (MachineData.MachineState == ReceivedMachineState)
         return res.end(JSON.stringify(MachineData.toJSON()))
 
-    try {
-        //await MachineData.updateMachineStateToTime(new Date())
-        MachineData.MachineStateFromTime = new Date()
-        MachineData.MachineState = ReceivedMachineState
-        //clearInterval();
-        //MachineStateIncTimer = setInterval(MachineStateIncTimer, UpdateInterval, UpdateInterval);
-        return res.end(JSON.stringify(MachineData.toJSON()))
-    } catch (ex) {
-        return next(ex)
-    }
+    MachineData.MachineStateToTime = new Date;
+    await MachineDataBase.UpdateMachineState(MachineData)
+    MachineData.MachineStateFromTime = new Date;
+    MachineData.MachineStateToTime = new Date;
+    MachineData.MachineState = ReceivedMachineState;
+    await MachineDataBase.UpdateMachineState(MachineData)
+    MachineData.SetMachineStateTimer()
+    return res.end(JSON.stringify(MachineData.toJSON()))
 });
 
 export { StartRouting }

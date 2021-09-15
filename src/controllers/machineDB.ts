@@ -25,15 +25,15 @@ class MachineDB {
         return this.db.collection("Users").find({}).project({name: 1, _id: 0}).toArray()
     }
     public async GetReferences(): Promise<any> {
-        return this.db.collection("References").find({}).project({name: 1, _id: 0}).toArray()
+        return this.db.collection("ReferencesList").find({}).project({name: 1, _id: 0}).toArray()
     }
     public async SaveReferences(References: MachineDBModels.Reference[] | any[]): Promise<any> {
-        await this.db.collection("References").deleteMany({})
-        return await this.db.collection("References").insertMany(References)
+        await this.db.collection("ReferencesList").deleteMany({})
+        return await this.db.collection("ReferencesList").insertMany(References)
     }
     public async UpdateMachineState(MachineData: Machine.MachineData): Promise<any> {
         return await this.db.collection("MachineStates").updateOne(
-            {FromTime: MachineData.MachineStateFromTime},
+            {FromTime: MachineData.MachineStateFromTime, State: MachineData.MachineState},
             {$set: {
                 State: MachineData.MachineState, 
                 ToTime: MachineData.MachineStateToTime,
@@ -43,7 +43,7 @@ class MachineDB {
             {upsert: true})
     }
     public async UpdateReference(MachineData: Machine.MachineData): Promise<any> {
-        return await this.db.collection("References").updateOne(
+        return await this.db.collection("ReferencesHistory").updateOne(
             {FromTime: MachineData.Reference.FromTime},
             {$set: {
                 Reference: MachineData.Reference.Name, 
