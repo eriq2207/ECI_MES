@@ -37,8 +37,8 @@ class MachineDB {
                 State: MachineData.MachineState, 
                 ToTime: MachineData.MachineStateToTime,
                 FromTime: MachineData.MachineStateFromTime,
-                Operator: MachineData.User,
-                OperatorSession: MachineData.UserSession
+                User: MachineData.User,
+                UserSession: MachineData.UserSession
             }},
             {upsert: true})
     }
@@ -49,8 +49,8 @@ class MachineDB {
                 Reference: MachineData.Reference.Name, 
                 ToTime: MachineData.Reference.ToTime,
                 FromTime: MachineData.Reference.FromTime,
-                Operator: MachineData.User,
-                OperatorSession: MachineData.UserSession
+                User: MachineData.User,
+                UserSession: MachineData.UserSession
             }},
             {upsert: true})
     }

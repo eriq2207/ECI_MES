@@ -35,7 +35,7 @@ router.post('/login', async function (req, res) {
     if(LastMachineState == null)
         MachineData.UserSession = 0
     else
-        MachineData.UserSession = LastMachineState.OperatorSession + 1;
+        MachineData.UserSession = LastMachineState.UserSession + 1;
     MachineData.MachineState = Machine.MachineStates.Retooling;
     MachineData.User = user;
     MachineData.MachineStateFromTime = new Date;

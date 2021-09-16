@@ -16,7 +16,7 @@ class MachineData {
     }
     public MachineStateTimer: any;
     public ReferenceTimer: any;
-    public UpdateInterval: number = 10000;
+    public UpdateInterval: number = 5000;
     public LastScannedText = {
         text: "",
         page: Page.Login
