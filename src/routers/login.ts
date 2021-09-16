@@ -30,6 +30,12 @@ router.post('/login', async function (req, res) {
         return res.render('login', {
             error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
         })
+    //Set new session ID
+    const LastMachineState = await MachineDataBase.GetLastMachineState();
+    if(LastMachineState == null)
+        MachineData.UserSession = 0
+    else
+        MachineData.UserSession = LastMachineState.OperatorSession + 1;
     MachineData.MachineState = Machine.MachineStates.Retooling;
     MachineData.User = user;
     MachineData.MachineStateFromTime = new Date;

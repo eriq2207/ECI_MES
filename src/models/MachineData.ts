@@ -22,6 +22,7 @@ class MachineData {
         page: Page.Login
     }
     public User: any = "";
+    public UserSession: number = 0;
     public Reference: Reference.Reference = new Reference.Reference()
     public MachineState: MachineStates = MachineStates.Standstill
     public MachineStateFromTime: Date = new Date

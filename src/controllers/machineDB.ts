@@ -37,7 +37,8 @@ class MachineDB {
                 State: MachineData.MachineState, 
                 ToTime: MachineData.MachineStateToTime,
                 FromTime: MachineData.MachineStateFromTime,
-                Operator: MachineData.User
+                Operator: MachineData.User,
+                OperatorSession: MachineData.UserSession
             }},
             {upsert: true})
     }
@@ -48,9 +49,13 @@ class MachineDB {
                 Reference: MachineData.Reference.Name, 
                 ToTime: MachineData.Reference.ToTime,
                 FromTime: MachineData.Reference.FromTime,
-                Operator: MachineData.User
+                Operator: MachineData.User,
+                OperatorSession: MachineData.UserSession
             }},
             {upsert: true})
+    }
+    public async GetLastMachineState(): Promise<any> {
+        return await this.db.collection("MachineStates").findOne({}, {sort:{$natural:-1}})
     }
 }
 const MachineDataBase = new MachineDB()
