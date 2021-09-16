@@ -11,14 +11,26 @@ function StartRouting(MachineDataParam: Machine.MachineData): Router {
     return router;
 }
 
-router.get('/UserSessionMachineStates', async function (req, res) {
+router.get('/OEEMachineStates', async function (req, res) {
     const States = await MachineDataBase.GetMachineStatesForSession(MachineData.UserSession)
     return res.json({MachineStates: States})
 });
 
-router.get('/UserSessionReferences', async function (req, res) {
+router.get('/OEEReferences', async function (req, res) {
     const References = await MachineDataBase.GetReferencesForSession(MachineData.UserSession)
     return res.json({References: References})
 })
+router.get('/OEEReferencesWithMachineStates', async function (req, res) {
+    const References = await MachineDataBase.GetReferencesForSession(MachineData.UserSession)
+    const MachineStates = await MachineDataBase.GetMachineStatesForSession(MachineData.UserSession)
+    References.forEach(Reference => {
+        let StatesStartIndex = MachineStates.lastIndexOf(obj=> obj.FromTime < Reference.FromTime)
+        if(StatesStartIndex>0)
+            StatesStartIndex--;
+        let StatesEndIndex = MachineStates.indexOf(obj=> obj.ToTime> Reference.ToTime)
+    });
+    return res.json({ReferencesWithStates: References})
+})
+
 
 export { StartRouting };
