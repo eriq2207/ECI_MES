@@ -223,19 +223,19 @@
               if (MachineData.User == "")
                 window.location.reload();
 
-              $('#ReferenceNameAndDescription').text(MachineData.ReferenceName + " - " + MachineData.ReferenceDescription)
+              $('#ReferenceNameAndDescription').text(MachineData.Reference.Name + " - " + MachineData.Reference.Description)
 
               if (((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1) == 0)
                 $("#MachineStateTimeDiv").text("0.0")
               else
                 $("#MachineStateTimeDiv").text(((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1))
 
-              $('#ReferenceProductionTime').text(TimeString(MachineData.ReferenceTargetTime))
-              var ActReferenceTime = (MachineData.ReferenceToTime - MachineData.ReferenceFromTime)/1000;
+              $('#ReferenceProductionTime').text(TimeString(MachineData.Reference.TargetTime))
+              var ActReferenceTime = (MachineData.Reference.ToTime - MachineData.Reference.FromTime)/1000;
               var ActReferenceTimeString = TimeString(ActReferenceTime) + '\t('
-              ActReferenceTimeString+=(ActReferenceTime/MachineData.ReferenceTargetTime * 100).toFixed(0) + '%)'
+              ActReferenceTimeString+=(ActReferenceTime/MachineData.Reference.TargetTime * 100).toFixed(0) + '%)'
               $('#ActualProductionTime').text(ActReferenceTimeString)
-              var ReferenceLeftTime = MachineData.ReferenceTargetTime - ActReferenceTime
+              var ReferenceLeftTime = MachineData.Reference.TargetTime - ActReferenceTime
               $('#ReferenceProgress').text(TimeString(ReferenceLeftTime))
             },
             error: function (err) {

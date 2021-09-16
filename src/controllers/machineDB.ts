@@ -49,6 +49,7 @@ class MachineDB {
                 Reference: MachineData.Reference.Name, 
                 ToTime: MachineData.Reference.ToTime,
                 FromTime: MachineData.Reference.FromTime,
+                Done: MachineData.Reference.Done,
                 User: MachineData.User,
                 UserSession: MachineData.UserSession
             }},
@@ -56,6 +57,12 @@ class MachineDB {
     }
     public async GetLastMachineState(): Promise<any> {
         return await this.db.collection("MachineStates").findOne({}, {sort:{$natural:-1}})
+    }
+    public async GetMachineStatesForSession(UserSessionParam: number): Promise<any> {
+        return await this.db.collection("MachineStates").find({UserSession: UserSessionParam}).toArray()
+    }
+    public async GetReferencesForSession(UserSessionParam: number): Promise<any> {
+        return await this.db.collection("ReferencesHistory").find({UserSession: UserSessionParam}).toArray()
     }
 }
 const MachineDataBase = new MachineDB()

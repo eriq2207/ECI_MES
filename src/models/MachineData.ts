@@ -22,7 +22,7 @@ class MachineData {
         page: Page.Login
     }
     public User: any = "";
-    public UserSession: number = 0;
+    public UserSession: number = -1;
     public Reference: Reference.Reference = new Reference.Reference()
     public MachineState: MachineStates = MachineStates.Standstill
     public MachineStateFromTime: Date = new Date
@@ -32,11 +32,14 @@ class MachineData {
         return {
             "User": this.User,
             "LastScannedText": this.LastScannedText,
-            "ReferenceName": this.Reference.Name,
-            "ReferenceDescription": this.Reference.Description,
-            "ReferenceFromTime": this.Reference.FromTime.getTime(),
-            "ReferenceToTime": this.Reference.ToTime.getTime(),
-            "ReferenceTargetTime": this.Reference.TargetTime,
+            Reference: {
+                "Name": this.Reference.Name,
+                "Description": this.Reference.Description,
+                "Done": this.Reference.Done,
+                "FromTime": this.Reference.FromTime.getTime(),
+                "ToTime": this.Reference.ToTime.getTime(),
+                "TargetTime": this.Reference.TargetTime
+            },
             "MachineState": this.MachineState,
             "MachineStateFromTime": this.MachineStateFromTime.getTime(),
             "MachineStateToTime": this.MachineStateToTime.getTime(),

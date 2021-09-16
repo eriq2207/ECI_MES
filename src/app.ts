@@ -10,6 +10,7 @@ import {MachineDataBase} from "./controllers/machineDB"
 import * as login from "./routers/login"
 import * as main from "./routers/main"
 import * as reference from "./routers/reference"
+import * as oee from "./routers/oee"
 
 declare module 'express-session' {
     export interface SessionData {
@@ -37,5 +38,6 @@ scanner.StartScanner(MachineObject)
 app.use("/",login.StartRouting(MachineObject))
 app.use("/",main.StartRouting(MachineObject))
 app.use("/",reference.StartRouting(MachineObject))
+app.use("/",oee.StartRouting(MachineObject))
 
 app.listen(80);
