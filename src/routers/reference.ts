@@ -38,7 +38,8 @@ router.post('/reference', async function (req, res) {
     
     MachineData.ChangeMachineState(Machine.MachineStates.Work)
     //Set reference
-    MachineData.Reference.Name = reference
+    MachineData.Reference.Name = ReferenceInList[0].name;
+    MachineData.Reference.TargetTime = ReferenceInList[0].TargetTime;
     MachineData.Reference.FromTime = new Date;
     MachineData.Reference.ToTime = new Date;
     await MachineDataBase.UpdateReference(MachineData)

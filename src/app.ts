@@ -2,7 +2,7 @@ import express from "express";
 import session from "express-session";
 import path from "path";
 
-import { MachineData } from "./models/MachineData";
+import {MachineData} from "./models/MachineData";
 
 import * as scanner from "./controllers/scanner"
 import {MachineDataBase} from "./controllers/machineDB"
@@ -28,8 +28,8 @@ app.use(session({
 }));
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
-const MachineObject = new MachineData();
 
+const MachineObject = new MachineData();
 MachineDataBase.connect();
 
 scanner.StartScanner(MachineObject)

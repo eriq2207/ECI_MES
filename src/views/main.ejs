@@ -34,7 +34,8 @@
 
 <body>
   <!-- MODAL -->
-  <div class="modal fade" id="ReferenceConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="ReferenceConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -135,7 +136,6 @@
                       </span>
                       <span class="info-box-number">
                         <h3 id="ReferenceNameAndDescription" class="mb-0">
-                          <%= locals.ReferenceName %> - <%= locals.ReferenceDescription %>
                         </h3>
                       </span>
                     </div>
@@ -148,7 +148,6 @@
                       </span>
                       <span class="info-box-number">
                         <h3 id="ReferenceProductionTime" class="mb-0">
-                          <%= locals.ReferenceTime %> 2 godz. 30 min. 20 sek.
                         </h3>
                       </span>
                     </div>
@@ -160,8 +159,7 @@
                         <h2><b>Aktualny czas produkcji: </b></h2>
                       </span>
                       <span class="info-box-number">
-                        <h3 id="ReferenceProductionTime" class="mb-0">
-                          <%= locals.ReferenceTime %> 2 godz. 15 min. 10 sek.
+                        <h3 id="ActualProductionTime" class="mb-0">
                         </h3>
                       </span>
                     </div>
@@ -184,7 +182,8 @@
                     <div class="col-6">
                       <div class="card card-primary">
                         <div class="card-body">
-                          <button type="button" class="btn btn-block btn-success p-3" data-toggle="modal" data-target="#ReferenceConfirmModal">
+                          <button type="button" class="btn btn-block btn-success p-3" data-toggle="modal"
+                            data-target="#ReferenceConfirmModal">
                             <h3 class="m-0">REF. GOTOWA</h3>
                           </button>
                         </div>
@@ -199,37 +198,56 @@
       <script>
         SetActData()
         setInterval(SetActData, 1000)
-        // function MachineDataPolling() {
-        //   $.ajax({
-        //     url: window.location.origin + '/MachineData',
-        //     type: 'GET',
-        //     contentType: 'application/json; charset=utf-8',
-        //     success: function (response) {
-        //       try {
-        //         var MachineData = JSON.parse(response)
-        //         if (MachineData.User == "")
-        //           window.location.reload();
-        //         $("#ReferenceName").text(MachineData.ReferenceName)
-        //         $("#ReferenceAmount").text(MachineData.ReferenceActualAmount + "/" + MachineData.ReferenceTargetAmount)
-        //         if (((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1) == 0)
-        //           $("#MachineStateTimeDiv").text("0.0")
-        //         else
-        //           $("#MachineStateTimeDiv").text(((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1))
-        //       } catch (ex) {
-        //         console.log("Bład parsowania JSON")
-        //       }
+        function TimeString(UnixTime){
+          if (UnixTime < 0 )
+            return false
+          var hours = Math.floor(UnixTime/3600) % 24
+          var minutes = Math.floor(UnixTime/60) % 60
+          var seconds = Math.floor(UnixTime) % 60
+          var resString = "";
+          if(hours>0)
+            resString+= hours + " godz. "
+          if(minutes>0)
+            resString+= minutes + " min. "
+          resString+= seconds + " sek."
+          return resString
+        }
+        function MachineDataPolling() {
+          $.ajax({
+            url: '/MachineData',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
 
-        //     },
-        //     error: function (err) {
-        //       console.log("Błąd")
-        //     },
-        //     complete: function () {
-        //       setTimeout(MachineDataPolling, 500)
-        //     },
-        //     timeout: 2000
-        //   });
-        // }
-        // setTimeout(MachineDataPolling, 500)
+              var MachineData = JSON.parse(response)
+              if (MachineData.User == "")
+                window.location.reload();
+
+              $('#ReferenceNameAndDescription').text(MachineData.ReferenceName + " - " + MachineData.ReferenceDescription)
+
+              if (((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1) == 0)
+                $("#MachineStateTimeDiv").text("0.0")
+              else
+                $("#MachineStateTimeDiv").text(((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1))
+
+              $('#ReferenceProductionTime').text(TimeString(MachineData.ReferenceTargetTime))
+              var ActReferenceTime = (MachineData.ReferenceToTime - MachineData.ReferenceFromTime)/1000;
+              var ActReferenceTimeString = TimeString(ActReferenceTime) + '\t('
+              ActReferenceTimeString+=(ActReferenceTime/MachineData.ReferenceTargetTime * 100).toFixed(0) + '%)'
+              $('#ActualProductionTime').text(ActReferenceTimeString)
+              var ReferenceLeftTime = MachineData.ReferenceTargetTime - ActReferenceTime
+              $('#ReferenceProgress').text(TimeString(ReferenceLeftTime))
+            },
+            error: function (err) {
+              console.log("Błąd: " + err)
+            },
+            complete: function () {
+              setTimeout(MachineDataPolling, 500)
+            },
+            timeout: 2000
+          });
+        }
+        MachineDataPolling()
 
         $(".StatusBtn").on("click", (e) => {
           console.log(e.target)

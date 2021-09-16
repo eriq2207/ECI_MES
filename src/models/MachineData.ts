@@ -35,6 +35,7 @@ class MachineData {
             "ReferenceDescription": this.Reference.Description,
             "ReferenceFromTime": this.Reference.FromTime.getTime(),
             "ReferenceToTime": this.Reference.ToTime.getTime(),
+            "ReferenceTargetTime": this.Reference.TargetTime,
             "MachineState": this.MachineState,
             "MachineStateFromTime": this.MachineStateFromTime.getTime(),
             "MachineStateToTime": this.MachineStateToTime.getTime(),
