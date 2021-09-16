@@ -10,26 +10,25 @@
 
     <link rel="icon" href="../img/eci_logo.png">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../dist/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="../dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <!-- KeyBoard-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
     <!-- comboList styles-->
     <link rel="stylesheet" href="./css/comboList.css">
 
+    <!-- REQUIRED SCRIPTS -->
 
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+
+    <script src="./js/comboList.js"></script>
 </head>
 
 <body style="background-color: #f4f6f9">
-    
+
     <div class="container-fluid row mt-4 mx-0">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
@@ -69,8 +68,6 @@
         <div class="col-sm-3"></div>
     </div>
     <!-- /.login-box -->
-    <script src="./js/comboList.js"></script>
-    <script src="./js/jquery.js"></script>
     <script>
         var users = []
 
@@ -80,7 +77,7 @@
                 type: 'GET',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
-                    users = response.map((obj)=>{
+                    users = response.map((obj) => {
                         return obj.name
                     })
                     autocomplete(document.getElementById("loginInput"), users);
@@ -96,8 +93,7 @@
                 success: function (response) {
                     try {
                         var MachineData = JSON.parse(response)
-                        if (MachineData.LastScannedText.text != "")
-                        {
+                        if (MachineData.LastScannedText.text != "") {
                             $('#errorText').text('Brak operatora "' + MachineData.LastScannedText.text + '" na liście zarejestrowanych operatorów!')
                         }
                         if (MachineData.User != "")

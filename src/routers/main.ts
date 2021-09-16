@@ -1,8 +1,6 @@
 import { Router } from "express";
-import * as readline from "readline";
 import { MachineDataBase } from "src/controllers/machineDB";
 import * as Machine from "../models/MachineData"
-//import * as MachineDB from "../controllers/sqlcomm"
 
 let router = Router()
 let MachineData: Machine.MachineData;
@@ -15,6 +13,9 @@ function StartRouting(MachineDataParam: Machine.MachineData): Router {
 router.get('/', function (req, res) {
     if (MachineData.User === "")
         return res.redirect('/login');
+        
+    if (MachineData.Reference.Name === "")
+        return res.redirect('/reference')
 
     return res.render('main', MachineData.toJSON())
 });

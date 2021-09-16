@@ -1,6 +1,5 @@
 import express from "express";
 import session from "express-session";
-import bodyParser from "body-parser";
 import path from "path";
 
 import { MachineData } from "./models/MachineData";
@@ -27,8 +26,8 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }));
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: true}))
+app.use(express.json());
 const MachineObject = new MachineData();
 
 MachineDataBase.connect();

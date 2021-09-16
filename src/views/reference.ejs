@@ -10,22 +10,24 @@
 
     <link rel="icon" href="../img/eci_logo.png">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../dist/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="../dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <!-- KeyBoard-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
     <!-- comboList styles-->
     <link rel="stylesheet" href="./css/comboList.css">
 
+    <!-- REQUIRED SCRIPTS -->
 
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- Moment.js -->
+    <script src="../plugins/moment/moment-with-locales.js"></script>
+
+    <script src="./js/comboList.js"></script>
+    <script src="./js/actTime.js"></script>
 </head>
 
 <body style="background-color: #f4f6f9">
@@ -39,9 +41,10 @@
                             <h2 class="ml-4">Electrical Components International</h2>
                         </div>
                         <div class="row">
-                            <h3 class="ml-4">Operator: <%= locals.User %></h2>
-                                <h3 id="ActualDate" class="ml-auto mr-2">
+                            <h3 class="ml-4">Operator: <%= locals.User %>
                                     </h2>
+                                    <h3 id="ActualDate" class="ml-auto mr-2">
+                                        </h2>
                         </div>
                     </div>
                 </div>
@@ -77,7 +80,8 @@
                             </form>
                         </div>
                         <div class="col-sm-6">
-                            <button id="startProductionBtn" type="submit" class="btn btn-primary btn-block mb-2">Rozpocznij
+                            <button id="startProductionBtn" type="submit"
+                                class="btn btn-primary btn-block mb-2">Rozpocznij
                                 produkcje!</button>
                         </div>
                         <p id="errorText" class="mb-0" style='color: red; text-align: center;'>
@@ -93,15 +97,10 @@
             <div class="col-sm-3"></div>
         </div>
         <!-- /.login-box -->
-        <script src="./js/comboList.js"></script>
-        <script src="./js/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
-        <script src="./js/actTime.js"></script>
         <script>
-        SetActData()
-        setInterval(SetActData, 1000)
-            function StartProduction()
-            {
+            SetActData()
+            setInterval(SetActData, 1000)
+            function StartProduction() {
                 var dataToSend = {
                     reference: $('#referenceInput').val()
                 }
@@ -119,7 +118,7 @@
                     timeout: 2000
                 });
             }
-            $('#startProductionBtn').on('click',StartProduction)
+            $('#startProductionBtn').on('click', StartProduction)
             var references = []
             function GetReferences() {
                 $.ajax({
@@ -170,4 +169,5 @@
             GetReferences()
         </script>
 </body>
+
 </html>

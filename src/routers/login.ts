@@ -14,8 +14,7 @@ function StartRouting(MachineDataParam: Machine.MachineData): Router {
 router.get('/login', function (req, res) {
     if (MachineData.User === "")
         return res.render('login')
-
-    
+        
     return res.redirect('reference')
 });
 
@@ -31,6 +30,7 @@ router.post('/login', async function (req, res) {
         return res.render('login', {
             error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
         })
+    MachineData.MachineState = Machine.MachineState.Retooling;
     MachineData.User = user;
     MachineData.MachineStateFromTime = new Date;
     MachineData.MachineStateToTime = new Date;

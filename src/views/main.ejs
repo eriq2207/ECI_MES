@@ -26,11 +26,31 @@
   <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App  -->
   <script src="../js/adminlte.min.js"></script>
+  <!-- Moment.js -->
+  <script src="../plugins/moment/moment-with-locales.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+  <script src="./js/actTime.js"></script>
 </head>
 
 <body>
+  <!-- MODAL -->
+  <div class="modal fade" id="ReferenceConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Potwierdź ukończenie referencji!</h5>
+        </div>
+        <div class="modal-body">
+          Czy produkacja referencji została ukończona?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie, jeszcze nie!</button>
+          <button type="button" id="ReferenceFinishedBtn" class="btn btn-primary">Tak, zakończona!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- REAL BODY -->
   <div class="content-wrapper m-0" style="min-height: 300px;">
     <div class="container-fluid pt-2">
       <div class="row" style="min-height: 50px;">
@@ -147,11 +167,25 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-8">
+                    <div class="col-6">
+                      <div class="info-box">
+                        <div class="info-box-content">
+                          <span class="info-box-text">
+                            <h2><b>Pozostało: </b></h2>
+                          </span>
+                          <span class="info-box-number">
+                            <h3 id="ReferenceProgress" class="mb-0">
+                              68%
+                            </h3>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
                       <div class="card card-primary">
                         <div class="card-body">
-                          <button type="button" class="StatusBtn btn btn-block btn-success p-3">
-                            <h3 class="m-0">REFERENCJA GOTOWA</h3>
+                          <button type="button" class="btn btn-block btn-success p-3" data-toggle="modal" data-target="#ReferenceConfirmModal">
+                            <h3 class="m-0">REF. GOTOWA</h3>
                           </button>
                         </div>
                         <!-- /.card-body -->
@@ -162,9 +196,6 @@
             </div>
         </div>
       </div>
-      <script src="//cdn.amcharts.com/lib/4/core.js"></script>
-      <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
-      <script src="./js/actTime.js"></script>
       <script>
         SetActData()
         setInterval(SetActData, 1000)
@@ -204,7 +235,17 @@
           console.log(e.target)
           ChangeStatus(e.target.getAttribute('name'))
         })
-
+        $("#ReferenceFinishedBtn").on("click", FinishReference)
+        function FinishReference() {
+          $.ajax({
+            url: '/FinishReference',
+            type: 'POST',
+            success: function (response) {
+              location.reload()
+            },
+            timeout: 2000
+          });
+        }
         function ChangeStatus(state) {
           $.ajax({
             url: '/ChangeMachineState',
