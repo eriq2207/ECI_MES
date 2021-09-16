@@ -24,10 +24,7 @@ router.get('/OEEReferencesWithMachineStates', async function (req, res) {
     const References = await MachineDataBase.GetReferencesForSession(MachineData.UserSession)
     const MachineStates = await MachineDataBase.GetMachineStatesForSession(MachineData.UserSession)
     References.forEach(Reference => {
-        let StatesStartIndex = MachineStates.lastIndexOf(obj=> obj.FromTime < Reference.FromTime)
-        if(StatesStartIndex>0)
-            StatesStartIndex--;
-        let StatesEndIndex = MachineStates.indexOf(obj=> obj.ToTime> Reference.ToTime)
+        
     });
     return res.json({ReferencesWithStates: References})
 })
