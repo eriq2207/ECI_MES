@@ -53,7 +53,6 @@ class MachineDB {
             }},
             {upsert: true})
     }
-    
 }
 const MachineDataBase = new MachineDB()
 export {MachineDataBase}

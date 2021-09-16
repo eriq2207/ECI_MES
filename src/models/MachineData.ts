@@ -1,16 +1,16 @@
 import * as Reference from "../models/Reference";
 import { MachineDataBase } from "src/controllers/machineDB";
 
-enum MachineState {
-    Work = "Praca", 
-    Retooling = "Przezbrojenie", 
-    Failure = "Awaria", 
+enum MachineStates {
+    Work = "Praca",
+    Retooling = "Przezbrojenie",
+    Failure = "Awaria",
     Standstill = "Postój"
 }
-enum Page {Login, Reference, Main}
+enum Page { Login, Reference, Main }
 
 class MachineData {
-    constructor(){
+    constructor() {
         this.SetMachineStateTimer()
         this.SetReferenceTimer()
     }
@@ -23,11 +23,11 @@ class MachineData {
     }
     public User: any = "";
     public Reference: Reference.Reference = new Reference.Reference()
-    public MachineState: MachineState = MachineState.Standstill
+    public MachineState: MachineStates = MachineStates.Standstill
     public MachineStateFromTime: Date = new Date
     public MachineStateToTime: Date = new Date
     public ActivePage: Page = Page.Login
-    toJSON() : object{
+    toJSON(): object {
         return {
             "User": this.User,
             "LastScannedText": this.LastScannedText,
@@ -40,16 +40,16 @@ class MachineData {
             "MachineStateToTime": this.MachineStateToTime.getTime(),
             "ActivePage": this.ActivePage
         }
-        
+
     }
     private async MachineStateIncTimer(UpdateTime: number) {
-        if (this.User == "") 
+        if (this.User == "")
             return;
         this.MachineStateToTime = new Date(this.MachineStateToTime.getTime() + UpdateTime)
-        const res = await MachineDataBase.UpdateMachineState(this)  
+        const res = await MachineDataBase.UpdateMachineState(this)
     }
     private async ReferenceIncTimer(UpdateTime: number) {
-        if (this.Reference.Name == "") 
+        if (this.Reference.Name == "")
             return;
         this.Reference.ToTime = new Date(this.Reference.ToTime.getTime() + UpdateTime)
         const res = await MachineDataBase.UpdateReference(this)
@@ -62,7 +62,16 @@ class MachineData {
         clearInterval(this.ReferenceTimer);
         this.ReferenceTimer = setInterval(this.ReferenceIncTimer.bind(this), this.UpdateInterval, this.UpdateInterval)
     }
+    public async ChangeMachineState(MachineStateParam: MachineStates): Promise<any> {
+        this.MachineStateToTime = new Date;
+        await MachineDataBase.UpdateMachineState(this)
+        this.MachineStateFromTime = new Date;
+        this.MachineStateToTime = new Date;
+        this.MachineState = MachineStateParam
+        await MachineDataBase.UpdateMachineState(this)
+        this.SetMachineStateTimer()
+    }
 
 }
 
-export {MachineState, Page, MachineData}
+export { MachineStates, Page, MachineData }

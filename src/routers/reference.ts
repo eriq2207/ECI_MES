@@ -35,14 +35,8 @@ router.post('/reference', async function (req, res) {
         res.statusCode = 500;
         return res.end()
     }
-    //Set correct machine state
-    MachineData.MachineStateToTime = new Date;
-    await MachineDataBase.UpdateMachineState(MachineData)
-    MachineData.MachineStateFromTime = new Date;
-    MachineData.MachineStateToTime = new Date;
-    MachineData.MachineState = Machine.MachineState.Work;
-    await MachineDataBase.UpdateMachineState(MachineData)
-    MachineData.SetMachineStateTimer()
+    
+    MachineData.ChangeMachineState(Machine.MachineStates.Work)
     //Set reference
     MachineData.Reference.Name = reference
     MachineData.Reference.FromTime = new Date;
@@ -64,14 +58,7 @@ router.get('/References', async function (req, res) {
     return res.json(ReferencesAct)
 });
 router.post('/FinishReference', async function (req, res) {
-    //Set correct machine state
-    MachineData.MachineStateToTime = new Date;
-    await MachineDataBase.UpdateMachineState(MachineData)
-    MachineData.MachineStateFromTime = new Date;
-    MachineData.MachineStateToTime = new Date;
-    MachineData.MachineState = Machine.MachineState.Retooling;
-    await MachineDataBase.UpdateMachineState(MachineData)
-    MachineData.SetMachineStateTimer()
+    MachineData.ChangeMachineState(Machine.MachineStates.Retooling)
     //Set reference
     MachineData.Reference.ToTime = new Date;
     await MachineDataBase.UpdateReference(MachineData)
