@@ -36,10 +36,11 @@ router.post('/login', async function (req, res) {
         MachineData.UserSession = 0
     else
         MachineData.UserSession = LastMachineState.UserSession + 1;
+    const ActDate = new Date;
     MachineData.MachineState = Machine.MachineStates.Retooling;
     MachineData.User = user;
-    MachineData.MachineStateFromTime = new Date;
-    MachineData.MachineStateToTime = new Date;
+    MachineData.MachineStateFromTime = ActDate;
+    MachineData.MachineStateToTime = ActDate;
     await MachineDataBase.UpdateMachineState(MachineData)
     MachineData.SetMachineStateTimer()
     return res.redirect('reference')
@@ -50,7 +51,8 @@ router.get('/logout', async function (req, res) {
         if(err)
             console.log("Session destroy error occured: " + err.stack)
     });
-    MachineData.MachineStateToTime = new Date
+    const ActDate = new Date;
+    MachineData.MachineStateToTime = ActDate;
     await MachineDataBase.UpdateMachineState(MachineData)
     MachineData.LastScannedText.text = ""
     MachineData.User = ""

@@ -1,4 +1,5 @@
 {
+    "MachineName": "Stanowisko Montażowe",
     "MongoDB": {
         "ConnString": "mongodb://localhost:27017",
         "DbName": "Machine"

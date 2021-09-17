@@ -11,22 +11,32 @@ function StartRouting(MachineDataParam: Machine.MachineData): Router {
     return router;
 }
 
+router.get('/oee', async function (req, res) {
+    return res.render('oee', {
+        MachineData: MachineData,
+        config: config
+    })
+});
+
 router.get('/OEEMachineStates', async function (req, res) {
     const States = await MachineDataBase.GetMachineStatesForSession(MachineData.UserSession)
-    return res.json({MachineStates: States})
+    return res.json(JSON.stringify({MachineStates: States}))
 });
 
 router.get('/OEEReferences', async function (req, res) {
     const References = await MachineDataBase.GetReferencesForSession(MachineData.UserSession)
-    return res.json({References: References})
+    return res.json(JSON.stringify({References: References}))
 })
 router.get('/OEEReferencesWithMachineStates', async function (req, res) {
     const References = await MachineDataBase.GetReferencesForSession(MachineData.UserSession)
     const MachineStates = await MachineDataBase.GetMachineStatesForSession(MachineData.UserSession)
-    References.forEach(Reference => {
-        
+    References.forEach(ActReference => {
+        const StartIndex = MachineStates.findIndex(obj=> obj.FromTime.getTime() === ActReference.FromTime.getTime())
+        const EndIndex = MachineStates.findIndex(obj=> obj.ToTime.getTime() === ActReference.ToTime.getTime())
+        const ActRefStates = MachineStates.slice(StartIndex, EndIndex);
+        ActReference.MachineStates = ActRefStates
     });
-    return res.json({ReferencesWithStates: References})
+    return res.json(JSON.stringify({ReferencesWithStates: References}))
 })
 
 

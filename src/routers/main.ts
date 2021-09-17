@@ -34,7 +34,8 @@ router.post('/ChangeMachineState', async function (req, res, next) {
     if (MachineData.MachineState == ReceivedMachineState)
         return res.end(JSON.stringify(MachineData.toJSON()))
 
-    MachineData.ChangeMachineState(ReceivedMachineState)
+    const ActDate = new Date;
+    MachineData.ChangeMachineState(ReceivedMachineState, ActDate)
     return res.end(JSON.stringify(MachineData.toJSON()))
 });
 

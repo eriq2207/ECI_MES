@@ -67,11 +67,11 @@ class MachineData {
         clearInterval(this.ReferenceTimer);
         this.ReferenceTimer = setInterval(this.ReferenceIncTimer.bind(this), this.UpdateInterval, this.UpdateInterval)
     }
-    public async ChangeMachineState(MachineStateParam: MachineStates): Promise<any> {
-        this.MachineStateToTime = new Date;
+    public async ChangeMachineState(MachineStateParam: MachineStates, ChangeDate: Date): Promise<any> {
+        this.MachineStateToTime = ChangeDate;
         await MachineDataBase.UpdateMachineState(this)
-        this.MachineStateFromTime = new Date;
-        this.MachineStateToTime = new Date;
+        this.MachineStateFromTime = ChangeDate;
+        this.MachineStateToTime = ChangeDate;
         this.MachineState = MachineStateParam
         await MachineDataBase.UpdateMachineState(this)
         this.SetMachineStateTimer()

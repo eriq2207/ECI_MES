@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>ECI MES</title>
+
+  <link rel="icon" href="../img/eci_logo.png">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../css/adminlte.css">
+  <!-- Google Font: Source Sans Pro  -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4  -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App  -->
+  <script src="../js/adminlte.min.js"></script>
+  <!-- Moment.js -->
+  <script src="../plugins/moment/moment-with-locales.js"></script>
+  <!-- AMCHARTS LIB-->
+  <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+
+  <script src="./js/actTime.js"></script>
+</head>
+
+<body>
+  <!-- REAL BODY -->
+  <div class="content-wrapper m-0" style="min-height: 300px;">
+    <div class="container-fluid pt-2">
+      <div class="row" style="min-height: 50px;">
+        <div class="col-12">
+          <div class="row container-fluid p-2 mb-3 mx-0 rounded border bg-white">
+            <img src="../img/eci_logo_big.png" style="max-height: 75px;">
+            <div class="flex-grow-1">
+              <div class="row">
+                <h2 class="ml-4">
+                  <%= locals.config.MachineName %>
+                </h2>
+              </div>
+              <div class="row">
+                <h3 class="ml-4 " id="UserName">
+                  </h2>
+                  <h3 id="ActualDate" class="ml-auto mr-2">
+                    </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="info-box">
+            <div class="info-box-content">
+              <span class="info-box-text">
+                <h2 id="StationPerformance">WYDAJNOŚĆ STANOWISKA</h2>
+              </span>
+              <span class="info-box-number">
+                <h3 id="ReferenceNameAndDescription" class="mb-0">
+                </h3>
+              </span>
+              <div class="chart" id="StationChartDiv">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="info-box">
+            <div class="info-box-content">
+              <span class="info-box-text">
+                <h2>WYDAJNOŚĆ OPERATORA</h2>
+              </span>
+              <span class="info-box-number">
+                <h3 id="ReferenceNameAndDescription" class="mb-0">
+                </h3>
+              </span>
+              <div class="chart" id="OperatorChartDiv">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="info-box">
+            <div class="info-box-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    //Actual time
+    SetActData()
+    setInterval(SetActData, 1000)
+    var OEEPollingTimer;
+    //Chart
+    var StationChartDataTemplate = [{
+      "State": "Praca",
+      "time": 0
+    }, {
+      "State": "Przezbrojenie",
+      "time": 0
+    }, {
+      "State": "Awaria",
+      "time": 0
+    }, {
+      "State": "Postój",
+      "time": 0
+    }, {
+      "State": "Brak operatora",
+      "time": 0
+    },]
+    var OperatorChartDataTemplate = [{
+      "id": 0,
+      "Reference": "H111",
+      "RealTime": 0,
+      "TargetTime": 0,
+      "OverrunTime": 0
+    }, {
+      "id": 1,
+      "Reference": "H222",
+      "RealTime": 150,
+      "TargetTime": 100,
+      "OverrunTime": 0
+    }, {
+      "id": 2,
+      "Reference": "H333",
+      "RealTime": 0,
+      "TargetTime": 150,
+      "OverrunTime": 100
+    },]
+    var StationPieChart = am4core.create("StationChartDiv", am4charts.PieChart)
+    var OperatorColumnChart = am4core.create("OperatorChartDiv", am4charts.XYChart)
+    function StationPieChartInit() {
+      var pieSeries = StationPieChart.series.push(new am4charts.PieSeries());
+      pieSeries.dataFields.value = "time";
+      pieSeries.dataFields.category = "State";
+      pieSeries.alignLabels = false;;
+      pieSeries.labels.template.bent = true;
+      var colorSet = new am4core.ColorSet();
+      colorSet.list = ["#28a745", "#ffc107", "#dc3545", "#5a6268"].map(function (color) {
+        return new am4core.color(color);
+      });
+      pieSeries.colors = colorSet;
+      pieSeries.slices.template.stroke = am4core.color("#fff");
+      pieSeries.slices.template.strokeWidth = 7;
+      pieSeries.slices.template.strokeOpacity = 1;
+      pieSeries.hiddenState.properties.opacity = 1;
+      pieSeries.hiddenState.properties.endAngle = -90;
+      pieSeries.hiddenState.properties.startAngle = -90;
+
+      pieSeries.ticks.template.events.on("ready", hideSmall);
+      pieSeries.ticks.template.events.on("visibilitychanged", hideSmall);
+      pieSeries.labels.template.events.on("ready", hideSmall);
+      pieSeries.labels.template.events.on("visibilitychanged", hideSmall);
+      function hideSmall(ev) {
+        if (ev.target.dataItem && (ev.target.dataItem.values.value.percent < 5 || ev.target.dataItem.values.value.percent == 100)) {
+          ev.target.hide();
+        }
+        else {
+          ev.target.show();
+        }
+      }
+      StationPieChart.data = StationChartDataTemplate
+
+    }
+    StationPieChartInit()
+    function OperatorChartInit() {
+      var colorSet = new am4core.ColorSet();
+      colorSet.list = ["#28a745", "#5a6268", "#dc3545"].map(function (color) {
+        return new am4core.color(color);
+      });
+      OperatorColumnChart.colors = colorSet;
+      OperatorColumnChart.zoomOutButton.disabled = true;
+      OperatorColumnChart.padding(25, 10, 15, 15);
+      OperatorColumnChart.legend = new am4charts.Legend();
+
+      let categoryAxis = OperatorColumnChart.xAxes.push(new am4charts.CategoryAxis());
+      categoryAxis.dataFields.category = "id";
+
+      categoryAxis.renderer.grid.template.location = 0;
+
+      let TimeAxis = OperatorColumnChart.yAxes.push(new am4charts.DurationAxis());
+      TimeAxis.renderer.minWidth = 50;
+      TimeAxis.title.text = "Czas (minuty)"
+      TimeAxis.baseUnit = "second"
+
+      let RealTimeSerie = AddSerie("Aktualny czas", "RealTime")
+      let TargerTimeSerie = AddSerie("Pozostały czas", "TargetTime")
+      let OverrunTimeSerie = AddSerie("Czas przekroczenia", "OverrunTime")
+
+      function AddSerie(Name, ValueY) {
+        let Serie = OperatorColumnChart.series.push(new am4charts.ColumnSeries());
+        Serie.columns.template.width = am4core.percent(80);
+        Serie.name = Name
+        Serie.color = "red"
+        Serie.dataFields.categoryX = "id";
+        Serie.dataFields.valueY = ValueY;
+        Serie.dataItems.template.locations.categoryX = 0.5;
+        Serie.stacked = true;
+        Serie.tooltip.pointerOrientation = "vertical";
+        return Serie
+      }
+      OperatorColumnChart.data = OperatorChartDataTemplate
+    }
+    OperatorChartInit()
+    //Data polling
+    function ReferencesDataPolling() {
+      $.ajax({
+        url: '/OEEReferencesWithMachineStates',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+          let References = JSON.parse(response)
+        },
+        error: function (err) {
+          console.log("Błąd: " + err)
+        },
+        timeout: 2000
+      });
+    }
+    function MachineStatesDataPolling() {
+      $.ajax({
+        url: '/OEEMachineStates',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+          let resJSON = JSON.parse(response)
+          let MachineStates = resJSON.MachineStates
+          let StationChartData = JSON.parse(JSON.stringify(StationChartDataTemplate))
+          for(var i=0; i<MachineStates.length; i++) {
+            let FromTime = new Date(MachineStates[i].FromTime).getTime()
+            let ToTime = new Date(MachineStates[i].ToTime).getTime()
+            let time = Math.round((ToTime - FromTime)/1000)
+            let IndexOfState = StationChartData.findIndex(obj=>obj.State == MachineStates[i].State)
+            StationChartData[IndexOfState].time+= time
+          }
+          StationPieChart.data = StationChartData;
+          let TimeSum = 0;
+          let WorkSum = 0;
+          for(var i=0; i<StationChartData.length; i++)
+          {
+            if(StationChartData[i].State == "Praca")
+              WorkSum+=StationChartData[i].time
+            else
+              TimeSum+=StationChartData[i].time
+          }
+          let StationPerformance = (WorkSum/TimeSum*100).toFixed(1)
+          $('#StationPerformance').text("WYDAJNOŚĆ STANOWISKA: " + StationPerformance + " %")
+        },
+        error: function (err) {
+          console.log("Błąd: " + err)
+        },
+        timeout: 2000
+      });
+    }
+    //OEEPollingTimer = setTimeout(OEEDataPolling(),0)
+    function MachineDataPolling() {
+      $.ajax({
+        url: '/MachineData',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+          var MachineData = JSON.parse(response)
+          $('#UserName').text("Operator: " + MachineData.User)
+          if (MachineData.User != "") {
+            setTimeout(ReferencesDataPolling, 0)
+            setTimeout(MachineStatesDataPolling, 0)
+          }
+          else {
+            StationPieChart.data = [{
+              "State": "Brak operatora",
+              "time": 1
+            }]
+            OperatorColumnChart.data = []
+          }
+
+        },
+        error: function (err) {
+          console.log("Błąd: " + err)
+        },
+        complete: function () {
+          setTimeout(MachineDataPolling, 2000)
+        },
+        timeout: 2000
+      });
+    }
+    MachineDataPolling()
+  </script>
+  <style>
+    h2 {
+      text-align: center;
+      margin-bottom: 0;
+      font-weight: bold;
+    }
+
+    .chart {
+      min-height: 40vw;
+    }
+  </style>
+</body>
