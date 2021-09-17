@@ -134,15 +134,15 @@
     }, {
       "id": 1,
       "Reference": "H222",
-      "RealTime": 150,
-      "TargetTime": 100,
+      "RealTime": 0,
+      "TargetTime": 0,
       "OverrunTime": 0
     }, {
       "id": 2,
       "Reference": "H333",
       "RealTime": 0,
-      "TargetTime": 150,
-      "OverrunTime": 100
+      "TargetTime": 0,
+      "OverrunTime": 0
     },]
     var StationPieChart = am4core.create("StationChartDiv", am4charts.PieChart)
     var OperatorColumnChart = am4core.create("OperatorChartDiv", am4charts.XYChart)
@@ -226,7 +226,42 @@
         type: 'GET',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-          let References = JSON.parse(response)
+          let resJSON = JSON.parse(response)
+          let References = resJSON.ReferencesWithStates
+          let OperatorChartData = []
+          for (var i = 0; i < References.length; i++) {
+            let ActReference = References[i]
+            let Reference = {
+              "id": i,
+              "Reference": ActReference.Reference,
+              "RealTime": 0,
+              "TargetTime": ActReference.TargetTime,
+              "OverrunTime": 0
+            }
+            let WorkSum = 0;
+            for (var j = 0; j < ActReference.MachineStates.length; j++) {
+              let ActState = ActReference.MachineStates[j]
+              let FromTime = new Date(ActState.FromTime).getTime()/1000
+              let ToTime = new Date(ActState.ToTime).getTime()/1000
+              if (ActState.State == "Praca")
+                WorkSum+= ToTime - FromTime;
+            }
+            Reference.RealTime = WorkSum;
+
+            if(Reference.RealTime> Reference.TargetTime)
+            {
+              Reference.OverrunTime = Reference.RealTime - Reference.TargetTime
+              Reference.RealTime = Reference.TargetTime
+              Reference.TargetTime = 0;
+            }
+            else
+            {
+              Reference.OverrunTime = 0;
+              Reference.TargetTime-=Reference.RealTime
+            }
+            OperatorChartData.push(Reference)
+          }
+          OperatorColumnChart.data = OperatorChartData
         },
         error: function (err) {
           console.log("Błąd: " + err)
@@ -243,24 +278,25 @@
           let resJSON = JSON.parse(response)
           let MachineStates = resJSON.MachineStates
           let StationChartData = JSON.parse(JSON.stringify(StationChartDataTemplate))
-          for(var i=0; i<MachineStates.length; i++) {
+          for (var i = 0; i < MachineStates.length; i++) {
             let FromTime = new Date(MachineStates[i].FromTime).getTime()
             let ToTime = new Date(MachineStates[i].ToTime).getTime()
-            let time = Math.round((ToTime - FromTime)/1000)
-            let IndexOfState = StationChartData.findIndex(obj=>obj.State == MachineStates[i].State)
-            StationChartData[IndexOfState].time+= time
+            let time = Math.round((ToTime - FromTime) / 1000)
+            let IndexOfState = StationChartData.findIndex(obj => obj.State == MachineStates[i].State)
+            StationChartData[IndexOfState].time += time
           }
           StationPieChart.data = StationChartData;
           let TimeSum = 0;
           let WorkSum = 0;
-          for(var i=0; i<StationChartData.length; i++)
-          {
-            if(StationChartData[i].State == "Praca")
-              WorkSum+=StationChartData[i].time
+          for (var i = 0; i < StationChartData.length; i++) {
+            if (StationChartData[i].State == "Praca")
+              WorkSum += StationChartData[i].time
             else
-              TimeSum+=StationChartData[i].time
+              TimeSum += StationChartData[i].time
           }
-          let StationPerformance = (WorkSum/TimeSum*100).toFixed(1)
+          let StationPerformance = (WorkSum / (TimeSum+WorkSum) * 100).toFixed(1)
+          if(StationPerformance == "NaN")
+            StationPerformance = "0.0"
           $('#StationPerformance').text("WYDAJNOŚĆ STANOWISKA: " + StationPerformance + " %")
         },
         error: function (err) {
@@ -269,7 +305,6 @@
         timeout: 2000
       });
     }
-    //OEEPollingTimer = setTimeout(OEEDataPolling(),0)
     function MachineDataPolling() {
       $.ajax({
         url: '/MachineData',

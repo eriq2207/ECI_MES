@@ -18,15 +18,15 @@
     "References": [
         {
             "name": "H111",
-            "TargetTime": 1000
+            "TargetTime": 60
         },
         {
             "name": "H222",
-            "TargetTime": 2000
+            "TargetTime": 120
         },
         {
             "name": "H333",
-            "TargetTime": 3000
+            "TargetTime": 180
         }
     ]
 }

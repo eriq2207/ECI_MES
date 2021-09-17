@@ -11,8 +11,7 @@ enum Page { Login, Reference, Main }
 
 class MachineData {
     constructor() {
-        this.SetMachineStateTimer()
-        this.SetReferenceTimer()
+        setInterval(this.UpdateMachineData.bind(this), this.UpdateInterval)
     }
     public MachineStateTimer: any;
     public ReferenceTimer: any;
@@ -47,25 +46,18 @@ class MachineData {
         }
 
     }
-    private async MachineStateIncTimer(UpdateTime: number) {
-        if (this.User == "")
-            return;
-        this.MachineStateToTime = new Date(this.MachineStateToTime.getTime() + UpdateTime)
-        const res = await MachineDataBase.UpdateMachineState(this)
-    }
-    private async ReferenceIncTimer(UpdateTime: number) {
-        if (this.Reference.Name == "")
-            return;
-        this.Reference.ToTime = new Date(this.Reference.ToTime.getTime() + UpdateTime)
-        const res = await MachineDataBase.UpdateReference(this)
-    }
-    public SetMachineStateTimer() {
-        clearInterval(this.MachineStateTimer);
-        this.MachineStateTimer = setInterval(this.MachineStateIncTimer.bind(this), this.UpdateInterval, this.UpdateInterval)
-    }
-    public SetReferenceTimer() {
-        clearInterval(this.ReferenceTimer);
-        this.ReferenceTimer = setInterval(this.ReferenceIncTimer.bind(this), this.UpdateInterval, this.UpdateInterval)
+    private async UpdateMachineData(UpdateTime: number) {
+        let ActDate = new Date;
+        if (this.User != "")
+        {
+            this.MachineStateToTime = ActDate;
+            const res = await MachineDataBase.UpdateMachineState(this)
+        }
+        if(this.Reference.Name != "")
+        {
+            this.Reference.ToTime = ActDate
+            const res = await MachineDataBase.UpdateReference(this)
+        }
     }
     public async ChangeMachineState(MachineStateParam: MachineStates, ChangeDate: Date): Promise<any> {
         this.MachineStateToTime = ChangeDate;
@@ -74,7 +66,6 @@ class MachineData {
         this.MachineStateToTime = ChangeDate;
         this.MachineState = MachineStateParam
         await MachineDataBase.UpdateMachineState(this)
-        this.SetMachineStateTimer()
     }
 
 }

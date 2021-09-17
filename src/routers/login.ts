@@ -36,13 +36,13 @@ router.post('/login', async function (req, res) {
         MachineData.UserSession = 0
     else
         MachineData.UserSession = LastMachineState.UserSession + 1;
+        
     const ActDate = new Date;
     MachineData.MachineState = Machine.MachineStates.Retooling;
     MachineData.User = user;
     MachineData.MachineStateFromTime = ActDate;
     MachineData.MachineStateToTime = ActDate;
     await MachineDataBase.UpdateMachineState(MachineData)
-    MachineData.SetMachineStateTimer()
     return res.redirect('reference')
 })
 

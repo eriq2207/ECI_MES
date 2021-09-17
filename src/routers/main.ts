@@ -36,6 +36,10 @@ router.post('/ChangeMachineState', async function (req, res, next) {
 
     const ActDate = new Date;
     MachineData.ChangeMachineState(ReceivedMachineState, ActDate)
+    //Update reference
+    MachineData.Reference.ToTime = ActDate;
+    MachineDataBase.UpdateReference(MachineData);
+    
     return res.end(JSON.stringify(MachineData.toJSON()))
 });
 

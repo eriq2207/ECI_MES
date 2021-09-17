@@ -44,7 +44,6 @@ router.post('/reference', async function (req, res) {
     MachineData.Reference.FromTime = ActDate;
     MachineData.Reference.ToTime = ActDate;
     await MachineDataBase.UpdateReference(MachineData)
-    MachineData.SetReferenceTimer()
 
     res.statusCode = 200
     return res.end()
@@ -67,7 +66,6 @@ router.post('/FinishReference', async function (req, res) {
     MachineData.Reference.Done = true;
     await MachineDataBase.UpdateReference(MachineData)
     MachineData.Reference.Name = ""
-    MachineData.SetReferenceTimer()
 
     return res.end();
 });
