@@ -182,7 +182,7 @@
     StationPieChartInit()
     function OperatorChartInit() {
       var colorSet = new am4core.ColorSet();
-      colorSet.list = ["#5a6268","#28a745", "#dc3545"].map(function (color) {
+      colorSet.list = ["#5a6268", "#28a745", "#dc3545"].map(function (color) {
         return new am4core.color(color);
       });
       OperatorColumnChart.colors = colorSet;
@@ -241,23 +241,21 @@
             let WorkSum = 0;
             for (var j = 0; j < ActReference.MachineStates.length; j++) {
               let ActState = ActReference.MachineStates[j]
-              let FromTime = new Date(ActState.FromTime).getTime()/1000
-              let ToTime = new Date(ActState.ToTime).getTime()/1000
+              let FromTime = new Date(ActState.FromTime).getTime() / 1000
+              let ToTime = new Date(ActState.ToTime).getTime() / 1000
               if (ActState.State == "Praca")
-                WorkSum+= ToTime - FromTime;
+                WorkSum += ToTime - FromTime;
             }
             Reference.RealTime = WorkSum;
 
-            if(Reference.RealTime> Reference.TargetTime)
-            {
+            if (Reference.RealTime > Reference.TargetTime) {
               Reference.OverrunTime = Reference.RealTime - Reference.TargetTime
               Reference.RealTime = Reference.TargetTime
               Reference.TargetTime = 0;
             }
-            else
-            {
+            else {
               Reference.OverrunTime = 0;
-              Reference.TargetTime-=Reference.RealTime
+              Reference.TargetTime -= Reference.RealTime
             }
             OperatorChartData.push(Reference)
           }
@@ -294,8 +292,8 @@
             else
               TimeSum += StationChartData[i].time
           }
-          let StationPerformance = (WorkSum / (TimeSum+WorkSum) * 100).toFixed(1)
-          if(StationPerformance == "NaN")
+          let StationPerformance = (WorkSum / (TimeSum + WorkSum) * 100).toFixed(1)
+          if (StationPerformance == "NaN")
             StationPerformance = "0.0"
           $('#StationPerformance').text("WYDAJNOŚĆ STANOWISKA: " + StationPerformance + " %")
         },
@@ -312,18 +310,18 @@
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
           var MachineData = JSON.parse(response)
-          $('#UserName').text("Operator: " + MachineData.User)
           if (MachineData.User != "") {
+            $('#UserName').text("Operator: " + MachineData.User)
             setTimeout(ReferencesDataPolling, 0)
             setTimeout(MachineStatesDataPolling, 0)
           }
-          else {
-            StationPieChart.data = [{
-              "State": "Brak operatora",
-              "time": 1
-            }]
-            OperatorColumnChart.data = []
-          }
+          // else {
+          //   StationPieChart.data = [{
+          //     "State": "Brak operatora",
+          //     "time": 1
+          //   }]
+          //   OperatorColumnChart.data = []
+          // }
 
         },
         error: function (err) {
