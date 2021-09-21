@@ -55,12 +55,12 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="login-logo">
-                <a href="/"><b>Witaj <%= locals.User %> !</b></a>
+                <a href="/"><b>Witaj <%= locals.User %> </b></a>
             </div>
             <!-- /.login-logo -->
             <div class="card">
                 <div class="card-body login-card-body">
-                    <p class="login-box-msg">Zeskanuj kod produkowanej referencji lub wybierz ją z listy!</p>
+                    <p class="login-box-msg">Zeskanuj kod produkowanej referencji<br> lub<br> wybierz ją z listy:</p>
 
                     <div class="input-group mb-3">
                         <input id="referenceInput" type="text" class="form-control input" placeholder="Nazwa referencji"
@@ -76,13 +76,13 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <form action="/logout" method="GET">
-                                <button type="submit" class="btn btn-primary btn-block mb-2">Zmień operatora!</button>
+                                <button type="submit" class="btn btn-primary btn-block mb-2">Zmień operatora</button>
                             </form>
                         </div>
                         <div class="col-sm-6">
                             <button id="startProductionBtn" type="submit"
                                 class="btn btn-primary btn-block mb-2">Rozpocznij
-                                produkcje!</button>
+                                produkcje</button>
                         </div>
                         <p id="errorText" class="mb-0" style='color: red; text-align: center;'>
                             <%= locals.error %>

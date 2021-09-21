@@ -173,7 +173,6 @@
                           </span>
                           <span class="info-box-number">
                             <h3 id="ReferenceProgress" class="mb-0">
-                              68%
                             </h3>
                           </span>
                         </div>
@@ -236,6 +235,8 @@
               ActReferenceTimeString+=(ActReferenceTime/MachineData.Reference.TargetTime * 100).toFixed(0) + '%)'
               $('#ActualProductionTime').text(ActReferenceTimeString)
               var ReferenceLeftTime = MachineData.Reference.TargetTime - ActReferenceTime
+              if(ReferenceLeftTime<0)
+                ReferenceLeftTime = 0
               $('#ReferenceProgress').text(TimeString(ReferenceLeftTime))
             },
             error: function (err) {
