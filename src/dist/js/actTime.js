@@ -1,4 +1,4 @@
-function SetActData() {
+function setActDate() {
     moment.locale("pl")
-    $("#ActualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
+    $("#actualDate").text(moment().format('MMMM Do YYYY, HH:mm:ss'))
 }

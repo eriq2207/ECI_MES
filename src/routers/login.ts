@@ -1,48 +1,48 @@
 import { Router } from "express";
-import * as Machine from "../models/MachineData"
-import { MachineDataBase } from "../controllers/machineDB"; 
+import * as machine from "../models/machineData"
+import { machineDataBase } from "../controllers/machineDb"; 
 import * as config from "../config.json"
 
 const router = Router()
-let MachineData: Machine.MachineData;
+let machineData: machine.MachineData;
 
-function StartRouting(MachineDataParam: Machine.MachineData): Router {
-    MachineData = MachineDataParam;
+function startRouting(machineDataParam: machine.MachineData): Router {
+    machineData = machineDataParam;
     return router;
 }
 
 router.get('/login', function (req, res) {
-    if (MachineData.User === "")
+    if (machineData.user === "")
         return res.render('login')
         
     return res.redirect('reference')
 });
 
 router.post('/login', async function (req, res) {
-    if (MachineData.User != "")
+    if (machineData.user != "")
         return res.redirect('login');
 
     const user: String = req.body.user;
-    const UserInList = config.Users.filter((obj)=>{
+    const userInList = config.users.filter((obj)=>{
         return obj.name === user
     })
-    if(UserInList.length == 0)
+    if(userInList.length == 0)
         return res.render('login', {
             error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
         })
     //Set new session ID
-    const LastMachineState = await MachineDataBase.GetLastMachineState();
-    if(LastMachineState == null)
-        MachineData.UserSession = 0
+    const lastMachineState = await machineDataBase.getLastMachineState();
+    if(lastMachineState == null)
+        machineData.userSession = 0
     else
-        MachineData.UserSession = LastMachineState.UserSession + 1;
+        machineData.userSession = lastMachineState.userSession + 1;
         
-    const ActDate = new Date;
-    MachineData.MachineState = Machine.MachineStates.Retooling;
-    MachineData.User = user;
-    MachineData.MachineStateFromTime = ActDate;
-    MachineData.MachineStateToTime = ActDate;
-    await MachineDataBase.UpdateMachineState(MachineData)
+    const actDate = new Date;
+    machineData.machineState = machine.MachineStates.retooling;
+    machineData.user = user;
+    machineData.machineStateFromTime = actDate;
+    machineData.machineStateToTime = actDate;
+    await machineDataBase.updateMachineState(machineData)
     return res.redirect('reference')
 })
 
@@ -51,22 +51,22 @@ router.get('/logout', async function (req, res) {
         if(err)
             console.log("Session destroy error occured: " + err.stack)
     });
-    const ActDate = new Date;
-    MachineData.MachineStateToTime = ActDate;
-    await MachineDataBase.UpdateMachineState(MachineData)
-    MachineData.LastScannedText.text = ""
-    MachineData.User = ""
+    const actDate = new Date;
+    machineData.machineStateToTime = actDate;
+    await machineDataBase.updateMachineState(machineData)
+    machineData.lastScannedText.text = ""
+    machineData.user = ""
     return res.redirect('login')
 });
 
-router.get('/LoginData', function (req, res) {
-    MachineData.ActivePage = Machine.Page.Login
+router.get('/loginData', function (req, res) {
+    machineData.activePage = machine.Page.login
 
-    return res.json(JSON.stringify(MachineData.toJSON()))
+    return res.json(JSON.stringify(machineData))
 });
-router.get('/Users', async function (req, res) {
-    const UsersAct = await MachineDataBase.GetUsers()
-    return res.json(UsersAct)
+router.get('/users', async function (req, res) {
+    const actUsers = await machineDataBase.getUsers()
+    return res.json(actUsers)
 });
 
-export { StartRouting };
+export { startRouting };

@@ -1,8 +1,8 @@
 import { MongoClient, Db} from 'mongodb'
 import config from '../config.json'
-import * as Machine from "../models/MachineData"
+import * as machine from "../models/machineData"
 
-const url = config.MongoDB.ConnString;
+const url = config.mongoDB.connString;
 class MachineDB {
     public client: MongoClient;
     public db: Db;
@@ -11,59 +11,59 @@ class MachineDB {
     }
     public async connect(){
         await this.client.connect()
-        this.db = this.client.db(config.MongoDB.DbName)
+        this.db = this.client.db(config.mongoDB.dbName)
         //Temporary save users and ref from config file - will be from external system
-        this.SaveUsers(config.Users)
-        this.SaveReferences(config.References)
+        this.saveUsers(config.users)
+        this.saveReferences(config.references)
     }
-    public async SaveUsers(Users: any[]): Promise<any> {
-        await this.db.collection("Users").deleteMany({})
-        return await this.db.collection("Users").insertMany(Users)
+    public async saveUsers(users: any[]): Promise<any> {
+        await this.db.collection("users").deleteMany({})
+        return await this.db.collection("users").insertMany(users)
     }
-    public async SaveReferences(References: any[]): Promise<any> {
-        await this.db.collection("ReferencesList").deleteMany({})
-        return await this.db.collection("ReferencesList").insertMany(References)
+    public async saveReferences(references: any[]): Promise<any> {
+        await this.db.collection("referencesList").deleteMany({})
+        return await this.db.collection("referencesList").insertMany(references)
     }
-    public async GetUsers(): Promise<any> {
-        return this.db.collection("Users").find({}).project({name: 1, _id: 0}).toArray()
+    public async getUsers(): Promise<any> {
+        return this.db.collection("users").find({}).project({name: 1, _id: 0}).toArray()
     }
-    public async GetReferences(): Promise<any> {
-        return this.db.collection("ReferencesList").find({}).project({name: 1, _id: 0}).toArray()
+    public async getReferences(): Promise<any> {
+        return this.db.collection("referencesList").find({}).project({name: 1, _id: 0}).toArray()
     }
-    public async UpdateMachineState(MachineData: Machine.MachineData): Promise<any> {
-        return await this.db.collection("MachineStates").updateOne(
-            {FromTime: MachineData.MachineStateFromTime, State: MachineData.MachineState},
+    public async updateMachineState(machineData: machine.MachineData): Promise<any> {
+        return await this.db.collection("machineStates").updateOne(
+            {fromTime: machineData.machineStateFromTime, state: machineData.machineState},
             {$set: {
-                State: MachineData.MachineState, 
-                ToTime: MachineData.MachineStateToTime,
-                FromTime: MachineData.MachineStateFromTime,
-                User: MachineData.User,
-                UserSession: MachineData.UserSession
+                state: machineData.machineState, 
+                toTime: machineData.machineStateToTime,
+                fromTime: machineData.machineStateFromTime,
+                user: machineData.user,
+                userSession: machineData.userSession
             }},
             {upsert: true})
     }
-    public async UpdateReference(MachineData: Machine.MachineData): Promise<any> {
-        return await this.db.collection("ReferencesHistory").updateOne(
-            {FromTime: MachineData.Reference.FromTime},
+    public async updateReference(machineData: machine.MachineData): Promise<any> {
+        return await this.db.collection("referencesHistory").updateOne(
+            {FromTime: machineData.reference.fromTime},
             {$set: {
-                Reference: MachineData.Reference.Name, 
-                ToTime: MachineData.Reference.ToTime,
-                FromTime: MachineData.Reference.FromTime,
-                Done: MachineData.Reference.Done,
-                User: MachineData.User,
-                UserSession: MachineData.UserSession
+                reference: machineData.reference.name, 
+                toTime: machineData.reference.toTime,
+                fromTime: machineData.reference.fromTime,
+                done: machineData.reference.done,
+                user: machineData.user,
+                userSession: machineData.userSession
             }},
             {upsert: true})
     }
-    public async GetLastMachineState(): Promise<any> {
-        return await this.db.collection("MachineStates").findOne({}, {sort:{$natural:-1}})
+    public async getLastMachineState(): Promise<any> {
+        return await this.db.collection("machineStates").findOne({}, {sort:{$natural:-1}})
     }
-    public async GetMachineStatesForSession(UserSessionParam: number): Promise<any> {
-        return await this.db.collection("MachineStates").find({UserSession: UserSessionParam}).toArray()
+    public async getMachineStatesForSession(userSessionParam: number): Promise<any> {
+        return await this.db.collection("machineStates").find({userSession: userSessionParam}).toArray()
     }
-    public async GetReferencesForSession(UserSessionParam: number): Promise<any> {
-        return await this.db.collection("ReferencesHistory").find({UserSession: UserSessionParam}).toArray()
+    public async getReferencesForSession(userSessionParam: number): Promise<any> {
+        return await this.db.collection("referencesHistory").find({userSession: userSessionParam}).toArray()
     }
 }
-const MachineDataBase = new MachineDB()
-export {MachineDataBase}
+const machineDataBase = new MachineDB()
+export {machineDataBase}

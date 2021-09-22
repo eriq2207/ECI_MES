@@ -41,9 +41,9 @@
                             <h2 class="ml-4">Electrical Components International</h2>
                         </div>
                         <div class="row">
-                            <h3 class="ml-4">Operator: <%= locals.User %>
+                            <h3 class="ml-4">Operator: <%= locals.user %>
                                     </h2>
-                                    <h3 id="ActualDate" class="ml-auto mr-2">
+                                    <h3 id="actualDate" class="ml-auto mr-2">
                                         </h2>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="login-logo">
-                <a href="/"><b>Witaj <%= locals.User %> </b></a>
+                <a href="/"><b>Witaj <%= locals.user %> </b></a>
             </div>
             <!-- /.login-logo -->
             <div class="card">
@@ -98,9 +98,9 @@
         </div>
         <!-- /.login-box -->
         <script>
-            SetActData()
-            setInterval(SetActData, 1000)
-            function StartProduction() {
+            setActDate()
+            setInterval(setActDate, 1000)
+            function startProduction() {
                 var dataToSend = {
                     reference: $('#referenceInput').val()
                 }
@@ -118,11 +118,11 @@
                     timeout: 2000
                 });
             }
-            $('#startProductionBtn').on('click', StartProduction)
+            $('#startProductionBtn').on('click', startProduction)
             var references = []
-            function GetReferences() {
+            function getReferences() {
                 $.ajax({
-                    url: '/References',
+                    url: '/references',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
                     success: function (response) {
@@ -134,22 +134,22 @@
                     timeout: 2000
                 });
             }
-            var LastRcvScannedText = ""
-            function ReferenceStatusPolling() {
+            var lastRcvScannedText = ""
+            function referenceStatusPolling() {
                 $.ajax({
-                    url: '/ReferenceData',
+                    url: '/referenceData',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
                     success: function (response) {
                         try {
-                            var MachineData = JSON.parse(response)
-                            if (MachineData.LastScannedText.text != "" &&
-                                MachineData.LastScannedText.page == 1 &&
-                                LastRcvScannedText != MachineData.LastScannedText.text) {
-                                LastRcvScannedText = MachineData.LastScannedText.text;
-                                $('#referenceInput').val(MachineData.LastScannedText.text)
+                            var machineData = JSON.parse(response)
+                            if (machineData.lastScannedText.text != "" &&
+                                machineData.lastScannedText.page == 1 &&
+                                lastRcvScannedText != machineData.lastScannedText.text) {
+                                lastRcvScannedText = machineData.lastScannedText.text;
+                                $('#referenceInput').val(machineData.lastScannedText.text)
                             }
-                            if (MachineData.User === "")
+                            if (machineData.user === "")
                                 window.location.reload()
                         } catch (ex) {
                             console.log("Błąd parsowania JSON")
@@ -160,13 +160,13 @@
 
                     },
                     complete: function () {
-                        setTimeout(ReferenceStatusPolling, 500)
+                        setTimeout(referenceStatusPolling, 500)
                     },
                     timeout: 2000
                 });
             }
-            setTimeout(ReferenceStatusPolling, 500)
-            GetReferences()
+            setTimeout(referenceStatusPolling, 500)
+            getReferences()
         </script>
 </body>
 

@@ -1,8 +1,8 @@
 import * as readline from "readline";
-import * as Machine from "../models/MachineData"
+import * as machine from "../models/machineData"
 import * as config from "../config.json"
 
-let MachineData: Machine.MachineData;
+let machineData: machine.MachineData;
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -10,24 +10,24 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (data) => {
-    if (MachineData.ActivePage == Machine.Page.Login) {
-        MachineData.LastScannedText.text = data;
-        MachineData.LastScannedText.page = Machine.Page.Login;
-        const UserInList = config.Users.filter((obj) => {
+    if (machineData.activePage == machine.Page.login) {
+        machineData.lastScannedText.text = data;
+        machineData.lastScannedText.page = machine.Page.login;
+        const userInList = config.users.filter((obj) => {
             return obj.name === data
         })
-        if (UserInList.length == 1)
-            MachineData.User = data;
+        if (userInList.length == 1)
+            machineData.user = data;
     }
-    else if (MachineData.ActivePage == Machine.Page.Reference)
+    else if (machineData.activePage == machine.Page.reference)
     {
-        MachineData.LastScannedText.text = data;
-        MachineData.LastScannedText.page = Machine.Page.Reference;
+        machineData.lastScannedText.text = data;
+        machineData.lastScannedText.page = machine.Page.reference;
     }
 })
 
-function StartScanner(MachineDataProp: Machine.MachineData) {
-    MachineData = MachineDataProp
+function StartScanner(machineDataProp: machine.MachineData) {
+    machineData = machineDataProp
 }
 
 export { StartScanner }

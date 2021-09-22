@@ -1,71 +1,53 @@
-import * as Reference from "../models/Reference";
-import { MachineDataBase } from "src/controllers/machineDB";
+import {Reference} from "./reference";
+import { machineDataBase } from "src/controllers/machineDb";
 
 enum MachineStates {
-    Work = "Praca",
-    Retooling = "Przezbrojenie",
-    Failure = "Awaria",
-    Standstill = "Postój"
+    work = "Praca",
+    retooling = "Przezbrojenie",
+    failure = "Awaria",
+    standstill = "Postój"
 }
-enum Page { Login, Reference, Main }
+enum Page { login, reference, main }
 
 class MachineData {
     constructor() {
-        setInterval(this.UpdateMachineData.bind(this), this.UpdateInterval)
+        setInterval(this.updateMachineData.bind(this), this.updateInterval)
     }
-    public MachineStateTimer: any;
-    public ReferenceTimer: any;
-    public UpdateInterval: number = 5000;
-    public LastScannedText = {
+    public machineStateTimer: any;
+    public referenceTimer: any;
+    public updateInterval: number = 5000;
+    public lastScannedText = {
         text: "",
-        page: Page.Login
+        page: Page.login
     }
-    public User: any = "";
-    public UserSession: number = -1;
-    public Reference: Reference.Reference = new Reference.Reference()
-    public MachineState: MachineStates = MachineStates.Standstill
-    public MachineStateFromTime: Date = new Date
-    public MachineStateToTime: Date = new Date
-    public ActivePage: Page = Page.Login
-    toJSON(): object {
-        return {
-            "User": this.User,
-            "LastScannedText": this.LastScannedText,
-            Reference: {
-                "Name": this.Reference.Name,
-                "Description": this.Reference.Description,
-                "Done": this.Reference.Done,
-                "FromTime": this.Reference.FromTime.getTime(),
-                "ToTime": this.Reference.ToTime.getTime(),
-                "TargetTime": this.Reference.TargetTime
-            },
-            "MachineState": this.MachineState,
-            "MachineStateFromTime": this.MachineStateFromTime.getTime(),
-            "MachineStateToTime": this.MachineStateToTime.getTime(),
-            "ActivePage": this.ActivePage
-        }
-
-    }
-    private async UpdateMachineData(UpdateTime: number) {
+    public user: any = "";
+    public userSession: number = -1;
+    public reference: Reference = new Reference()
+    public machineState: MachineStates = MachineStates.standstill
+    public machineStateFromTime: Date = new Date
+    public machineStateToTime: Date = new Date
+    public activePage: Page = Page.login
+    
+    private async updateMachineData(UpdateTime: number) {
         let ActDate = new Date;
-        if (this.User != "")
+        if (this.user != "")
         {
-            this.MachineStateToTime = ActDate;
-            const res = await MachineDataBase.UpdateMachineState(this)
+            this.machineStateToTime = ActDate;
+            const res = await machineDataBase.updateMachineState(this)
         }
-        if(this.Reference.Name != "")
+        if(this.reference.name != "")
         {
-            this.Reference.ToTime = ActDate
-            const res = await MachineDataBase.UpdateReference(this)
+            this.reference.toTime = ActDate
+            const res = await machineDataBase.updateReference(this)
         }
     }
-    public async ChangeMachineState(MachineStateParam: MachineStates, ChangeDate: Date): Promise<any> {
-        this.MachineStateToTime = ChangeDate;
-        await MachineDataBase.UpdateMachineState(this)
-        this.MachineStateFromTime = ChangeDate;
-        this.MachineStateToTime = ChangeDate;
-        this.MachineState = MachineStateParam
-        await MachineDataBase.UpdateMachineState(this)
+    public async changeMachineState(MachineStateParam: MachineStates, ChangeDate: Date): Promise<any> {
+        this.machineStateToTime = ChangeDate;
+        await machineDataBase.updateMachineState(this)
+        this.machineStateFromTime = ChangeDate;
+        this.machineStateToTime = ChangeDate;
+        this.machineState = MachineStateParam
+        await machineDataBase.updateMachineState(this)
     }
 
 }

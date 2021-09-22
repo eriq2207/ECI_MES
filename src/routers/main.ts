@@ -1,46 +1,46 @@
 import { Router } from "express";
-import { MachineDataBase } from "src/controllers/machineDB";
-import * as Machine from "../models/MachineData"
+import { machineDataBase } from "src/controllers/machineDb";
+import * as machine from "../models/machineData"
 
 let router = Router()
-let MachineData: Machine.MachineData;
+let machineData: machine.MachineData;
 
-function StartRouting(MachineDataParam: Machine.MachineData): Router {
-    MachineData = MachineDataParam
+function startRouting(machineDataParam: machine.MachineData): Router {
+    machineData = machineDataParam
     return router
 }
 
 router.get('/', function (req, res) {
-    if (MachineData.User === "")
+    if (machineData.user === "")
         return res.redirect('/login');
 
-    if (MachineData.Reference.Name === "")
+    if (machineData.reference.name === "")
         return res.redirect('/reference')
 
-    return res.render('main', MachineData.toJSON())
+    return res.render('main', machineData)
 });
 
-router.get('/MachineData', function (req, res) {
-    MachineData.ActivePage = Machine.Page.Main
-    return res.end(JSON.stringify(MachineData.toJSON()))
+router.get('/machineData', function (req, res) {
+    machineData.activePage = machine.Page.main
+    return res.end(JSON.stringify(machineData))
 });
 
-router.post('/ChangeMachineState', async function (req, res, next) {
-    let ReceivedMachineState: any = req.body.MachineState
-    if (!Object.values(Machine.MachineStates).includes(ReceivedMachineState))
-        return res.end(JSON.stringify(MachineData.toJSON()))
+router.post('/changeMachineState', async function (req, res, next) {
+    let receivedMachineState: any = req.body.machineState
+    if (!Object.values(machine.MachineStates).includes(receivedMachineState))
+        return res.end(JSON.stringify(machineData))
 
     //Save machine change state to DB
-    if (MachineData.MachineState == ReceivedMachineState)
-        return res.end(JSON.stringify(MachineData.toJSON()))
+    if (machineData.machineState == receivedMachineState)
+        return res.end(JSON.stringify(machineData))
 
-    const ActDate = new Date;
-    MachineData.ChangeMachineState(ReceivedMachineState, ActDate)
+    const actDate = new Date;
+    machineData.changeMachineState(receivedMachineState, actDate)
     //Update reference
-    MachineData.Reference.ToTime = ActDate;
-    MachineDataBase.UpdateReference(MachineData);
+    machineData.reference.toTime = actDate;
+    machineDataBase.updateReference(machineData);
     
-    return res.end(JSON.stringify(MachineData.toJSON()))
+    return res.end(JSON.stringify(machineData))
 });
 
-export { StartRouting }
+export { startRouting }

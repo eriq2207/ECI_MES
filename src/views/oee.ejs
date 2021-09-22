@@ -47,13 +47,14 @@
             <div class="flex-grow-1">
               <div class="row">
                 <h2 class="ml-4">
-                  <%= locals.config.MachineName %>
+                  <%= locals.config.machineName %>
                 </h2>
               </div>
               <div class="row">
-                <h3 class="ml-4 " id="UserName">
+                <h3 class="ml-4 " id="userName">
+                  Operator: 
                   </h2>
-                  <h3 id="ActualDate" class="ml-auto mr-2">
+                  <h3 id="actualDate" class="ml-auto mr-2">
                     </h2>
               </div>
             </div>
@@ -65,13 +66,13 @@
           <div class="info-box">
             <div class="info-box-content">
               <span class="info-box-text">
-                <h2 id="StationPerformance">WYDAJNOŚĆ STANOWISKA</h2>
+                <h2 id="stationPerformance">WYDAJNOŚĆ STANOWISKA</h2>
               </span>
               <span class="info-box-number">
-                <h3 id="ReferenceNameAndDescription" class="mb-0">
+                <h3 id="referenceNameAndDescription" class="mb-0">
                 </h3>
               </span>
-              <div class="chart" id="StationChartDiv">
+              <div class="chart" id="stationChartDiv">
 
               </div>
             </div>
@@ -81,13 +82,13 @@
           <div class="info-box">
             <div class="info-box-content">
               <span class="info-box-text">
-                <h2 id="OperatorPerformance">WYDAJNOŚĆ OPERATORA</h2>
+                <h2 id="operatorPerformance">WYDAJNOŚĆ OPERATORA</h2>
               </span>
               <span class="info-box-number">
-                <h3 id="ReferenceNameAndDescription" class="mb-0">
+                <h3 id="referenceNameAndDescription" class="mb-0">
                 </h3>
               </span>
-              <div class="chart" id="OperatorChartDiv">
+              <div class="chart" id="operatorChartDiv">
 
               </div>
             </div>
@@ -98,7 +99,7 @@
         <div class="col-12">
           <div class="info-box">
             <div class="info-box-content">
-              <div id="TimelineChartDiv"></div>
+              <div id="timelineChartDiv"></div>
             </div>
           </div>
         </div>
@@ -107,47 +108,47 @@
   </div>
   <script>
     //Actual time
-    SetActData()
-    setInterval(SetActData, 1000)
-    var OEEPollingTimer;
+    setActDate()
+    setInterval(setActDate, 1000)
+    var oeePollingTimer;
     //Chart
-    var StationChartDataTemplate = [{
-      "State": "Praca",
+    var stationChartDataTemplate = [{
+      "state": "Praca",
       "time": 0
     }, {
-      "State": "Przezbrojenie",
+      "state": "Przezbrojenie",
       "time": 0
     }, {
-      "State": "Awaria",
+      "state": "Awaria",
       "time": 0
     }, {
-      "State": "Postój",
+      "state": "Postój",
       "time": 0
     }, {
-      "State": "Brak operatora",
+      "state": "Brak operatora",
       "time": 0
     },]
-    var OperatorChartDataTemplate = [{
+    var operatorChartDataTemplate = [{
 
       "id": 0,
-      "Reference": "H111",
-      "RealTime": 0,
-      "TargetTime": 0,
-      "OverrunTime": 0
+      "reference": "H111",
+      "realTime": 0,
+      "targetTime": 0,
+      "overrunTime": 0
     }, {
       "id": 1,
-      "Reference": "H222",
-      "RealTime": 0,
-      "TargetTime": 0,
-      "OverrunTime": 0
+      "reference": "H222",
+      "realTime": 0,
+      "targetTime": 0,
+      "overrunTime": 0
     }, {
       "id": 2,
-      "Reference": "H333",
-      "RealTime": 0,
-      "TargetTime": 0,
-      "OverrunTime": 0
+      "reference": "H333",
+      "realTime": 0,
+      "targetTime": 0,
+      "overrunTime": 0
     },]
-    var TimelineChartDataTemplate = [
+    var timelineChartDataTemplate = [
       {
         name: "",
         state: "Praca",
@@ -179,14 +180,14 @@
 
     ];
 
-    var StationPieChart = am4core.create("StationChartDiv", am4charts.PieChart)
-    var OperatorColumnChart = am4core.create("OperatorChartDiv", am4charts.XYChart)
-    var TimelineChart = am4core.create("TimelineChartDiv", am4charts.XYChart);
+    var stationPieChart = am4core.create("stationChartDiv", am4charts.PieChart)
+    var operatorColumnChart = am4core.create("operatorChartDiv", am4charts.XYChart)
+    var timelineChart = am4core.create("timelineChartDiv", am4charts.XYChart);
 
-    function StationPieChartInit() {
-      var pieSeries = StationPieChart.series.push(new am4charts.PieSeries());
+    function stationPieChartInit() {
+      var pieSeries = stationPieChart.series.push(new am4charts.PieSeries());
       pieSeries.dataFields.value = "time";
-      pieSeries.dataFields.category = "State";
+      pieSeries.dataFields.category = "state";
       pieSeries.alignLabels = false;;
       pieSeries.labels.template.bent = true;
       var colorSet = new am4core.ColorSet();
@@ -213,35 +214,35 @@
           ev.target.show();
         }
       }
-      StationPieChart.data = StationChartDataTemplate
+      stationPieChart.data = stationChartDataTemplate
 
     }
-    function OperatorChartInit() {
+    function operatorChartInit() {
       var colorSet = new am4core.ColorSet();
       colorSet.list = ["#5a6268", "#28a745", "#dc3545"].map(function (color) {
         return new am4core.color(color);
       });
-      OperatorColumnChart.colors = colorSet;
-      OperatorColumnChart.zoomOutButton.disabled = true;
-      OperatorColumnChart.padding(25, 10, 15, 15);
-      OperatorColumnChart.legend = new am4charts.Legend();
+      operatorColumnChart.colors = colorSet;
+      operatorColumnChart.zoomOutButton.disabled = true;
+      operatorColumnChart.padding(25, 10, 15, 15);
+      operatorColumnChart.legend = new am4charts.Legend();
 
-      let categoryAxis = OperatorColumnChart.xAxes.push(new am4charts.CategoryAxis());
+      let categoryAxis = operatorColumnChart.xAxes.push(new am4charts.CategoryAxis());
       categoryAxis.dataFields.category = "id";
 
       categoryAxis.renderer.grid.template.location = 0;
 
-      let TimeAxis = OperatorColumnChart.yAxes.push(new am4charts.DurationAxis());
+      let TimeAxis = operatorColumnChart.yAxes.push(new am4charts.DurationAxis());
       TimeAxis.renderer.minWidth = 50;
       TimeAxis.title.text = "Czas (minuty)"
       TimeAxis.baseUnit = "second"
 
-      let RealTimeSerie = AddSerie("Aktualny czas", "RealTime")
-      let TargerTimeSerie = AddSerie("Pozostały czas", "TargetTime")
-      let OverrunTimeSerie = AddSerie("Czas przekroczenia", "OverrunTime")
+      let RealTimeSerie = addSerie("Aktualny czas", "realTime")
+      let TargerTimeSerie = addSerie("Pozostały czas", "targetTime")
+      let OverrunTimeSerie = addSerie("Czas przekroczenia", "overrunTime")
 
-      function AddSerie(Name, ValueY) {
-        let Serie = OperatorColumnChart.series.push(new am4charts.ColumnSeries());
+      function addSerie(Name, ValueY) {
+        let Serie = operatorColumnChart.series.push(new am4charts.ColumnSeries());
         Serie.columns.template.width = am4core.percent(80);
         Serie.name = Name
         Serie.color = "red"
@@ -252,21 +253,21 @@
         Serie.tooltip.pointerOrientation = "vertical";
         return Serie
       }
-      OperatorColumnChart.data = OperatorChartDataTemplate
+      operatorColumnChart.data = operatorChartDataTemplate
     }
-    function TimelineChartInit() {
+    function timelineChartInit() {
 
-      TimelineChart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+      timelineChart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-      TimelineChart.paddingRight = 30;
-      TimelineChart.dateFormatter.inputDateFormat = "yyyy-MM-dd HH:mm:ss";
+      timelineChart.paddingRight = 30;
+      timelineChart.dateFormatter.inputDateFormat = "yyyy-MM-dd HH:mm:ss";
 
-      var categoryAxis = TimelineChart.yAxes.push(new am4charts.CategoryAxis());
+      var categoryAxis = timelineChart.yAxes.push(new am4charts.CategoryAxis());
       categoryAxis.dataFields.category = "name";
       categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.renderer.inversed = true;
 
-      var dateAxis = TimelineChart.xAxes.push(new am4charts.DateAxis());
+      var dateAxis = timelineChart.xAxes.push(new am4charts.DateAxis());
       dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss";
       dateAxis.renderer.minGridDistance = 70;
       dateAxis.baseInterval = { count: 1, timeUnit: "second" };
@@ -274,7 +275,7 @@
       //dateAxis.strictMinMax = true;
       dateAxis.renderer.tooltipLocation = 0;
 
-      var series1 = TimelineChart.series.push(new am4charts.ColumnSeries());
+      var series1 = timelineChart.series.push(new am4charts.ColumnSeries());
       series1.columns.template.width = am4core.percent(80);
       series1.columns.template.tooltipText = "{state}: {openDateX} - {dateX}";
 
@@ -285,69 +286,69 @@
       series1.columns.template.propertyFields.stroke = "color";
       series1.columns.template.strokeOpacity = 1;
 
-      TimelineChart.data = TimelineChartDataTemplate
+      timelineChart.data = timelineChartDataTemplate
 
     }
     
-    StationPieChartInit()
-    OperatorChartInit()
-    TimelineChartInit()
+    stationPieChartInit()
+    operatorChartInit()
+    timelineChartInit()
     //Data polling
-    function ReferencesDataPolling() {
+    function referencesDataPolling() {
       $.ajax({
-        url: '/OEEReferencesWithMachineStates',
+        url: '/oee/referencesWithMachineStates',
         type: 'GET',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
           let resJSON = JSON.parse(response)
-          let References = resJSON.ReferencesWithStates
-          let OperatorChartData = []
-          for (var i = 0; i < References.length; i++) {
-            let ActReference = References[i]
-            let Reference = {
+          let references = resJSON.referencesWithStates
+          let operatorChartData = []
+          for (var i = 0; i < references.length; i++) {
+            let actReference = references[i]
+            let reference = {
               "id": i,
-              "Reference": ActReference.Reference,
-              "RealTime": 0,
-              "TargetTime": ActReference.TargetTime,
-              "OverrunTime": 0
+              "reference": actReference.reference,
+              "realTime": 0,
+              "targetTime": actReference.targetTime,
+              "overrunTime": 0
             }
-            let WorkSum = 0;
-            for (var j = 0; j < ActReference.MachineStates.length; j++) {
-              let ActState = ActReference.MachineStates[j]
-              let FromTime = new Date(ActState.FromTime).getTime() / 1000
-              let ToTime = new Date(ActState.ToTime).getTime() / 1000
-              if (ActState.State == "Praca")
-                WorkSum += ToTime - FromTime;
+            let workSum = 0;
+            for (var j = 0; j < actReference.machineStates.length; j++) {
+              let actState = actReference.machineStates[j]
+              let fromTime = new Date(actState.fromTime).getTime() / 1000
+              let toTime = new Date(actState.toTime).getTime() / 1000
+              if (actState.state == "Praca")
+                workSum += toTime - fromTime;
             }
-            Reference.RealTime = WorkSum;
+            reference.realTime = workSum;
 
-            if (Reference.RealTime > Reference.TargetTime) {
-              Reference.OverrunTime = Reference.RealTime - Reference.TargetTime
-              Reference.RealTime = Reference.TargetTime
-              Reference.TargetTime = 0;
+            if (reference.realTime > reference.targetTime) {
+              reference.overrunTime = reference.realTime - reference.targetTime
+              reference.realTime = reference.targetTime
+              reference.targetTime = 0;
             }
             else {
-              Reference.OverrunTime = 0;
-              Reference.TargetTime -= Reference.RealTime
+              reference.overrunTime = 0;
+              reference.targetTime -= reference.realTime
             }
-            OperatorChartData.push(Reference)
+            operatorChartData.push(reference)
           }
-          OperatorColumnChart.data = OperatorChartData
+          operatorColumnChart.data = operatorChartData
           //Calculate operator performance
-          var OperatorWorkTime = 0;
-          var OperatorTargetTime = 0
-          var OperatorPerformance;
-          for (var i = 0; i < OperatorChartData.length; i++) {
-            OperatorWorkTime += OperatorChartData[i].RealTime;
-            OperatorWorkTime += OperatorChartData[i].OverrunTime;
+          var operatorWorkTime = 0;
+          var operatorTargetTime = 0
+          var operatorPerformance;
+          for (var i = 0; i < operatorChartData.length; i++) {
+            operatorWorkTime += operatorChartData[i].realTime;
+            operatorWorkTime += operatorChartData[i].overrunTime;
 
-            OperatorTargetTime += OperatorChartData[i].RealTime;
-            OperatorTargetTime += OperatorChartData[i].TargetTime;
+            operatorTargetTime += operatorChartData[i].realTime;
+            operatorTargetTime += operatorChartData[i].targetTime;
           }
-          OperatorPerformance = (OperatorTargetTime / OperatorWorkTime * 100).toFixed(1)
-          if (OperatorPerformance == "NaN")
-            OperatorPerformance = "0.0"
-          $('#OperatorPerformance').text("WYDAJNOŚĆ OPERATORA: " + OperatorPerformance + " %")
+          operatorPerformance = (operatorTargetTime / operatorWorkTime * 100).toFixed(1)
+          if (operatorPerformance == "NaN")
+            operatorPerformance = "0.0"
+          $('#operatorPerformance').text("WYDAJNOŚĆ OPERATORA: " + operatorPerformance + " %")
 
 
         },
@@ -357,49 +358,49 @@
         timeout: 2000
       });
     }
-    function MachineStatesDataPolling() {
+    function machineStatesDataPolling() {
       $.ajax({
-        url: '/OEEMachineStates',
+        url: '/oee/machineStates',
         type: 'GET',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
           const resJSON = JSON.parse(response)
-          const MachineStates = resJSON.MachineStates
-          const StationChartData = JSON.parse(JSON.stringify(StationChartDataTemplate))
-          const TimelineChartData = []
-          for (var i = 0; i < MachineStates.length; i++) {
+          const machineStates = resJSON.machineStates
+          const stationChartData = JSON.parse(JSON.stringify(stationChartDataTemplate))
+          const timelineChartData = []
+          for (var i = 0; i < machineStates.length; i++) {
             //Piechart
-            const FromTime = new Date(MachineStates[i].FromTime).getTime()
-            const ToTime = new Date(MachineStates[i].ToTime).getTime()
-            const time = Math.round((ToTime - FromTime) / 1000)
-            const IndexOfState = StationChartData.findIndex(obj => obj.State == MachineStates[i].State)
-            StationChartData[IndexOfState].time += time
+            const fromTime = new Date(machineStates[i].fromTime).getTime()
+            const toTime = new Date(machineStates[i].toTime).getTime()
+            const time = Math.round((toTime - fromTime) / 1000)
+            const indexOfState = stationChartData.findIndex(obj => obj.state == machineStates[i].state)
+            stationChartData[indexOfState].time += time
             //Timeline chart
             const format = "YYYY-MM-DD HH:mm:ss"
-            const TimelineChartDataArr = TimelineChartDataTemplate.filter(obj => obj.state === MachineStates[i].State)
+            const timelineChartDataArr = timelineChartDataTemplate.filter(obj => obj.state === machineStates[i].state)
 
-            if(TimelineChartDataArr.length == 1)
+            if(timelineChartDataArr.length == 1)
             {
-              const TimelineChartDataObj = JSON.parse(JSON.stringify(TimelineChartDataArr[0]))
-              TimelineChartDataObj.fromTime = moment(FromTime).format(format);
-              TimelineChartDataObj.toTime = moment(ToTime).format(format);
-              TimelineChartData.push(TimelineChartDataObj)
+              const timelineChartDataObj = JSON.parse(JSON.stringify(timelineChartDataArr[0]))
+              timelineChartDataObj.fromTime = moment(fromTime).format(format);
+              timelineChartDataObj.toTime = moment(toTime).format(format);
+              timelineChartData.push(timelineChartDataObj)
             }
           }
-          StationPieChart.data = StationChartData;
-          TimelineChart.data = TimelineChartData;
-          let TimeSum = 0;
-          let WorkSum = 0;
-          for (var i = 0; i < StationChartData.length; i++) {
-            if (StationChartData[i].State == "Praca")
-              WorkSum += StationChartData[i].time
+          stationPieChart.data = stationChartData;
+          timelineChart.data = timelineChartData;
+          let timeSum = 0;
+          let workSum = 0;
+          for (var i = 0; i < stationChartData.length; i++) {
+            if (stationChartData[i].state == "Praca")
+              workSum += stationChartData[i].time
             else
-              TimeSum += StationChartData[i].time
+              timeSum += stationChartData[i].time
           }
-          let StationPerformance = (WorkSum / (TimeSum + WorkSum) * 100).toFixed(1)
-          if (StationPerformance == "NaN")
-            StationPerformance = "0.0"
-          $('#StationPerformance').text("WYDAJNOŚĆ STANOWISKA: " + StationPerformance + " %")
+          let stationPerformance = (workSum / (timeSum + workSum) * 100).toFixed(1)
+          if (stationPerformance == "NaN")
+            stationPerformance = "0.0"
+          $('#stationPerformance').text("WYDAJNOŚĆ STANOWISKA: " + stationPerformance + " %")
         },
         error: function (err) {
           console.log("Błąd: " + err)
@@ -407,17 +408,17 @@
         timeout: 2000
       });
     }
-    function MachineDataPolling() {
+    function machineDataPolling() {
       $.ajax({
-        url: '/MachineData',
+        url: '/machineData',
         type: 'GET',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-          var MachineData = JSON.parse(response)
-          if (MachineData.User != "") {
-            $('#UserName').text("Operator: " + MachineData.User)
-            setTimeout(ReferencesDataPolling, 0)
-            setTimeout(MachineStatesDataPolling, 0)
+          var machineData = JSON.parse(response)
+          if (machineData.user != "") {
+            $('#userName').text("Operator: " + machineData.user)
+            setTimeout(referencesDataPolling, 0)
+            setTimeout(machineStatesDataPolling, 0)
           }
           // else {
           //   StationPieChart.data = [{
@@ -432,12 +433,12 @@
           console.log("Błąd: " + err)
         },
         complete: function () {
-          setTimeout(MachineDataPolling, 2000)
+          setTimeout(machineDataPolling, 2000)
         },
         timeout: 2000
       });
     }
-    MachineDataPolling()
+    machineDataPolling()
   </script>
   <style>
     h2 {

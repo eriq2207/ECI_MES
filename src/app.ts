@@ -2,10 +2,10 @@ import express from "express";
 import session from "express-session";
 import path from "path";
 
-import {MachineData} from "./models/MachineData";
+import {MachineData} from "./models/machineData";
 
 import * as scanner from "./controllers/scanner"
-import {MachineDataBase} from "./controllers/machineDB"
+import {machineDataBase} from "./controllers/machineDb"
 
 import * as login from "./routers/login"
 import * as main from "./routers/main"
@@ -31,13 +31,13 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
 const MachineObject = new MachineData();
-MachineDataBase.connect();
+machineDataBase.connect();
 
 scanner.StartScanner(MachineObject)
 
-app.use("/",login.StartRouting(MachineObject))
-app.use("/",main.StartRouting(MachineObject))
-app.use("/",reference.StartRouting(MachineObject))
-app.use("/",oee.StartRouting(MachineObject))
+app.use("/",login.startRouting(MachineObject))
+app.use("/",main.startRouting(MachineObject))
+app.use("/",reference.startRouting(MachineObject))
+app.use("/oee",oee.startRouting(MachineObject))
 
 app.listen(80);

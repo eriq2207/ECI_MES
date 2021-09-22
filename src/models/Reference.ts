@@ -1,9 +1,9 @@
 export class Reference {
-    public Name: String = ""
-    public Description: String = "Opis referencji"
-    public Done : Boolean = false;
-    public FromTime: Date = new Date
-    public ToTime: Date = new Date
-    public TargetTime: number = 0;
+    public name: String = ""
+    public description: String = "Opis referencji"
+    public done : Boolean = false;
+    public fromTime: Date = new Date
+    public toTime: Date = new Date
+    public targetTime: number = 0;
 }
 

@@ -1,73 +1,73 @@
 import { Router } from "express";
-import * as Machine from "../models/MachineData"
-import { MachineDataBase } from "../controllers/machineDB"; 
+import * as machine from "../models/machineData"
+import { machineDataBase } from "../controllers/machineDb"; 
 import * as config from "../config.json"
 
 const router = Router()
-let MachineData: Machine.MachineData;
+let machineData: machine.MachineData;
 
-function StartRouting(MachineDataParam: Machine.MachineData): Router {
-    MachineData = MachineDataParam;
+function startRouting(machineDataParam: machine.MachineData): Router {
+    machineData = machineDataParam;
     return router;
 }
 
 router.get('/reference', function (req, res) {
-    if (MachineData.User === "")
+    if (machineData.user === "")
         return res.redirect('login')
 
-    if(MachineData.Reference.Name != "")
+    if(machineData.reference.name != "")
         return res.redirect('/')
 
-    return res.render('reference', MachineData.toJSON())
+    return res.render('reference', machineData)
     
 });
 
 router.post('/reference', async function (req, res) {
-    if (MachineData.User === "")
+    if (machineData.user === "")
         return res.redirect('login');
 
     const reference: String = req.body.reference;
-    const ReferenceInList = config.References.filter((obj)=>{
+    const referenceInList = config.references.filter((obj)=>{
         return obj.name === reference
     })
-    if(ReferenceInList.length == 0)
+    if(referenceInList.length == 0)
     {
         res.statusCode = 500;
         return res.end()
     }
-    const ActDate = new Date;
-    MachineData.ChangeMachineState(Machine.MachineStates.Work, ActDate)
+    const actDate = new Date;
+    machineData.changeMachineState(machine.MachineStates.work, actDate)
     //Set reference
-    MachineData.Reference.Name = ReferenceInList[0].name;
-    MachineData.Reference.TargetTime = ReferenceInList[0].TargetTime;
-    MachineData.Reference.Done = false;
-    MachineData.Reference.FromTime = ActDate;
-    MachineData.Reference.ToTime = ActDate;
-    await MachineDataBase.UpdateReference(MachineData)
+    machineData.reference.name = referenceInList[0].name;
+    machineData.reference.targetTime = referenceInList[0].targetTime;
+    machineData.reference.done = false;
+    machineData.reference.fromTime = actDate;
+    machineData.reference.toTime = actDate;
+    await machineDataBase.updateReference(machineData)
 
     res.statusCode = 200
     return res.end()
 })
 
-router.get('/ReferenceData', function (req, res) {
-    MachineData.ActivePage = Machine.Page.Reference
-    return res.json(JSON.stringify(MachineData.toJSON()))
+router.get('/referenceData', function (req, res) {
+    machineData.activePage = machine.Page.reference
+    return res.json(JSON.stringify(machineData))
 });
 
-router.get('/References', async function (req, res) {
-    const ReferencesAct = await MachineDataBase.GetReferences()
-    return res.json(ReferencesAct)
+router.get('/references', async function (req, res) {
+    const actReferences = await machineDataBase.getReferences()
+    return res.json(actReferences)
 });
-router.post('/FinishReference', async function (req, res) {
-    const ActDate = new Date;
-    MachineData.ChangeMachineState(Machine.MachineStates.Retooling, ActDate)
+router.post('/finishReference', async function (req, res) {
+    const actDate = new Date;
+    machineData.changeMachineState(machine.MachineStates.retooling, actDate)
     //Set reference
-    MachineData.Reference.ToTime = ActDate;
-    MachineData.Reference.Done = true;
-    await MachineDataBase.UpdateReference(MachineData)
-    MachineData.Reference.Name = ""
+    machineData.reference.toTime = actDate;
+    machineData.reference.done = true;
+    await machineDataBase.updateReference(machineData)
+    machineData.reference.name = ""
 
     return res.end();
 });
 
-export { StartRouting };
+export { startRouting };

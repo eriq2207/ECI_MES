@@ -1,10 +1,10 @@
 {
-    "MachineName": "Stanowisko Montażowe",
-    "MongoDB": {
-        "ConnString": "mongodb://localhost:27017",
-        "DbName": "Machine"
+    "machineName": "Stanowisko montażowe",
+    "mongoDB": {
+        "connString": "mongodb://localhost:27017",
+        "dbName": "machine"
     },
-    "Users": [
+    "users": [
         {
             "name": "Eryk"
         },
@@ -15,18 +15,18 @@
             "name": "Przemek"
         }
     ],
-    "References": [
+    "references": [
         {
             "name": "H111",
-            "TargetTime": 60
+            "targetTime": 60
         },
         {
             "name": "H222",
-            "TargetTime": 120
+            "targetTime": 120
         },
         {
             "name": "H333",
-            "TargetTime": 180
+            "targetTime": 180
         }
     ]
 }

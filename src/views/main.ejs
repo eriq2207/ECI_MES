@@ -34,7 +34,7 @@
 
 <body>
   <!-- MODAL -->
-  <div class="modal fade" id="ReferenceConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <div class="modal fade" id="referenceConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -46,7 +46,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie, jeszcze nie!</button>
-          <button type="button" id="ReferenceFinishedBtn" class="btn btn-primary">Tak, zakończona!</button>
+          <button type="button" id="referenceFinishedBtn" class="btn btn-primary">Tak, zakończona!</button>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
                 <h2 class="ml-4">Electrical Components International</h2>
               </div>
               <div class="row">
-                <h3 class="ml-4">Operator: <%= locals.User %>
+                <h3 class="ml-4">Operator: <%= locals.user %>
                     </h2>
                     <h3 id="ActualDate" class="ml-auto mr-2">
                       </h2>
@@ -74,32 +74,24 @@
       </div>
       <div class="row">
         <div class="col-4">
-          <% if(locals.MachineState=="Praca" ) { %>
+          <% if(locals.machineState=="Praca" ) { %>
             <div id="MachineStateDiv" class="small-box bg-success">
-              <% } else if(locals.MachineState=="Awaria" ) { %>
+              <% } else if(locals.machineState=="Awaria" ) { %>
                 <div id="MachineStateDiv" class="small-box bg-danger">
-                  <% } else if(locals.MachineState=="Postój" ) { %>
+                  <% } else if(locals.machineState=="Postój" ) { %>
                     <div id="MachineStateDiv" class="small-box bg-light">
                       <% } %>
                         <div class="inner">
                           <h3>Stan maszyny:</h3>
                           <div class="row">
-                            <% if(locals.MachineState=="Praca" ) { %>
+                            <% if(locals.machineState=="Praca" ) { %>
                               <h4 class="pt-2 ml-2">Praca: &nbsp</h4>
-                              <% } else if(locals.MachineState=="Awaria" ) { %>
+                              <% } else if(locals.machineState=="Awaria" ) { %>
                                 <h4 class="pt-2 ml-2">Awaria: &nbsp</h4>
-                                <% } else if(locals.MachineState=="Postój" ) { %>
+                                <% } else if(locals.machineState=="Postój" ) { %>
                                   <h4 class="pt-2 ml-2">Postój: &nbsp</h4>
                                   <% } %>
-                                    <h3 id="MachineStateTimeDiv">
-                                      <% if
-                                        (((locals.MachineStateToTime-locals.MachineStateFromTime)/60000).toFixed(1)==0 )
-                                        { %>
-                                        0.0
-                                        <% } else { %>
-                                          <%= ((locals.MachineStateToTime-locals.MachineStateFromTime)/60000).toFixed(1)
-                                            %>
-                                            <% } %>
+                                    <h3 id="machineStateTimeDiv">
                                     </h3>
                                     <h4 class="pt-2"> &nbsp min.</h4>
 
@@ -114,13 +106,13 @@
                         <h3 style="text-align: center;" class="m-0">STAN MASZYNY</h3>
                       </div>
                       <div class="card-body">
-                        <button type="button" name="Praca" class="StatusBtn btn btn-block btn-success p-3">
+                        <button type="button" name="Praca" class="statusBtn btn btn-block btn-success p-3">
                           <h3 class="m-0">PRACA</h3>
                         </button>
-                        <button type="button" name="Awaria" class="StatusBtn btn btn-block btn-danger p-3">
+                        <button type="button" name="Awaria" class="statusBtn btn btn-block btn-danger p-3">
                           <h3 class="m-0">AWARIA</h3>
                         </button>
-                        <button type="button" name="Postój" class="StatusBtn btn btn-block btn-light p-3">
+                        <button type="button" name="Postój" class="statusBtn btn btn-block btn-light p-3">
                           <h3 class="m-0">POSTÓJ</h3>
                         </button>
                       </div>
@@ -135,7 +127,7 @@
                         <h2><b>Produkowana referencja: </b></h2>
                       </span>
                       <span class="info-box-number">
-                        <h3 id="ReferenceNameAndDescription" class="mb-0">
+                        <h3 id="referenceNameAndDescription" class="mb-0">
                         </h3>
                       </span>
                     </div>
@@ -147,7 +139,7 @@
                         <h2><b>Referencyjny Czas produkcji: </b></h2>
                       </span>
                       <span class="info-box-number">
-                        <h3 id="ReferenceProductionTime" class="mb-0">
+                        <h3 id="referenceProductionTime" class="mb-0">
                         </h3>
                       </span>
                     </div>
@@ -159,7 +151,7 @@
                         <h2><b>Aktualny czas produkcji: </b></h2>
                       </span>
                       <span class="info-box-number">
-                        <h3 id="ActualProductionTime" class="mb-0">
+                        <h3 id="actualProductionTime" class="mb-0">
                         </h3>
                       </span>
                     </div>
@@ -172,7 +164,7 @@
                             <h2><b>Pozostało: </b></h2>
                           </span>
                           <span class="info-box-number">
-                            <h3 id="ReferenceProgress" class="mb-0">
+                            <h3 id="referenceProgress" class="mb-0">
                             </h3>
                           </span>
                         </div>
@@ -182,7 +174,7 @@
                       <div class="card card-primary">
                         <div class="card-body">
                           <button type="button" class="btn btn-block btn-success p-3" data-toggle="modal"
-                            data-target="#ReferenceConfirmModal">
+                            data-target="#referenceConfirmModal">
                             <h3 class="m-0">REF. GOTOWA</h3>
                           </button>
                         </div>
@@ -195,69 +187,76 @@
         </div>
       </div>
       <script>
-        SetActData()
-        setInterval(SetActData, 1000)
-        function TimeString(UnixTime){
-          if (UnixTime < 0 )
+        setActDate()
+        setInterval(setActDate, 1000)
+        function TimeString(UnixTime) {
+          if (UnixTime < 0)
             return false
-          var hours = Math.floor(UnixTime/3600) % 24
-          var minutes = Math.floor(UnixTime/60) % 60
+          var hours = Math.floor(UnixTime / 3600) % 24
+          var minutes = Math.floor(UnixTime / 60) % 60
           var seconds = Math.floor(UnixTime) % 60
           var resString = "";
-          if(hours>0)
-            resString+= hours + " godz. "
-          if(minutes>0)
-            resString+= minutes + " min. "
-          resString+= seconds + " sek."
+          if (hours > 0)
+            resString += hours + " godz. "
+          if (minutes > 0)
+            resString += minutes + " min. "
+          resString += seconds + " sek."
           return resString
         }
-        function MachineDataPolling() {
+        function machineDataPolling() {
           $.ajax({
-            url: '/MachineData',
+            url: '/machineData',
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
 
-              var MachineData = JSON.parse(response)
-              if (MachineData.User == "")
+              let machineData = JSON.parse(response)
+              if (machineData.user == "")
                 window.location.reload();
 
-              $('#ReferenceNameAndDescription').text(MachineData.Reference.Name + " - " + MachineData.Reference.Description)
+              $('#referenceNameAndDescription').text(machineData.reference.name + " - " + machineData.reference.description)
 
-              if (((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1) == 0)
-                $("#MachineStateTimeDiv").text("0.0")
+              let stateToTime = new Date(machineData.machineStateToTime).getTime();
+              let stateFromTime = new Date(machineData.machineStateFromTime).getTime();
+
+              let refToTime = new Date(machineData.reference.toTime).getTime();
+              let refFromTime = new Date(machineData.reference.fromTime).getTime();
+              let refTargetTime = new Date(machineData.reference.targetTime).getTime();
+
+              if (((stateToTime - stateFromTime) / 60000).toFixed(1) == 0)
+                $("#machineStateTimeDiv").text("0.0")
               else
-                $("#MachineStateTimeDiv").text(((MachineData.MachineStateToTime - MachineData.MachineStateFromTime) / 60000).toFixed(1))
+                $("#machineStateTimeDiv").text(((stateToTime - stateFromTime) / 60000).toFixed(1))
 
-              $('#ReferenceProductionTime').text(TimeString(MachineData.Reference.TargetTime))
-              var ActReferenceTime = (MachineData.Reference.ToTime - MachineData.Reference.FromTime)/1000;
-              var ActReferenceTimeString = TimeString(ActReferenceTime) + '\t('
-              ActReferenceTimeString+=(ActReferenceTime/MachineData.Reference.TargetTime * 100).toFixed(0) + '%)'
-              $('#ActualProductionTime').text(ActReferenceTimeString)
-              var ReferenceLeftTime = MachineData.Reference.TargetTime - ActReferenceTime
-              if(ReferenceLeftTime<0)
-                ReferenceLeftTime = 0
-              $('#ReferenceProgress').text(TimeString(ReferenceLeftTime))
+              $('#referenceProductionTime').text(TimeString(refTargetTime))
+              var actReferenceTime = (refToTime - refFromTime) / 1000;
+              var actReferenceTimeString = TimeString(actReferenceTime) + '\t('
+              actReferenceTimeString += (actReferenceTime / refTargetTime * 100).toFixed(0) + '%)'
+              $('#actualProductionTime').text(actReferenceTimeString)
+              var referenceLeftTime = refTargetTime - actReferenceTime
+              if (referenceLeftTime < 0)
+                referenceLeftTime = 0
+              $('#referenceProgress').text(TimeString(referenceLeftTime))
             },
             error: function (err) {
               console.log("Błąd: " + err)
             },
             complete: function () {
-              setTimeout(MachineDataPolling, 500)
+              setTimeout(machineDataPolling, 500)
             },
             timeout: 2000
           });
         }
-        MachineDataPolling()
+        machineDataPolling()
 
-        $(".StatusBtn").on("click", (e) => {
+        $(".statusBtn").on("click", (e) => {
           console.log(e.target)
-          ChangeStatus(e.target.getAttribute('name'))
+          changeStatus(e.target.getAttribute('name'))
         })
-        $("#ReferenceFinishedBtn").on("click", FinishReference)
-        function FinishReference() {
+        $("#referenceFinishedBtn").on("click", finishReference)
+        function finishReference() {
           $.ajax({
-            url: '/FinishReference',
+            url: '/finishReference',
             type: 'POST',
             success: function (response) {
               location.reload()
@@ -265,12 +264,12 @@
             timeout: 2000
           });
         }
-        function ChangeStatus(state) {
+        function changeStatus(state) {
           $.ajax({
-            url: '/ChangeMachineState',
+            url: '/changeMachineState',
             type: 'POST',
             data: {
-              "MachineState": state
+              "machineState": state
             },
             success: function (response) {
               location.reload()

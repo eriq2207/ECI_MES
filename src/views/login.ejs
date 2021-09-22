@@ -71,9 +71,9 @@
     <script>
         var users = []
 
-        function GetUsers() {
+        function getUsers() {
             $.ajax({
-                url: '/Users',
+                url: '/users',
                 type: 'GET',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
@@ -85,18 +85,18 @@
                 timeout: 2000
             });
         }
-        function LoginStatusPolling() {
+        function loginStatusPolling() {
             $.ajax({
-                url: '/LoginData',
+                url: '/loginData',
                 type: 'GET',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
                     try {
-                        var MachineData = JSON.parse(response)
-                        if (MachineData.LastScannedText.text != "") {
-                            $('#errorText').text('Brak operatora "' + MachineData.LastScannedText.text + '" na liście zarejestrowanych operatorów!')
+                        var machineData = JSON.parse(response)
+                        if (machineData.lastScannedText.text != "") {
+                            $('#errorText').text('Brak operatora "' + machineData.lastScannedText.text + '" na liście zarejestrowanych operatorów!')
                         }
-                        if (MachineData.User != "")
+                        if (machineData.user != "")
                             window.location.reload()
                     } catch (ex) {
                         console.log("Błąd parsowania JSON")
@@ -107,13 +107,13 @@
 
                 },
                 complete: function () {
-                    setTimeout(LoginStatusPolling, 500)
+                    setTimeout(loginStatusPolling, 500)
                 },
                 timeout: 2000
             });
         }
-        setTimeout(LoginStatusPolling, 500)
-        GetUsers()
+        setTimeout(loginStatusPolling, 500)
+        getUsers()
     </script>
 </body>
 
