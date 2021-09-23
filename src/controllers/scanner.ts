@@ -1,5 +1,5 @@
 import * as readline from "readline";
-import * as machine from "../models/machineData"
+import * as machine from "../models/MachineData"
 import * as config from "../config.json"
 
 let machineData: machine.MachineData;
@@ -26,9 +26,9 @@ rl.on('line', (data) => {
     }
 })
 
-function startScanner(machineDataProp: machine.MachineData) {
+function start(machineDataProp: machine.MachineData) {
     machineData = machineDataProp
 }
 
-export { startScanner }
+export { start }
 

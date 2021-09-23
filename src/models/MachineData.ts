@@ -1,5 +1,5 @@
-import {Reference} from "./reference";
-import { machineDataBase } from "src/controllers/machineDb";
+import {Reference} from "./Reference";
+import { machineDb } from "../controllers/machineDb";
 
 enum MachineStates {
     work = "Praca",
@@ -33,21 +33,21 @@ class MachineData {
         if (this.user != "")
         {
             this.machineStateToTime = ActDate;
-            const res = await machineDataBase.updateMachineState(this)
+            const res = await machineDb.updateMachineState(this)
         }
         if(this.reference.name != "")
         {
             this.reference.toTime = ActDate
-            const res = await machineDataBase.updateReference(this)
+            const res = await machineDb.updateReference(this)
         }
     }
     public async changeMachineState(MachineStateParam: MachineStates, ChangeDate: Date): Promise<any> {
         this.machineStateToTime = ChangeDate;
-        await machineDataBase.updateMachineState(this)
+        await machineDb.updateMachineState(this)
         this.machineStateFromTime = ChangeDate;
         this.machineStateToTime = ChangeDate;
         this.machineState = MachineStateParam
-        await machineDataBase.updateMachineState(this)
+        await machineDb.updateMachineState(this)
     }
 
 }

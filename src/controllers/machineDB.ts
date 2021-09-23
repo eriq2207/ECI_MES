@@ -1,6 +1,6 @@
 import { MongoClient, Db} from 'mongodb'
 import config from '../config.json'
-import * as machine from "../models/machineData"
+import * as machine from "../models/MachineData"
 
 const url = config.mongoDB.connString;
 class MachineDB {
@@ -65,5 +65,5 @@ class MachineDB {
         return await this.db.collection("referencesHistory").find({userSession: userSessionParam}).toArray()
     }
 }
-const machineDataBase = new MachineDB()
-export {machineDataBase}
+const machineDb = new MachineDB()
+export {machineDb }

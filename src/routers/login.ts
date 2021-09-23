@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as machine from "../models/machineData"
-import { machineDataBase } from "../controllers/machineDb"; 
+import * as machine from "../models/MachineData"
+import { machineDb } from "../controllers/machineDb"; 
 import * as config from "../config.json"
 
 const router = Router()
@@ -31,7 +31,7 @@ router.post('/login', async function (req, res) {
             error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
         })
     //Set new session ID
-    const lastMachineState = await machineDataBase.getLastMachineState();
+    const lastMachineState = await machineDb.getLastMachineState();
     if(lastMachineState == null)
         machineData.userSession = 0
     else
@@ -42,7 +42,7 @@ router.post('/login', async function (req, res) {
     machineData.user = user;
     machineData.machineStateFromTime = actDate;
     machineData.machineStateToTime = actDate;
-    await machineDataBase.updateMachineState(machineData)
+    await machineDb.updateMachineState(machineData)
     return res.redirect('reference')
 })
 
@@ -53,7 +53,7 @@ router.get('/logout', async function (req, res) {
     });
     const actDate = new Date;
     machineData.machineStateToTime = actDate;
-    await machineDataBase.updateMachineState(machineData)
+    await machineDb.updateMachineState(machineData)
     machineData.lastScannedText.text = ""
     machineData.user = ""
     return res.redirect('login')
@@ -65,7 +65,7 @@ router.get('/loginData', function (req, res) {
     return res.json(JSON.stringify(machineData))
 });
 router.get('/users', async function (req, res) {
-    const actUsers = await machineDataBase.getUsers()
+    const actUsers = await machineDb.getUsers()
     return res.json(actUsers)
 });
 

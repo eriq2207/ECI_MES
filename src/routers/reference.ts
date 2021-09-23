@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as machine from "../models/machineData"
-import { machineDataBase } from "../controllers/machineDb"; 
+import * as machine from "../models/MachineData"
+import { machineDb } from "../controllers/machineDb"; 
 import * as config from "../config.json"
 
 const router = Router()
@@ -43,7 +43,7 @@ router.post('/reference', async function (req, res) {
     machineData.reference.done = false;
     machineData.reference.fromTime = actDate;
     machineData.reference.toTime = actDate;
-    await machineDataBase.updateReference(machineData)
+    await machineDb.updateReference(machineData)
 
     res.statusCode = 200
     return res.end()
@@ -55,7 +55,7 @@ router.get('/referenceData', function (req, res) {
 });
 
 router.get('/references', async function (req, res) {
-    const actReferences = await machineDataBase.getReferences()
+    const actReferences = await machineDb.getReferences()
     return res.json(actReferences)
 });
 router.post('/finishReference', async function (req, res) {
@@ -64,7 +64,7 @@ router.post('/finishReference', async function (req, res) {
     //Set reference
     machineData.reference.toTime = actDate;
     machineData.reference.done = true;
-    await machineDataBase.updateReference(machineData)
+    await machineDb.updateReference(machineData)
     machineData.reference.name = ""
 
     return res.end();

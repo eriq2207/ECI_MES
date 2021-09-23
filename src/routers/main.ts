@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { machineDataBase } from "src/controllers/machineDb";
-import * as machine from "../models/machineData"
+import { machineDb } from "src/controllers/machineDb";
+import * as machine from "../models/MachineData"
 
 let router = Router()
 let machineData: machine.MachineData;
@@ -38,7 +38,7 @@ router.post('/changeMachineState', async function (req, res, next) {
     machineData.changeMachineState(receivedMachineState, actDate)
     //Update reference
     machineData.reference.toTime = actDate;
-    machineDataBase.updateReference(machineData);
+    machineDb.updateReference(machineData);
     
     return res.end(JSON.stringify(machineData))
 });
