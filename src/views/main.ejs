@@ -189,7 +189,7 @@
       <script>
         setActDate()
         setInterval(setActDate, 1000)
-        function TimeString(UnixTime) {
+        function toTimeString(UnixTime) {
           if (UnixTime < 0)
             return false
           var hours = Math.floor(UnixTime / 3600) % 24
@@ -228,15 +228,15 @@
               else
                 $("#machineStateTimeDiv").text(((stateToTime - stateFromTime) / 60000).toFixed(1))
 
-              $('#referenceProductionTime').text(TimeString(refTargetTime))
+              $('#referenceProductionTime').text(toTimeString(refTargetTime))
               var actReferenceTime = (refToTime - refFromTime) / 1000;
-              var actReferenceTimeString = TimeString(actReferenceTime) + '\t('
+              var actReferenceTimeString = toTimeString(actReferenceTime) + '\t('
               actReferenceTimeString += (actReferenceTime / refTargetTime * 100).toFixed(0) + '%)'
               $('#actualProductionTime').text(actReferenceTimeString)
               var referenceLeftTime = refTargetTime - actReferenceTime
               if (referenceLeftTime < 0)
                 referenceLeftTime = 0
-              $('#referenceProgress').text(TimeString(referenceLeftTime))
+              $('#referenceProgress').text(toTimeString(referenceLeftTime))
             },
             error: function (err) {
               console.log("Błąd: " + err)
