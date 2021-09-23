@@ -2,6 +2,7 @@ import { MongoClient, Db} from 'mongodb'
 import config from '../config.json'
 import * as machine from "../models/MachineData"
 
+
 const url = config.mongoDB.connString;
 class MachineDB {
     public client: MongoClient;
