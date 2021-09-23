@@ -26,9 +26,9 @@ rl.on('line', (data) => {
     }
 })
 
-function StartScanner(machineDataProp: machine.MachineData) {
+function startScanner(machineDataProp: machine.MachineData) {
     machineData = machineDataProp
 }
 
-export { StartScanner }
+export { startScanner }
 

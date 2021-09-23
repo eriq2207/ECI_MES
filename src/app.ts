@@ -33,7 +33,7 @@ app.use(express.json());
 const MachineObject = new MachineData();
 machineDataBase.connect();
 
-scanner.StartScanner(MachineObject)
+scanner.startScanner(MachineObject)
 
 app.use("/",login.startRouting(MachineObject))
 app.use("/",main.startRouting(MachineObject))
