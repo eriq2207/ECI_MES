@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { machineDb } from "src/controllers/machineDb";
+import { machineDb } from "../controllers/machineDb";
 import * as machine from "../models/MachineData"
 
 let router = Router()
