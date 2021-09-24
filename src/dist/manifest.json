@@ -1,0 +1,20 @@
+{
+    "name": "ECI MES",
+    "short_name": "ECIMES",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "black",
+    "theme_color": "blue",
+    "icons": [
+        {
+            "src": "/img/eci_logo.png",
+            "type":"image/png",
+            "sizes": "44x44"
+        },
+        {
+            "src": "/img/eci_logo_big.png",
+            "type":"image/png",
+            "sizes": "250x250"
+        }
+    ]
+}

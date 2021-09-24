@@ -47,10 +47,6 @@ router.post('/login', async function (req, res) {
 })
 
 router.get('/logout', async function (req, res) {
-    await req.session.destroy((err)=>{
-        if(err)
-            console.log("Session destroy error occured: " + err.stack)
-    });
     const actDate = new Date;
     machineData.machineStateToTime = actDate;
     await machineDb.updateMachineState(machineData)
