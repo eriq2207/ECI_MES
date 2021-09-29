@@ -8,32 +8,32 @@
 
   <title>ECI MES</title>
 
-  <link rel="icon" href="./img/eci_logo.png">
+  <link rel="icon" href="img/eci_logo.png">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.css">
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="./css/adminlte.css">
+  <link rel="stylesheet" href="../css/adminlte.css">
   <!-- Google Font: Source Sans Pro  -->
-  <link href="./css/googleFonts.css" rel="stylesheet">
+  <link href="../css/googleFonts.css" rel="stylesheet">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="./css/ionicons.css">
+  <link rel="stylesheet" href="../css/ionicons.css">
 
   <!-- REQUIRED SCRIPTS -->
 
   <!-- jQuery -->
-  <script src="./plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4  -->
-  <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App  -->
-  <script src="./js/adminlte.min.js"></script>
+  <script src="../js/adminlte.min.js"></script>
   <!-- Moment.js -->
-  <script src="./plugins/moment/moment-with-locales.js"></script>
+  <script src="../plugins/moment/moment-with-locales.js"></script>
   <!-- AMCHARTS LIB-->
-  <script src="./js/charts/core.js"></script>
-  <script src="./js/charts/charts.js"></script>
-  <script src="./js/charts/animated.js"></script>
+  <script src="../js/charts/core.js"></script>
+  <script src="../js/charts/charts.js"></script>
+  <script src="../js/charts/animated.js"></script>
 
-  <script src="./js/actTime.js"></script>
+  <script src="../js/actTime.js"></script>
 </head>
 
 <body>
@@ -52,7 +52,7 @@
               </div>
               <div class="row">
                 <h3 class="ml-4 " id="userName">
-                  Operator: 
+                  Operator:
                   </h2>
                   <h3 id="actualDate" class="ml-auto mr-2">
                     </h2>
@@ -152,29 +152,29 @@
       {
         name: "",
         state: "Praca",
-        fromTime: "2018-01-01 08:00",
-        toTime: "2018-01-01 10:00",
+        fromTime: "",
+        toTime: "",
         color: '#28a745'
       },
       {
         name: "",
         state: "Przezbrojenie",
-        fromTime: "2018-01-01 12:00",
-        toTime: "2018-01-01 15:00",
+        fromTime: "",
+        toTime: "",
         color: '#ffc107'
       },
       {
         name: "",
         state: "Awaria",
-        fromTime: "2018-01-01 15:30",
-        toTime: "2018-01-01 21:30",
+        fromTime: "",
+        toTime: "",
         color: '#dc3545'
       },
       {
         name: "",
         state: "Postój",
-        fromTime: "2018-01-01 22:00",
-        toTime: "2018-01-01 23:30",
+        fromTime: "",
+        toTime: "",
         color: '#5a6268'
       },
 
@@ -289,15 +289,21 @@
       timelineChart.data = timelineChartDataTemplate
 
     }
-    
+
     stationPieChartInit()
     operatorChartInit()
     timelineChartInit()
     //Data polling
+    let searchParams = new URLSearchParams(location.search);
+    const userSession = searchParams.get('userSession')
+    const dataToSend = {
+      userSession: userSession
+    }
     function referencesDataPolling() {
       $.ajax({
         url: '/oee/referencesWithMachineStates',
         type: 'GET',
+        data: dataToSend,
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
           let resJSON = JSON.parse(response)
@@ -361,6 +367,7 @@
     function machineStatesDataPolling() {
       $.ajax({
         url: '/oee/machineStates',
+        data: dataToSend,
         type: 'GET',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
@@ -369,6 +376,7 @@
           const stationChartData = JSON.parse(JSON.stringify(stationChartDataTemplate))
           const timelineChartData = []
           for (var i = 0; i < machineStates.length; i++) {
+            $("#userName").text("Operator: " + machineStates[0].user)
             //Piechart
             const fromTime = new Date(machineStates[i].fromTime).getTime()
             const toTime = new Date(machineStates[i].toTime).getTime()
@@ -379,8 +387,7 @@
             const format = "YYYY-MM-DD HH:mm:ss"
             const timelineChartDataArr = timelineChartDataTemplate.filter(obj => obj.state === machineStates[i].state)
 
-            if(timelineChartDataArr.length == 1)
-            {
+            if (timelineChartDataArr.length == 1) {
               const timelineChartDataObj = JSON.parse(JSON.stringify(timelineChartDataArr[0]))
               timelineChartDataObj.fromTime = moment(fromTime).format(format);
               timelineChartDataObj.toTime = moment(toTime).format(format);
@@ -408,37 +415,8 @@
         timeout: 2000
       });
     }
-    function machineDataPolling() {
-      $.ajax({
-        url: '/machineData',
-        type: 'GET',
-        contentType: 'application/json; charset=utf-8',
-        success: function (response) {
-          var machineData = JSON.parse(response)
-          if (machineData.user != "") {
-            $('#userName').text("Operator: " + machineData.user)
-            setTimeout(referencesDataPolling, 1000)
-            setTimeout(machineStatesDataPolling, 5000)
-          }
-          // else {
-          //   StationPieChart.data = [{
-          //     "State": "Brak operatora",
-          //     "time": 1
-          //   }]
-          //   OperatorColumnChart.data = []
-          // }
-
-        },
-        error: function (err) {
-          console.log("Błąd: " + err)
-        },
-        complete: function () {
-          setTimeout(machineDataPolling, 20000)
-        },
-        timeout: 2000
-      });
-    }
-    machineDataPolling()
+    setTimeout(referencesDataPolling, 0)
+    setTimeout(machineStatesDataPolling, 0)
   </script>
   <style>
     h2 {

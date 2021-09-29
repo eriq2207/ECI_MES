@@ -5,6 +5,7 @@ import { MachineData } from "./models/MachineData";
 
 import * as scanner from "./controllers/scanner"
 import { machineDb } from "./controllers/machineDb"
+import * as config from "./config.json"
 
 import * as login from "./routers/login"
 import * as main from "./routers/main"
@@ -19,6 +20,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
 const machineObject = new MachineData();
+machineObject.disableOperatorCheck = config.disableUserCheck
 machineDb.connect();
 
 scanner.start(machineObject)

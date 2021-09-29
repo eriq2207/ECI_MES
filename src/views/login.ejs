@@ -18,9 +18,7 @@
     <link href="./css/googleFonts.css" rel="stylesheet">
     <!-- comboList styles-->
     <link rel="stylesheet" href="./css/comboList.css">
-    <link rel="manifest" href="./manifest.json"
- 
-    <!-- REQUIRED SCRIPTS -->
+    <link rel="manifest" href="./manifest.json" <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
     <script src="./plugins/jquery/jquery.min.js"></script>
@@ -44,15 +42,8 @@
                     <p class="login-box-msg">Zeskanuj kod operatora<br> lub<br> wybierz operatora z listy:</p>
 
                     <form autocomplete="off" action="/login" method="post">
-                        <div class="input-group mb-3">
-                            <input id="loginInput" type="text" class="form-control input" placeholder="Nazwa operatora"
-                                name="user">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fa fa-user"></span>
-                                </div>
-                            </div>
-                        </div>
+                        <input id="loginInput" type="text" class="form-control input mb-2" placeholder="Nazwa operatora"
+                            name="user">
                         <!-- /.col -->
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-primary btn-block mb-2">Zaloguj się</button>
@@ -72,7 +63,7 @@
     <!-- /.login-box -->
     <script>
         var users = []
-
+        
         function getUsers() {
             $.ajax({
                 url: '/users',
@@ -95,13 +86,24 @@
                 success: function (response) {
                     try {
                         var machineData = JSON.parse(response)
-                        if (machineData.lastScannedText.text != "") {
-                            $('#errorText').text('Brak operatora "' + machineData.lastScannedText.text + '" na liście zarejestrowanych operatorów!')
-                        }
+                        if(machineData.lastScannedText.text != "")
+                            $("#loginInput").val(machineData.lastScannedText.text)
                         if (machineData.user != "")
-                            window.location.reload()
+                            return window.location.reload()
+
+                        if (machineData.lastScannedText.text == "")
+                            return false;
+
+                        if (!machineData.disableOperatorCheck)
+                            $('#errorText').text('Brak operatora "' + machineData.lastScannedText.text + '" na liście zarejestrowanych operatorów!')
+                        else if (!machineData.lastScannedText.text.startsWith("OP"))
+                            $('#errorText').text('Nazwa operatora powinna zaczynać się od OP...')
                     } catch (ex) {
                         console.log("Błąd parsowania JSON")
+                    }
+                    console.log("hehe")
+                    if (!machineData.disableOperatorCheck && users.length == 0) {
+                        getUsers()
                     }
 
                 },
@@ -114,8 +116,8 @@
                 timeout: 2000
             });
         }
-        setTimeout(loginStatusPolling, 500)
-        getUsers()
+        setTimeout(loginStatusPolling, 0)
+
     </script>
 </body>
 

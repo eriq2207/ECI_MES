@@ -29,7 +29,7 @@ class MachineDB {
         return this.db.collection("users").find({}).project({name: 1, _id: 0}).toArray()
     }
     public async getReferences(): Promise<any> {
-        return this.db.collection("referencesList").find({}).project({name: 1, _id: 0}).toArray()
+        return this.db.collection("referencesList").find({}).project({name: 1, project:1, _id: 0}).toArray()
     }
     public async updateMachineState(machineData: machine.MachineData): Promise<any> {
         return await this.db.collection("machineStates").updateOne(
@@ -48,6 +48,7 @@ class MachineDB {
             {FromTime: machineData.reference.fromTime},
             {$set: {
                 reference: machineData.reference.name, 
+                project: machineData.reference.project,
                 toTime: machineData.reference.toTime,
                 fromTime: machineData.reference.fromTime,
                 done: machineData.reference.done,

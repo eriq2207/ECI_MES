@@ -26,9 +26,9 @@ router.post('/reference', async function (req, res) {
     if (machineData.user === "")
         return res.redirect('login');
 
-    const reference: String = req.body.reference;
+    const reference = req.body;
     const referenceInList = config.references.filter((obj)=>{
-        return obj.name === reference
+        return (obj.name === reference.name && obj.project === reference.project)
     })
     if(referenceInList.length == 0)
     {
@@ -66,6 +66,7 @@ router.post('/finishReference', async function (req, res) {
     machineData.reference.done = true;
     await machineDb.updateReference(machineData)
     machineData.reference.name = ""
+    machineData.lastScannedText.text = ""
 
     return res.end();
 });

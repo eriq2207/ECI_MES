@@ -1,5 +1,6 @@
 {
-    "machineName": "Stanowisko montażowe",
+    "machineName": "Braiding 1",
+    "scannerComPort": "COM1",
     "mongoDB": {
         "connString": "mongodb://localhost:27017",
         "dbName": "machine"
@@ -15,18 +16,22 @@
             "name": "Przemek"
         }
     ],
+    "disableUserCheck": true,
     "references": [
         {
             "name": "H111",
-            "targetTime": 60
+            "targetTime": 60,
+            "project": "ELUX"
         },
         {
             "name": "H222",
-            "targetTime": 120
+            "targetTime": 120,
+            "project": "BECKO"
         },
         {
             "name": "H333",
-            "targetTime": 180
+            "targetTime": 180,
+            "project": "BECKO"
         }
     ]
 }

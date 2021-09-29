@@ -19,17 +19,28 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', async function (req, res) {
+    machineData.lastScannedText.text = ""
     if (machineData.user != "")
         return res.redirect('login');
 
     const user: String = req.body.user;
-    const userInList = config.users.filter((obj)=>{
-        return obj.name === user
-    })
-    if(userInList.length == 0)
-        return res.render('login', {
-            error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
+    if(!config.disableUserCheck)
+    {
+        const userInList = config.users.filter((obj)=>{
+            return obj.name === user
         })
+        if(userInList.length == 0)
+            return res.render('login', {
+                error: 'Brak operatora "' + user + '" na liście zarejestrowanych operatorów!'
+            })
+    }
+    //Check OP pattern
+    if(!user.startsWith("OP"))
+    {
+        return res.render('login', {
+            error: 'Nazwa operatora musi zaczynać się od OP...'
+        })
+    }
     //Set new session ID
     const lastMachineState = await machineDb.getLastMachineState();
     if(lastMachineState == null)
@@ -57,7 +68,6 @@ router.get('/logout', async function (req, res) {
 
 router.get('/loginData', function (req, res) {
     machineData.activePage = machine.Page.login
-
     return res.json(JSON.stringify(machineData))
 });
 router.get('/users', async function (req, res) {

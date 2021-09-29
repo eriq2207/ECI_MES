@@ -60,18 +60,16 @@
             <!-- /.login-logo -->
             <div class="card">
                 <div class="card-body login-card-body">
-                    <p class="login-box-msg">Zeskanuj kod produkowanej referencji<br> lub<br> wybierz ją z listy:</p>
-
+                    <p class="login-box-msg">Wybierz projekt a następnie zeskanuj kod produkowanej referencji<br>
+                        lub<br> wybierz ją z listy:</p>
                     <div class="input-group mb-3">
-                        <input id="referenceInput" type="text" class="form-control input" placeholder="Nazwa referencji"
-                            name="reference">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fa fa-user"></span>
-                            </div>
-                        </div>
+                        <input id="projectInput" type="text" class="form-control input" placeholder="Nazwa projektu "
+                            name="project">
                     </div>
-
+                    <div class="input-group mb-3">
+                        <input id="referenceInput" style="display: none;"type="text" class="form-control input" placeholder="Nazwa referencji"
+                            name="reference">
+                    </div>
                     <!-- /.col -->
                     <div class="row">
                         <div class="col-sm-6">
@@ -100,9 +98,33 @@
         <script>
             setActDate()
             setInterval(setActDate, 1000)
+            var references = []
+            setInterval(() => {
+                inpVal = $("#projectInput").val();
+                if (inpVal == "")
+                {
+                    $("#referenceInput").fadeOut()
+                    $("#referenceInput").val("")
+                    return
+                }
+                const refForProject = references.filter((ref) => ref.project == inpVal)
+                const refNameForProject = refForProject.map(obj=>obj.name)
+
+                if (refForProject.length > 0)
+                {
+                    $("#referenceInput").fadeIn()
+                    autocomplete(document.getElementById("referenceInput"), refNameForProject)
+                }
+                else
+                {
+                    $("#referenceInput").val("")
+                }
+
+            }, 500)
             function startProduction() {
                 var dataToSend = {
-                    reference: $('#referenceInput').val()
+                    name: $('#referenceInput').val(),
+                    project: $('#projectInput').val()
                 }
                 $.ajax({
                     url: '/reference',
@@ -119,17 +141,15 @@
                 });
             }
             $('#startProductionBtn').on('click', startProduction)
-            var references = []
             function getReferences() {
                 $.ajax({
                     url: '/references',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
                     success: function (response) {
-                        references = response.map((obj) => {
-                            return obj.name
-                        })
-                        autocomplete(document.getElementById("referenceInput"), references);
+                        references = response
+                        const uniqueProjects = [...new Set(response.map(ref => ref.project))];
+                        autocomplete(document.getElementById("projectInput"), uniqueProjects);
                     },
                     timeout: 2000
                 });
@@ -145,7 +165,8 @@
                             var machineData = JSON.parse(response)
                             if (machineData.lastScannedText.text != "" &&
                                 machineData.lastScannedText.page == 1 &&
-                                lastRcvScannedText != machineData.lastScannedText.text) {
+                                lastRcvScannedText != machineData.lastScannedText.text &&
+                                $("#projectInput").val() != "") {
                                 lastRcvScannedText = machineData.lastScannedText.text;
                                 $('#referenceInput').val(machineData.lastScannedText.text)
                             }
@@ -165,9 +186,17 @@
                     timeout: 2000
                 });
             }
+
             setTimeout(referenceStatusPolling, 500)
             getReferences()
         </script>
+        <style>
+            #referenceInputGroup {
+                visibility: hidden;
+                opacity: 0;
+                transition: visibility 0s, opacity 0.5s linear;
+            }
+        </style>
 </body>
 
 </html>

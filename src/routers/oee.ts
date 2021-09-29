@@ -18,18 +18,43 @@ router.get('/', async function (req, res) {
     })
 });
 
+router.get('/history', async function (req, res) {
+    if (!req.query.userSession) {
+        const lastMachineState = await machineDb.getLastMachineState()
+        if(machineData.user == "")
+            lastMachineState.userSession++;
+        if(lastMachineState.userSession<1)
+            return res.redirect("/oee")
+        return res.redirect("history?userSession=" + (lastMachineState.userSession - 1).toString())
+    }
+    return res.render('oeeHistory', {
+        config: config
+    })
+});
+
+
 router.get('/machineStates', async function (req, res) {
-    const States = await machineDb.getMachineStatesForSession(machineData.userSession)
+    let userSession = machineData.userSession
+    if (req.query.userSession)
+        userSession = parseInt(req.query.userSession.toString())
+
+    const States = await machineDb.getMachineStatesForSession(userSession)
     return res.json(JSON.stringify({ machineStates: States }))
 });
 
 router.get('/references', async function (req, res) {
-    const References = await machineDb.getReferencesForSession(machineData.userSession)
+    let userSession = machineData.userSession;
+    if (req.query.userSession)
+        userSession = parseInt(req.query.userSession.toString())
+    const References = await machineDb.getReferencesForSession(userSession)
     return res.json(JSON.stringify({ references: References }))
 })
 router.get('/referencesWithMachineStates', async function (req, res) {
-    const references = await machineDb.getReferencesForSession(machineData.userSession)
-    const machineStates = await machineDb.getMachineStatesForSession(machineData.userSession)
+    let userSession = machineData.userSession;
+    if (req.query.userSession)
+        userSession = parseInt(req.query.userSession.toString())
+    const references = await machineDb.getReferencesForSession(userSession)
+    const machineStates = await machineDb.getMachineStatesForSession(userSession)
     references.forEach(actReference => {
         let startIndex = machineStates.findIndex(obj => obj.fromTime.getTime() === actReference.fromTime.getTime())
         let endIndex = machineStates.findIndex(obj => obj.toTime.getTime() === actReference.toTime.getTime())

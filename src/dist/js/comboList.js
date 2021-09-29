@@ -38,7 +38,7 @@ function autocomplete(inp, arr) {
       }
     }
 }
-    inp.addEventListener("click", autocompleteHandler)
+inp.addEventListener("click", autocompleteHandler)
     inp.addEventListener("input", autocompleteHandler)
     /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function(e) {
@@ -93,6 +93,8 @@ function autocomplete(inp, arr) {
   }
   /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
+    if(!e.target.classList.value.includes("input"))
       closeAllLists(e.target);
   });
   }
+    

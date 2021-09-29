@@ -80,8 +80,10 @@
                 <div id="MachineStateDiv" class="small-box bg-danger">
                   <% } else if(locals.machineState=="Postój" ) { %>
                     <div id="MachineStateDiv" class="small-box bg-light">
-                      <% } %>
-                        <div class="inner">
+                      <% }  else if(locals.machineState=="Przezbrojenie" ) { %>
+                        <div id="MachineStateDiv" class="small-box bg-warning">
+                          <% } %>%>
+                        <div class="inner py-0">
                           <h3>Stan maszyny:</h3>
                           <div class="row">
                             <% if(locals.machineState=="Praca" ) { %>
@@ -89,8 +91,10 @@
                               <% } else if(locals.machineState=="Awaria" ) { %>
                                 <h4 class="pt-2 ml-2">Awaria: &nbsp</h4>
                                 <% } else if(locals.machineState=="Postój" ) { %>
-                                  <h4 class="pt-2 ml-2">Postój: &nbsp</h4>
-                                  <% } %>
+                                  <h4 class="pt-2 ml-2">Przerwa: &nbsp</h4>
+                                  <% } else if(locals.machineState=="Przezbrojenie" ) { %>
+                                    <h4 class="pt-2 ml-2">Przezbrojenie: &nbsp</h4>
+                                    <% } %>
                                     <h3 id="machineStateTimeDiv">
                                     </h3>
                                     <h4 class="pt-2"> &nbsp min.</h4>
@@ -102,7 +106,7 @@
                         </div>
                     </div>
                     <div class="card card-primary">
-                      <div class="card-header bg-info">
+                      <div class="card-header bg-info p-1">
                         <h3 style="text-align: center;" class="m-0">STAN MASZYNY</h3>
                       </div>
                       <div class="card-body">
@@ -112,9 +116,13 @@
                         <button type="button" name="Awaria" class="statusBtn btn btn-block btn-danger p-3">
                           <h3 class="m-0">AWARIA</h3>
                         </button>
-                        <button type="button" name="Postój" class="statusBtn btn btn-block btn-light p-3">
-                          <h3 class="m-0">POSTÓJ</h3>
+                        <button type="button" name="Przezbrojenie" class="statusBtn btn btn-block btn-warning p-3">
+                          <h3 class="m-0">PRZEZBROJENIE</h3>
                         </button>
+                        <button type="button" name="Postój" class="statusBtn btn btn-block btn-light p-3">
+                          <h3 class="m-0">PRZERWA</h3>
+                        </button>
+                        
                       </div>
                       <!-- /.card-body -->
                     </div>
@@ -227,16 +235,6 @@
                 $("#machineStateTimeDiv").text("0.0")
               else
                 $("#machineStateTimeDiv").text(((stateToTime - stateFromTime) / 60000).toFixed(1))
-
-              $('#referenceProductionTime').text(toTimeString(refTargetTime))
-              var actReferenceTime = (refToTime - refFromTime) / 1000;
-              var actReferenceTimeString = toTimeString(actReferenceTime) + '\t('
-              actReferenceTimeString += (actReferenceTime / refTargetTime * 100).toFixed(0) + '%)'
-              $('#actualProductionTime').text(actReferenceTimeString)
-              var referenceLeftTime = refTargetTime - actReferenceTime
-              if (referenceLeftTime < 0)
-                referenceLeftTime = 0
-              $('#referenceProgress').text(toTimeString(referenceLeftTime))
             },
             error: function (err) {
               console.log("Błąd: " + err)
@@ -247,8 +245,42 @@
             timeout: 2000
           });
         }
+        
+        function referencesDataPolling() {
+      $.ajax({
+        url: '/oee/referencesWithMachineStates',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+          const resJSON = JSON.parse(response)
+          const references = resJSON.referencesWithStates
+          const actRef = references[references.length-1]
+          const actRefWorkStates = actRef.machineStates.filter((obj)=> obj.state == "Praca")
+          let workTime = 0;
+            for (var i = 0; i < actRefWorkStates.length; i++) {
+              const actWorkState = actRefWorkStates[i]
+              const fromTime = new Date(actWorkState.fromTime).getTime() / 1000
+              const toTime = new Date(actWorkState.toTime).getTime() / 1000
+              workTime+= (toTime - fromTime)
+            }
+            $('#referenceProductionTime').text(toTimeString(actRef.targetTime))
+            $('#actualProductionTime').text(toTimeString(workTime))
+            let referenceLeftTime = actRef.targetTime - workTime
+            if (referenceLeftTime < 0)
+                 referenceLeftTime = 0
+             $('#referenceProgress').text(toTimeString(referenceLeftTime))
+        },
+        error: function (err) {
+          console.log("Błąd: " + err)
+        },
+        complete: function () {
+              setTimeout(referencesDataPolling, 5000)
+            },
+        timeout: 2000
+      });
+    }
         machineDataPolling()
-
+        referencesDataPolling()
         $(".statusBtn").on("click", (e) => {
           console.log(e.target)
           changeStatus(e.target.getAttribute('name'))

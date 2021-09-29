@@ -20,6 +20,7 @@ class MachineData {
         text: "",
         page: Page.login
     }
+    public disableOperatorCheck: Boolean = false;
     public user: any = "";
     public userSession: number = -1;
     public reference: Reference = new Reference()
