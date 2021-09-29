@@ -338,7 +338,7 @@
           var operatorWorkTime = 0;
           var operatorTargetTime = 0
           var operatorPerformance;
-          for (var i = 0; i < operatorChartData.length; i++) {
+          for (var i = 0; i < operatorChartData.length-1; i++) {
             operatorWorkTime += operatorChartData[i].realTime;
             operatorWorkTime += operatorChartData[i].overrunTime;
 
