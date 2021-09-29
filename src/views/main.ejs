@@ -225,7 +225,7 @@
               let refNameAndString = machineData.reference.name
               if(machineData.reference.description != "")
                 refNameAndString+=" - " + machineData.reference.description
-              $('#referenceNameAndDescription').text(machineData.reference.name + " - " + machineData.reference.description)
+              $('#referenceNameAndDescription').text(refNameAndString)
 
               let stateToTime = new Date(machineData.machineStateToTime).getTime();
               let stateFromTime = new Date(machineData.machineStateFromTime).getTime();
