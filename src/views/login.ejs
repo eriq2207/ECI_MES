@@ -63,7 +63,7 @@
     <!-- /.login-box -->
     <script>
         var users = []
-        
+
         function getUsers() {
             $.ajax({
                 url: '/users',
@@ -86,7 +86,7 @@
                 success: function (response) {
                     try {
                         var machineData = JSON.parse(response)
-                        if(machineData.lastScannedText.text != "")
+                        if (machineData.lastScannedText.text != "")
                             $("#loginInput").val(machineData.lastScannedText.text)
                         if (machineData.user != "")
                             return window.location.reload()
@@ -119,6 +119,16 @@
         setTimeout(loginStatusPolling, 0)
 
     </script>
+    <style>
+        .autocomplete-items {
+            max-height: 300px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            /* add padding to account for vertical scrollbar */
+            z-index: 1000 !important;
+        }
+    </style>
 </body>
 
 </html>

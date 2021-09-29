@@ -19,19 +19,2319 @@
     "disableUserCheck": true,
     "references": [
         {
-            "name": "H111",
-            "targetTime": 60,
-            "project": "ELUX"
+            "name": "F4-44000002980",
+            "project": "JLG",
+            "targetTime": 652
         },
         {
-            "name": "H222",
-            "targetTime": 120,
-            "project": "BECKO"
+            "name": "F1001178053",
+            "project": "JLG",
+            "targetTime": 404
         },
         {
-            "name": "H333",
-            "targetTime": 180,
-            "project": "BECKO"
+            "name": "F1001171116",
+            "project": "JLG",
+            "targetTime": 192
+        },
+        {
+            "name": "F1001179236",
+            "project": "JLG",
+            "targetTime": 570
+        },
+        {
+            "name": "F1001151260",
+            "project": "JLG",
+            "targetTime": 3807
+        },
+        {
+            "name": "F1001196898",
+            "project": "JLG",
+            "targetTime": 1383
+        },
+        {
+            "name": "F1001183297",
+            "project": "JLG",
+            "targetTime": 1047
+        },
+        {
+            "name": "F1001184839",
+            "project": "JLG",
+            "targetTime": 241
+        },
+        {
+            "name": "F1001146585",
+            "project": "JLG",
+            "targetTime": 3366
+        },
+        {
+            "name": "F1001212345",
+            "project": "JLG",
+            "targetTime": 7373
+        },
+        {
+            "name": "F1001169151",
+            "project": "JLG",
+            "targetTime": 447
+        },
+        {
+            "name": "F1001196899",
+            "project": "JLG",
+            "targetTime": 1246
+        },
+        {
+            "name": "F1001183614",
+            "project": "JLG",
+            "targetTime": 2920
+        },
+        {
+            "name": "F1001184070",
+            "project": "JLG",
+            "targetTime": 2362
+        },
+        {
+            "name": "F1001231424",
+            "project": "JLG",
+            "targetTime": 4054
+        },
+        {
+            "name": "F1001186007",
+            "project": "JLG",
+            "targetTime": 4950
+        },
+        {
+            "name": "F1001183611",
+            "project": "JLG",
+            "targetTime": 2735
+        },
+        {
+            "name": "F4-44000001840",
+            "project": "JLG",
+            "targetTime": 2362
+        },
+        {
+            "name": "F4-44000002970",
+            "project": "JLG",
+            "targetTime": 343
+        },
+        {
+            "name": "F4-44000002780",
+            "project": "JLG",
+            "targetTime": 1753
+        },
+        {
+            "name": "F1001145550",
+            "project": "JLG",
+            "targetTime": 3806
+        },
+        {
+            "name": "F4-44000001890",
+            "project": "JLG",
+            "targetTime": 349
+        },
+        {
+            "name": "F1001187945",
+            "project": "JLG",
+            "targetTime": 2814
+        },
+        {
+            "name": "F1001184751",
+            "project": "JLG",
+            "targetTime": 4677
+        },
+        {
+            "name": "F1001183939",
+            "project": "JLG",
+            "targetTime": 1942
+        },
+        {
+            "name": "F1001212346",
+            "project": "JLG",
+            "targetTime": 5848
+        },
+        {
+            "name": "F1001183612",
+            "project": "JLG",
+            "targetTime": 2084
+        },
+        {
+            "name": "F1001187944",
+            "project": "JLG",
+            "targetTime": 2801
+        },
+        {
+            "name": "F1001146672",
+            "project": "JLG",
+            "targetTime": 1747
+        },
+        {
+            "name": "F1001151260-E",
+            "project": "JLG",
+            "targetTime": 4708
+        },
+        {
+            "name": "F1001196900",
+            "project": "JLG",
+            "targetTime": 1265
+        },
+        {
+            "name": "F1001220126",
+            "project": "JLG",
+            "targetTime": 258
+        },
+        {
+            "name": "F1001185959",
+            "project": "JLG",
+            "targetTime": 3343
+        },
+        {
+            "name": "F1001226809",
+            "project": "JLG",
+            "targetTime": 412
+        },
+        {
+            "name": "F1001231424-C",
+            "project": "JLG",
+            "targetTime": 3994
+        },
+        {
+            "name": "F1001184751-G",
+            "project": "JLG",
+            "targetTime": 4677
+        },
+        {
+            "name": "F7223215-C",
+            "project": "BCT",
+            "targetTime": 3486
+        },
+        {
+            "name": "F1001216359",
+            "project": "JLG",
+            "targetTime": 3568
+        },
+        {
+            "name": "F7237531-B",
+            "project": "BCT",
+            "targetTime": 293
+        },
+        {
+            "name": "F7305995-A4",
+            "project": "BCT",
+            "targetTime": 124
+        },
+        {
+            "name": "F7302260-0",
+            "project": "BCT",
+            "targetTime": 1734
+        },
+        {
+            "name": "F1001212346-D",
+            "project": "JLG",
+            "targetTime": 5848
+        },
+        {
+            "name": "F7269889-A",
+            "project": "BCT",
+            "targetTime": 4162
+        },
+        {
+            "name": "F1001234276",
+            "project": "JLG",
+            "targetTime": 5296
+        },
+        {
+            "name": "F7341318-A",
+            "project": "BCT",
+            "targetTime": 2731
+        },
+        {
+            "name": "F1001145550-G",
+            "project": "JLG",
+            "targetTime": 3806
+        },
+        {
+            "name": "F1001225371",
+            "project": "JLG",
+            "targetTime": 1677
+        },
+        {
+            "name": "F7245639-0",
+            "project": "BCT",
+            "targetTime": 189
+        },
+        {
+            "name": "F7269888-A",
+            "project": "BCT",
+            "targetTime": 2454
+        },
+        {
+            "name": "F7273556-A",
+            "project": "BCT",
+            "targetTime": 5803
+        },
+        {
+            "name": "F7232072-B",
+            "project": "BCT",
+            "targetTime": 433
+        },
+        {
+            "name": "F7233894-C",
+            "project": "BCT",
+            "targetTime": 1907
+        },
+        {
+            "name": "F7237129-B",
+            "project": "BCT",
+            "targetTime": 2194
+        },
+        {
+            "name": "F7178982-0",
+            "project": "BCT",
+            "targetTime": 408
+        },
+        {
+            "name": "F7179236-0",
+            "project": "BCT",
+            "targetTime": 408
+        },
+        {
+            "name": "F7235068-0",
+            "project": "BCT",
+            "targetTime": 894
+        },
+        {
+            "name": "F7269887-A",
+            "project": "BCT",
+            "targetTime": 3473
+        },
+        {
+            "name": "F7340349-0",
+            "project": "BCT",
+            "targetTime": 3526
+        },
+        {
+            "name": "F7343663-0",
+            "project": "BCT",
+            "targetTime": 3333
+        },
+        {
+            "name": "F1001187944sp",
+            "project": "JLG",
+            "targetTime": 2801
+        },
+        {
+            "name": "F1001212345-C",
+            "project": "JLG",
+            "targetTime": 7373
+        },
+        {
+            "name": "F1001238729-B",
+            "project": "JLG",
+            "targetTime": 5979
+        },
+        {
+            "name": "F1001133224",
+            "project": "JLG",
+            "targetTime": 187
+        },
+        {
+            "name": "F100164694",
+            "project": "JLG",
+            "targetTime": 1572
+        },
+        {
+            "name": "F1001237510-B",
+            "project": "JLG",
+            "targetTime": 5419
+        },
+        {
+            "name": "F4-44000002780-01",
+            "project": "JLG",
+            "targetTime": 2653
+        },
+        {
+            "name": "F4-44000001840-03",
+            "project": "JLG",
+            "targetTime": 2362
+        },
+        {
+            "name": "F1001238822-C",
+            "project": "JLG",
+            "targetTime": 3742
+        },
+        {
+            "name": "F1001237510-C",
+            "project": "JLG",
+            "targetTime": 5419
+        },
+        {
+            "name": "F1001237509-D",
+            "project": "JLG",
+            "targetTime": 1784
+        },
+        {
+            "name": "F1E56315G01-B",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 3356
+        },
+        {
+            "name": "F2E14972G01-A",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 3249
+        },
+        {
+            "name": "F7343550-0",
+            "project": "BCT",
+            "targetTime": 266
+        },
+        {
+            "name": "F7335650-0",
+            "project": "BCT",
+            "targetTime": 172
+        },
+        {
+            "name": "F7327475-B",
+            "project": "BCT",
+            "targetTime": 427
+        },
+        {
+            "name": "F1000290832-02",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 120
+        },
+        {
+            "name": "F1001238822-D",
+            "project": "JLG",
+            "targetTime": 3742
+        },
+        {
+            "name": "F1001237510-D",
+            "project": "JLG",
+            "targetTime": 5419
+        },
+        {
+            "name": "F1001238845",
+            "project": "JLG",
+            "targetTime": 1776
+        },
+        {
+            "name": "F1001235091",
+            "project": "JLG",
+            "targetTime": 1797
+        },
+        {
+            "name": "F1001235091-SP",
+            "project": "JLG",
+            "targetTime": 1797
+        },
+        {
+            "name": "F1001226739",
+            "project": "JLG",
+            "targetTime": 1147
+        },
+        {
+            "name": "F163429744",
+            "project": "BCT",
+            "targetTime": 2206
+        },
+        {
+            "name": "F7333154-0",
+            "project": "BCT",
+            "targetTime": 4332
+        },
+        {
+            "name": "F7335651-0",
+            "project": "BCT",
+            "targetTime": 4995
+        },
+        {
+            "name": "F163429884",
+            "project": "BCT",
+            "targetTime": 1428
+        },
+        {
+            "name": "F1001238729-D",
+            "project": "JLG",
+            "targetTime": 4034
+        },
+        {
+            "name": "F7330820-0",
+            "project": "BCT",
+            "targetTime": 994
+        },
+        {
+            "name": "F2E80973G01-B",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 1743
+        },
+        {
+            "name": "F4-44000001840-04",
+            "project": "JLG",
+            "targetTime": 2362
+        },
+        {
+            "name": "F7329722-A",
+            "project": "BCT",
+            "targetTime": 1510
+        },
+        {
+            "name": "F7326270-0",
+            "project": "BCT",
+            "targetTime": 1220
+        },
+        {
+            "name": "F7337904-A",
+            "project": "BCT",
+            "targetTime": 121
+        },
+        {
+            "name": "F7337910-A",
+            "project": "BCT",
+            "targetTime": 163
+        },
+        {
+            "name": "F7326194-0",
+            "project": "BCT",
+            "targetTime": 923
+        },
+        {
+            "name": "F7343662-0",
+            "project": "BCT",
+            "targetTime": 3460
+        },
+        {
+            "name": "F1001185959-E",
+            "project": "JLG",
+            "targetTime": 3343
+        },
+        {
+            "name": "F7333154-A",
+            "project": "BCT",
+            "targetTime": 4332
+        },
+        {
+            "name": "F1001243058",
+            "project": "JLG",
+            "targetTime": 412
+        },
+        {
+            "name": "F1001167694-D",
+            "project": "JLG",
+            "targetTime": 1572
+        },
+        {
+            "name": "F1001237509-F",
+            "project": "JLG",
+            "targetTime": 1784
+        },
+        {
+            "name": "F1001231424-D",
+            "project": "JLG",
+            "targetTime": 3994
+        },
+        {
+            "name": "F1001234276-B",
+            "project": "JLG",
+            "targetTime": 5296
+        },
+        {
+            "name": "F1001238823-B",
+            "project": "JLG",
+            "targetTime": 4406
+        },
+        {
+            "name": "F7335651-A",
+            "project": "BCT",
+            "targetTime": 4995
+        },
+        {
+            "name": "F7334721-0",
+            "project": "BCT",
+            "targetTime": 279
+        },
+        {
+            "name": "F7217683-0",
+            "project": "BCT",
+            "targetTime": 144
+        },
+        {
+            "name": "F7219294-B3",
+            "project": "BCT",
+            "targetTime": 559
+        },
+        {
+            "name": "F7288678-0",
+            "project": "BCT",
+            "targetTime": 1322
+        },
+        {
+            "name": "F1001238729-E",
+            "project": "JLG",
+            "targetTime": 5979
+        },
+        {
+            "name": "F7193481-0",
+            "project": "BCT",
+            "targetTime": 203
+        },
+        {
+            "name": "F7135895-A",
+            "project": "BCT",
+            "targetTime": 314
+        },
+        {
+            "name": "F7322546-0",
+            "project": "BCT",
+            "targetTime": 104
+        },
+        {
+            "name": "F7232072-C2",
+            "project": "BCT",
+            "targetTime": 433
+        },
+        {
+            "name": "F1001248005-B",
+            "project": "JLG",
+            "targetTime": 1784
+        },
+        {
+            "name": "F7269887-B",
+            "project": "BCT",
+            "targetTime": 3473
+        },
+        {
+            "name": "F1E56107G01-C",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 2302
+        },
+        {
+            "name": "F1E56315G01-C",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 3249
+        },
+        {
+            "name": "F1001238823-C",
+            "project": "JLG",
+            "targetTime": 4406
+        },
+        {
+            "name": "F7331092-A2",
+            "project": "BCT",
+            "targetTime": 3123
+        },
+        {
+            "name": "F7331093-A2",
+            "project": "BCT",
+            "targetTime": 3106
+        },
+        {
+            "name": "F7303755-A",
+            "project": "BCT",
+            "targetTime": 1934
+        },
+        {
+            "name": "F7322232-D",
+            "project": "BCT",
+            "targetTime": 3123
+        },
+        {
+            "name": "F7147217-A",
+            "project": "BCT",
+            "targetTime": 451
+        },
+        {
+            "name": "F7363311-0",
+            "project": "BCT",
+            "targetTime": 4045
+        },
+        {
+            "name": "F1001237510-E",
+            "project": "JLG",
+            "targetTime": 5419
+        },
+        {
+            "name": "F7219627-A",
+            "project": "BCT",
+            "targetTime": 1838
+        },
+        {
+            "name": "F7234504-0",
+            "project": "BCT",
+            "targetTime": 189
+        },
+        {
+            "name": "F7352478-B",
+            "project": "BCT",
+            "targetTime": 1934
+        },
+        {
+            "name": "F7168895-A",
+            "project": "BCT",
+            "targetTime": 247
+        },
+        {
+            "name": "F7234118-0",
+            "project": "BCT",
+            "targetTime": 267
+        },
+        {
+            "name": "F7225809-0",
+            "project": "BCT",
+            "targetTime": 486
+        },
+        {
+            "name": "F7363313-0",
+            "project": "BCT",
+            "targetTime": 3804
+        },
+        {
+            "name": "F7363322-0",
+            "project": "BCT",
+            "targetTime": 3123
+        },
+        {
+            "name": "F7352433-A4",
+            "project": "BCT",
+            "targetTime": 1220
+        },
+        {
+            "name": "F7323069-0",
+            "project": "BCT",
+            "targetTime": 3278
+        },
+        {
+            "name": "F1001238729-F",
+            "project": "JLG",
+            "targetTime": 5979
+        },
+        {
+            "name": "F1001239082",
+            "project": "JLG",
+            "targetTime": 1402
+        },
+        {
+            "name": "F7330819-0",
+            "project": "BCT",
+            "targetTime": 143712
+        },
+        {
+            "name": "F7322211-E",
+            "project": "BCT",
+            "targetTime": 5177
+        },
+        {
+            "name": "F7322232-E",
+            "project": "BCT",
+            "targetTime": 3123
+        },
+        {
+            "name": "F1001248005-C",
+            "project": "JLG",
+            "targetTime": 1784
+        },
+        {
+            "name": "F1001238418",
+            "project": "JLG",
+            "targetTime": 575
+        },
+        {
+            "name": "F1001248892",
+            "project": "JLG",
+            "targetTime": 3929
+        },
+        {
+            "name": "F1001248891",
+            "project": "JLG",
+            "targetTime": 5448
+        },
+        {
+            "name": "F1001244435",
+            "project": "JLG",
+            "targetTime": 2567
+        },
+        {
+            "name": "F1001238845SP",
+            "project": "JLG",
+            "targetTime": 1776
+        },
+        {
+            "name": "F1001133224SP",
+            "project": "JLG",
+            "targetTime": 187
+        },
+        {
+            "name": "F7359289-0",
+            "project": "BCT",
+            "targetTime": 293
+        },
+        {
+            "name": "F1001238161",
+            "project": "JLG",
+            "targetTime": 1503
+        },
+        {
+            "name": "F1001238160",
+            "project": "JLG",
+            "targetTime": 2665
+        },
+        {
+            "name": "F7347589-0",
+            "project": "BCT",
+            "targetTime": 272
+        },
+        {
+            "name": "F1001212346-E",
+            "project": "JLG",
+            "targetTime": 5848
+        },
+        {
+            "name": "F1001151260-ESP",
+            "project": "JLG",
+            "targetTime": 4708
+        },
+        {
+            "name": "F4-44000001840-05",
+            "project": "JLG",
+            "targetTime": 2362
+        },
+        {
+            "name": "F7377960-0",
+            "project": "BCT",
+            "targetTime": 237
+        },
+        {
+            "name": "F1001238418SP",
+            "project": "JLG",
+            "targetTime": 575
+        },
+        {
+            "name": "F1001171116-R",
+            "project": "JLG",
+            "targetTime": 192
+        },
+        {
+            "name": "F1001237849",
+            "project": "JLG",
+            "targetTime": 6752
+        },
+        {
+            "name": "F7141456-0",
+            "project": "BCT",
+            "targetTime": 187
+        },
+        {
+            "name": "F7141454-0",
+            "project": "BCT",
+            "targetTime": 120
+        },
+        {
+            "name": "F7330652-0",
+            "project": "BCT",
+            "targetTime": 108
+        },
+        {
+            "name": "F7141455-0",
+            "project": "BCT",
+            "targetTime": 370
+        },
+        {
+            "name": "F7160072-B2",
+            "project": "BCT",
+            "targetTime": 824
+        },
+        {
+            "name": "F1E56107G01-D",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 2302
+        },
+        {
+            "name": "F1E56315G01-D",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 3249
+        },
+        {
+            "name": "F7230593-A",
+            "project": "BCT",
+            "targetTime": 541
+        },
+        {
+            "name": "F7160696-A2",
+            "project": "BCT",
+            "targetTime": 375
+        },
+        {
+            "name": "F7357143-A2",
+            "project": "BCT",
+            "targetTime": 4162
+        },
+        {
+            "name": "F7330651-0",
+            "project": "BCT",
+            "targetTime": 398
+        },
+        {
+            "name": "F7169538-0",
+            "project": "BCT",
+            "targetTime": 108
+        },
+        {
+            "name": "F7362092-A2",
+            "project": "BCT",
+            "targetTime": 5803
+        },
+        {
+            "name": "F7357189-0",
+            "project": "BCT",
+            "targetTime": 2511
+        },
+        {
+            "name": "F7159004-0",
+            "project": "BCT",
+            "targetTime": 167
+        },
+        {
+            "name": "F7174471-0",
+            "project": "BCT",
+            "targetTime": 277
+        },
+        {
+            "name": "F6728626-A",
+            "project": "BCT",
+            "targetTime": 322
+        },
+        {
+            "name": "F1001231423",
+            "project": "JLG",
+            "targetTime": 1503
+        },
+        {
+            "name": "F7104465-A",
+            "project": "BCT",
+            "targetTime": 148
+        },
+        {
+            "name": "F1001257165-A",
+            "project": "JLG",
+            "targetTime": 256
+        },
+        {
+            "name": "F1001257166-A",
+            "project": "JLG",
+            "targetTime": 268
+        },
+        {
+            "name": "FRD-3-16336-0",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 1353
+        },
+        {
+            "name": "F7334719-0",
+            "project": "BCT",
+            "targetTime": 565
+        },
+        {
+            "name": "F7159003-C",
+            "project": "BCT",
+            "targetTime": 343
+        },
+        {
+            "name": "F7311050-0",
+            "project": "BCT",
+            "targetTime": 717
+        },
+        {
+            "name": "F7246261-A2",
+            "project": "BCT",
+            "targetTime": 547
+        },
+        {
+            "name": "FS7246261-A2",
+            "project": "BCT",
+            "targetTime": 547
+        },
+        {
+            "name": "FS7221260-0",
+            "project": "BCT",
+            "targetTime": 162
+        },
+        {
+            "name": "F1001244293-A",
+            "project": "JLG",
+            "targetTime": 6400
+        },
+        {
+            "name": "F1001258433-A",
+            "project": "JLG",
+            "targetTime": 316
+        },
+        {
+            "name": "F8833786-0",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 3180
+        },
+        {
+            "name": "F1001184751-H",
+            "project": "JLG",
+            "targetTime": 4677
+        },
+        {
+            "name": "F1001184751-HSP",
+            "project": "JLG",
+            "targetTime": 4677
+        },
+        {
+            "name": "F1001244293-B",
+            "project": "JLG",
+            "targetTime": 6400
+        },
+        {
+            "name": "F1001182930-C",
+            "project": "JLG",
+            "targetTime": 251
+        },
+        {
+            "name": "F7372643-0",
+            "project": "BCT",
+            "targetTime": 5803
+        },
+        {
+            "name": "F7372364-0",
+            "project": "BCT",
+            "targetTime": 4162
+        },
+        {
+            "name": "F7372369-0",
+            "project": "BCT",
+            "targetTime": 2454
+        },
+        {
+            "name": "FS7237531-B",
+            "project": "BCT",
+            "targetTime": 293
+        },
+        {
+            "name": "F7347080-3P",
+            "project": "BCT",
+            "targetTime": 4554
+        },
+        {
+            "name": "F7347081-3P",
+            "project": "BCT",
+            "targetTime": 3879
+        },
+        {
+            "name": "F7354670-2P",
+            "project": "BCT",
+            "targetTime": 5277
+        },
+        {
+            "name": "F7354671-2P",
+            "project": "BCT",
+            "targetTime": 4990
+        },
+        {
+            "name": "F7354674-0",
+            "project": "BCT",
+            "targetTime": 298
+        },
+        {
+            "name": "F1001186007SP",
+            "project": "JLG",
+            "targetTime": 4950
+        },
+        {
+            "name": "F1001239082SP",
+            "project": "JLG",
+            "targetTime": 1402
+        },
+        {
+            "name": "F1001256834-A",
+            "project": "JLG",
+            "targetTime": 7940
+        },
+        {
+            "name": "F1001183614SP",
+            "project": "JLG",
+            "targetTime": 2920
+        },
+        {
+            "name": "F1001183611SP",
+            "project": "JLG",
+            "targetTime": 2735
+        },
+        {
+            "name": "F7369885-A",
+            "project": "BCT",
+            "targetTime": 4537
+        },
+        {
+            "name": "F1001244293-C",
+            "project": "JLG",
+            "targetTime": 6400
+        },
+        {
+            "name": "F7335651-B2",
+            "project": "BCT",
+            "targetTime": 4995
+        },
+        {
+            "name": "F7270707-0",
+            "project": "BCT",
+            "targetTime": 1372
+        },
+        {
+            "name": "F7347080-A",
+            "project": "BCT",
+            "targetTime": 4554
+        },
+        {
+            "name": "F1001183939SP",
+            "project": "JLG",
+            "targetTime": 1942
+        },
+        {
+            "name": "F7347081-A",
+            "project": "BCT",
+            "targetTime": 3879
+        },
+        {
+            "name": "F1001245839-C",
+            "project": "JLG",
+            "targetTime": 5550
+        },
+        {
+            "name": "F7354670-A",
+            "project": "BCT",
+            "targetTime": 5277
+        },
+        {
+            "name": "F7354671-A",
+            "project": "BCT",
+            "targetTime": 4990
+        },
+        {
+            "name": "F1001245913-C",
+            "project": "JLG",
+            "targetTime": 229
+        },
+        {
+            "name": "F1001146672SP",
+            "project": "JLG",
+            "targetTime": 1747
+        },
+        {
+            "name": "F1001146585SP",
+            "project": "JLG",
+            "targetTime": 3366
+        },
+        {
+            "name": "F7333154-B6",
+            "project": "BCT",
+            "targetTime": 4332
+        },
+        {
+            "name": "F1001235091SP",
+            "project": "JLG",
+            "targetTime": 1797
+        },
+        {
+            "name": "F1001253787-B",
+            "project": "JLG",
+            "targetTime": 1382
+        },
+        {
+            "name": "F1001238160SP",
+            "project": "JLG",
+            "targetTime": 2665
+        },
+        {
+            "name": "F7245963-0",
+            "project": "BCT",
+            "targetTime": 1872
+        },
+        {
+            "name": "F7152661-A",
+            "project": "BCT",
+            "targetTime": 134
+        },
+        {
+            "name": "F7199114-0",
+            "project": "BCT",
+            "targetTime": 881
+        },
+        {
+            "name": "F7141469-B",
+            "project": "BCT",
+            "targetTime": 253301
+        },
+        {
+            "name": "F7141369-B",
+            "project": "BCT",
+            "targetTime": 1519
+        },
+        {
+            "name": "F7357278-0",
+            "project": "BCT",
+            "targetTime": 2731
+        },
+        {
+            "name": "F7357279-0",
+            "project": "BCT",
+            "targetTime": 3526
+        },
+        {
+            "name": "F1001173342-C",
+            "project": "JLG",
+            "targetTime": 699
+        },
+        {
+            "name": "F1001181358-D",
+            "project": "JLG",
+            "targetTime": 421
+        },
+        {
+            "name": "F4-44000001840-06",
+            "project": "JLG",
+            "targetTime": 2824
+        },
+        {
+            "name": "F4-44000002780-02",
+            "project": "JLG",
+            "targetTime": 2653
+        },
+        {
+            "name": "F1001237849-D",
+            "project": "JLG",
+            "targetTime": 6752
+        },
+        {
+            "name": "F1001245913-D",
+            "project": "JLG",
+            "targetTime": 229
+        },
+        {
+            "name": "F7149164-C",
+            "project": "BCT",
+            "targetTime": 416
+        },
+        {
+            "name": "F1001171116SP",
+            "project": "JLG",
+            "targetTime": 192
+        },
+        {
+            "name": "F163431260",
+            "project": "BCT",
+            "targetTime": 1427
+        },
+        {
+            "name": "F7301416-0",
+            "project": "bct",
+            "targetTime": 1401
+        },
+        {
+            "name": "F7147217-A2",
+            "project": "BCT",
+            "targetTime": 450
+        },
+        {
+            "name": "F7330820-A5",
+            "project": "BCT",
+            "targetTime": 994
+        },
+        {
+            "name": "F7347080-B2",
+            "project": "BCT",
+            "targetTime": 4554
+        },
+        {
+            "name": "F7347081-B",
+            "project": "BCT",
+            "targetTime": 3879
+        },
+        {
+            "name": "F7369885-B7",
+            "project": "BCT",
+            "targetTime": 4537
+        },
+        {
+            "name": "F7359261-0",
+            "project": "BCT",
+            "targetTime": 396
+        },
+        {
+            "name": "F7388611-0",
+            "project": "BCT",
+            "targetTime": 736
+        },
+        {
+            "name": "F7141452-G",
+            "project": "BCT",
+            "targetTime": 2602
+        },
+        {
+            "name": "FF1001235091-A",
+            "project": "JLG",
+            "targetTime": 1797
+        },
+        {
+            "name": "F1001248891-B",
+            "project": "JLG",
+            "targetTime": 5448
+        },
+        {
+            "name": "F1001248892-B",
+            "project": "JLG",
+            "targetTime": 3929
+        },
+        {
+            "name": "F1001248005-D",
+            "project": "JLG",
+            "targetTime": 1784
+        },
+        {
+            "name": "F7330819-A5",
+            "project": "BCT",
+            "targetTime": 862
+        },
+        {
+            "name": "F1001214906-DSP",
+            "project": "JLG",
+            "targetTime": 2362
+        },
+        {
+            "name": "F1001238161SP",
+            "project": "JLG",
+            "targetTime": 1503
+        },
+        {
+            "name": "F1001255859-C",
+            "project": "JLG",
+            "targetTime": 7399
+        },
+        {
+            "name": "F1001253595-D",
+            "project": "JLG",
+            "targetTime": 7399
+        },
+        {
+            "name": "F1001245839-CSP",
+            "project": "JLG",
+            "targetTime": 5550
+        },
+        {
+            "name": "F1001248891SP",
+            "project": "JLG",
+            "targetTime": 5448
+        },
+        {
+            "name": "F1001248892SP",
+            "project": "JLG",
+            "targetTime": 3929
+        },
+        {
+            "name": "F1001253787-BSP",
+            "project": "JLG",
+            "targetTime": 1382
+        },
+        {
+            "name": "F1001181358-DSP",
+            "project": "JLG",
+            "targetTime": 421
+        },
+        {
+            "name": "F1001173342-CSP",
+            "project": "JLG",
+            "targetTime": 699
+        },
+        {
+            "name": "F1001169151SP",
+            "project": "JLG",
+            "targetTime": 447
+        },
+        {
+            "name": "F1001238729-FSP",
+            "project": "JLG",
+            "targetTime": 5979
+        },
+        {
+            "name": "F1001234276-BSP",
+            "project": "JLG",
+            "targetTime": 5296
+        },
+        {
+            "name": "F7356550-B",
+            "project": "BCT",
+            "targetTime": 734
+        },
+        {
+            "name": "F7354909-A",
+            "project": "BCT",
+            "targetTime": 1490
+        },
+        {
+            "name": "F7354911-A",
+            "project": "BCT",
+            "targetTime": 116
+        },
+        {
+            "name": "F1001238822-DSP",
+            "project": "JLG",
+            "targetTime": 3742
+        },
+        {
+            "name": "F1001256834-B",
+            "project": "JLG",
+            "targetTime": 7940
+        },
+        {
+            "name": "F4-44000001890-02",
+            "project": "JLG",
+            "targetTime": 349
+        },
+        {
+            "name": "F1E56106G01-B",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 1636
+        },
+        {
+            "name": "F1E50299G01-E",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 2472
+        },
+        {
+            "name": "F7328636-A",
+            "project": "BCT",
+            "targetTime": 685
+        },
+        {
+            "name": "F7328637-A",
+            "project": "BCT",
+            "targetTime": 547
+        },
+        {
+            "name": "F7369885-C",
+            "project": "BCT",
+            "targetTime": 4555
+        },
+        {
+            "name": "F7186714-0",
+            "project": "BCT",
+            "targetTime": 590
+        },
+        {
+            "name": "F7388611-A3",
+            "project": "BCT",
+            "targetTime": 736
+        },
+        {
+            "name": "F1001244293-D",
+            "project": "JLG",
+            "targetTime": 6400
+        },
+        {
+            "name": "F1001237849-E",
+            "project": "JLG",
+            "targetTime": 6752
+        },
+        {
+            "name": "F1001231424-ESP",
+            "project": "JLG",
+            "targetTime": 3994
+        },
+        {
+            "name": "F7347081-B2",
+            "project": "BCT",
+            "targetTime": 3879
+        },
+        {
+            "name": "F7328633-0",
+            "project": "BCT",
+            "targetTime": 1128
+        },
+        {
+            "name": "F7328635-A",
+            "project": "BCT",
+            "targetTime": 1138
+        },
+        {
+            "name": "F7328634-A+",
+            "project": "BCT",
+            "targetTime": 8477
+        },
+        {
+            "name": "F424588-D",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 294
+        },
+        {
+            "name": "F1001237510-ESP",
+            "project": "JLG",
+            "targetTime": 5419
+        },
+        {
+            "name": "F7335650-A5",
+            "project": "BCT",
+            "targetTime": 172
+        },
+        {
+            "name": "F1001245839-D",
+            "project": "JLG",
+            "targetTime": 5550
+        },
+        {
+            "name": "F7357279-A4",
+            "project": "BCT",
+            "targetTime": 3526
+        },
+        {
+            "name": "F7402645-0",
+            "project": "BCT",
+            "targetTime": 541
+        },
+        {
+            "name": "F7402647-0",
+            "project": "BCT",
+            "targetTime": 824
+        },
+        {
+            "name": "F1001245839-E",
+            "project": "JLG",
+            "targetTime": 5550
+        },
+        {
+            "name": "F1001245839-ESP",
+            "project": "JLG",
+            "targetTime": 5550
+        },
+        {
+            "name": "F7417081-A",
+            "project": "BCT",
+            "targetTime": 398
+        },
+        {
+            "name": "F7322232-F",
+            "project": "BCT",
+            "targetTime": 3123
+        },
+        {
+            "name": "F7322211-f",
+            "project": "BCT",
+            "targetTime": 5177
+        },
+        {
+            "name": "F5534003-01S",
+            "project": "CAT",
+            "targetTime": 171
+        },
+        {
+            "name": "F4389480-01S",
+            "project": "CAT",
+            "targetTime": 156
+        },
+        {
+            "name": "F7382589-0",
+            "project": "BCT",
+            "targetTime": 482
+        },
+        {
+            "name": "F4564978-03S",
+            "project": "CAT",
+            "targetTime": 171
+        },
+        {
+            "name": "F4760113-02S",
+            "project": "CAT",
+            "targetTime": 156
+        },
+        {
+            "name": "F7382590-0",
+            "project": "BCT",
+            "targetTime": 498
+        },
+        {
+            "name": "F5019109-02S",
+            "project": "CAT",
+            "targetTime": 372
+        },
+        {
+            "name": "F2906746-01",
+            "project": "CAT",
+            "targetTime": 179
+        },
+        {
+            "name": "F3315510-04S",
+            "project": "CAT",
+            "targetTime": 132
+        },
+        {
+            "name": "F7415811-0",
+            "project": "BCT",
+            "targetTime": 585
+        },
+        {
+            "name": "F3315551-03S",
+            "project": "CAT",
+            "targetTime": 250
+        },
+        {
+            "name": "F7415810-0",
+            "project": "BCT",
+            "targetTime": 858
+        },
+        {
+            "name": "F7371992-0",
+            "project": "BCT",
+            "targetTime": 553
+        },
+        {
+            "name": "F7382589-A",
+            "project": "BCT",
+            "targetTime": 482
+        },
+        {
+            "name": "F7382590-A",
+            "project": "BCT",
+            "targetTime": 498
+        },
+        {
+            "name": "F7371993-0",
+            "project": "BCT",
+            "targetTime": 138
+        },
+        {
+            "name": "F7412780-P1",
+            "project": "BCT",
+            "targetTime": 2955
+        },
+        {
+            "name": "F7412781-0",
+            "project": "BCT",
+            "targetTime": 3094
+        },
+        {
+            "name": "F7328635-B",
+            "project": "BCT",
+            "targetTime": 1138
+        },
+        {
+            "name": "F7328633-A",
+            "project": "BCT",
+            "targetTime": 1128
+        },
+        {
+            "name": "F4527867-01GB",
+            "project": "CAT",
+            "targetTime": 340
+        },
+        {
+            "name": "F4542159-04GB",
+            "project": "CAT",
+            "targetTime": 120
+        },
+        {
+            "name": "FRD-1-3114-0-B",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 168
+        },
+        {
+            "name": "F7414689-A",
+            "project": "BCT",
+            "targetTime": 81
+        },
+        {
+            "name": "FRD-2-5117-0-A",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 265
+        },
+        {
+            "name": "FRD-3-12164-0-A",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 139
+        },
+        {
+            "name": "FRD-2-4517-0-A",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 124
+        },
+        {
+            "name": "F4925230-02HR",
+            "project": "CAT",
+            "targetTime": 758
+        },
+        {
+            "name": "F7386590-0",
+            "project": "BCT",
+            "targetTime": 386
+        },
+        {
+            "name": "F7419134-A",
+            "project": "BCT",
+            "targetTime": 858
+        },
+        {
+            "name": "F3876532-03S",
+            "project": "CAT",
+            "targetTime": 346
+        },
+        {
+            "name": "F7328634-C4",
+            "project": "BCT",
+            "targetTime": 8477
+        },
+        {
+            "name": "F1001153177-DSP",
+            "project": "JLG",
+            "targetTime": 5659
+        },
+        {
+            "name": "F1001153177-D",
+            "project": "JLG",
+            "targetTime": 5659
+        },
+        {
+            "name": "F7371993-A",
+            "project": "BCT",
+            "targetTime": 139
+        },
+        {
+            "name": "F7371992-A",
+            "project": "BCT",
+            "targetTime": 553
+        },
+        {
+            "name": "F7414959-0",
+            "project": "BCT",
+            "targetTime": 310
+        },
+        {
+            "name": "F7429832-0",
+            "project": "BCT",
+            "targetTime": 223
+        },
+        {
+            "name": "F7390557-0",
+            "project": "BCT",
+            "targetTime": 346
+        },
+        {
+            "name": "F1001253595-DSP",
+            "project": "JLG",
+            "targetTime": 7399
+        },
+        {
+            "name": "F1001255859-CSP",
+            "project": "JLG",
+            "targetTime": 7399
+        },
+        {
+            "name": "F2201573-00",
+            "project": "CAT",
+            "targetTime": 322
+        },
+        {
+            "name": "F7414690-0",
+            "project": "BCT",
+            "targetTime": 3637
+        },
+        {
+            "name": "F3876614-03S",
+            "project": "CAT",
+            "targetTime": 375
+        },
+        {
+            "name": "F7328636-B",
+            "project": "BCT",
+            "targetTime": 685
+        },
+        {
+            "name": "F1145344-08",
+            "project": "CAT",
+            "targetTime": 1076
+        },
+        {
+            "name": "F7409367-0",
+            "project": "BCT",
+            "targetTime": 408
+        },
+        {
+            "name": "F2134715-02",
+            "project": "CAT",
+            "targetTime": 1884
+        },
+        {
+            "name": "F7386877-0",
+            "project": "BCT",
+            "targetTime": 126
+        },
+        {
+            "name": "F7408047-0",
+            "project": "BCT",
+            "targetTime": 3
+        },
+        {
+            "name": "FS7328635-B",
+            "project": "BCT",
+            "targetTime": 1138
+        },
+        {
+            "name": "FS7328636-B",
+            "project": "BCT",
+            "targetTime": 685
+        },
+        {
+            "name": "FS7328637-A",
+            "project": "BCT",
+            "targetTime": 547
+        },
+        {
+            "name": "F7348880-0",
+            "project": "BCT",
+            "targetTime": 976
+        },
+        {
+            "name": "FS7209507-A",
+            "project": "BCT",
+            "targetTime": 3
+        },
+        {
+            "name": "F1072653-04",
+            "project": "CAT",
+            "targetTime": 464
+        },
+        {
+            "name": "F7377477-0",
+            "project": "BCT",
+            "targetTime": 1847
+        },
+        {
+            "name": "F1428083-01",
+            "project": "CAT",
+            "targetTime": 822
+        },
+        {
+            "name": "F2130305-05",
+            "project": "CAT",
+            "targetTime": 1020
+        },
+        {
+            "name": "F1427409-00",
+            "project": "CAT",
+            "targetTime": 871
+        },
+        {
+            "name": "F7392011-0",
+            "project": "BCT",
+            "targetTime": 1305
+        },
+        {
+            "name": "F7387957-0",
+            "project": "BCT",
+            "targetTime": 1122
+        },
+        {
+            "name": "F7369886-A1",
+            "project": "BCT",
+            "targetTime": 5040
+        },
+        {
+            "name": "F7414688-A",
+            "project": "BCT",
+            "targetTime": 3460
+        },
+        {
+            "name": "F2639555-04S",
+            "project": "CAT",
+            "targetTime": 1241
+        },
+        {
+            "name": "F7330455-A2",
+            "project": "BCT",
+            "targetTime": 2989
+        },
+        {
+            "name": "F1749970-03",
+            "project": "CAT",
+            "targetTime": 501
+        },
+        {
+            "name": "F815707-01",
+            "project": "CAT",
+            "targetTime": 156
+        },
+        {
+            "name": "F7388772-0",
+            "project": "BCT",
+            "targetTime": 4429
+        },
+        {
+            "name": "F1914038-03",
+            "project": "CAT",
+            "targetTime": 454
+        },
+        {
+            "name": "F1001238418-B",
+            "project": "JLG",
+            "targetTime": 575
+        },
+        {
+            "name": "F1001237849-F",
+            "project": "JLG",
+            "targetTime": 6752
+        },
+        {
+            "name": "F1384904-03",
+            "project": "CAT",
+            "targetTime": 639
+        },
+        {
+            "name": "F1357609-00",
+            "project": "CAT",
+            "targetTime": 711
+        },
+        {
+            "name": "F1734008-03",
+            "project": "CAT",
+            "targetTime": 756
+        },
+        {
+            "name": "F7141452-H",
+            "project": "BCT",
+            "targetTime": 2602
+        },
+        {
+            "name": "F1001183611-F",
+            "project": "JLG",
+            "targetTime": 2735
+        },
+        {
+            "name": "F9R2612-01",
+            "project": "CAT",
+            "targetTime": 223
+        },
+        {
+            "name": "FT132713-0",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 1233
+        },
+        {
+            "name": "F4506015-01S",
+            "project": "CAT",
+            "targetTime": 720
+        },
+        {
+            "name": "FRD-3-9579-0-C",
+            "project": "TK/WDN/RED/CRN/MEC",
+            "targetTime": 162
+        },
+        {
+            "name": "F7141454-A",
+            "project": "BCT",
+            "targetTime": 120
+        },
+        {
+            "name": "F7141455-A",
+            "project": "BCT",
+            "targetTime": 370
+        },
+        {
+            "name": "F7147217-B",
+            "project": "BCT",
+            "targetTime": 450
+        },
+        {
+            "name": "F7160696-B",
+            "project": "BCT",
+            "targetTime": 375
+        },
+        {
+            "name": "F7330652-A",
+            "project": "BCT",
+            "targetTime": 108
+        },
+        {
+            "name": "F7402647-A",
+            "project": "BCT",
+            "targetTime": 824
+        },
+        {
+            "name": "F7193481-A",
+            "project": "BCT",
+            "targetTime": 203
+        },
+        {
+            "name": "F7246261-C",
+            "project": "BCT",
+            "targetTime": 547
+        },
+        {
+            "name": "F7322546-B",
+            "project": "BCT",
+            "targetTime": 104
+        },
+        {
+            "name": "F7149164-H",
+            "project": "BCT",
+            "targetTime": 416
+        },
+        {
+            "name": "F7402645-A",
+            "project": "BCT",
+            "targetTime": 541
+        },
+        {
+            "name": "F7417081-B",
+            "project": "BCT",
+            "targetTime": 398
+        },
+        {
+            "name": "F7234504-A",
+            "project": "BCT",
+            "targetTime": 189
+        },
+        {
+            "name": "F5840773-01S",
+            "project": "CAT",
+            "targetTime": 196
+        },
+        {
+            "name": "F7408047-A3",
+            "project": "BCT",
+            "targetTime": 560
+        },
+        {
+            "name": "F7412020-B2",
+            "project": "BCT",
+            "targetTime": 257
+        },
+        {
+            "name": "F7382590-B2",
+            "project": "BCT",
+            "targetTime": 498
+        },
+        {
+            "name": "F7382589-B2",
+            "project": "BCT",
+            "targetTime": 483
+        },
+        {
+            "name": "F7398402-C2",
+            "project": "BCT",
+            "targetTime": 3511
+        },
+        {
+            "name": "F7398403-B9",
+            "project": "BCT",
+            "targetTime": 4335
+        },
+        {
+            "name": "F7398618-B10",
+            "project": "BCT",
+            "targetTime": 3794
+        },
+        {
+            "name": "F7372690-A",
+            "project": "BCT",
+            "targetTime": 623
+        },
+        {
+            "name": "F7386590-A5",
+            "project": "BCT",
+            "targetTime": 386
+        },
+        {
+            "name": "F7397786-A3",
+            "project": "BCT",
+            "targetTime": 621
+        },
+        {
+            "name": "F7398404-B",
+            "project": "BCT",
+            "targetTime": 470
+        },
+        {
+            "name": "F7397786-C7",
+            "project": "BCT",
+            "targetTime": 621
+        },
+        {
+            "name": "F7412780-0",
+            "project": "BCT",
+            "targetTime": 2992
+        },
+        {
+            "name": "F7398618-C",
+            "project": "BCT",
+            "targetTime": 3794
+        },
+        {
+            "name": "F7398402-D",
+            "project": "BCT",
+            "targetTime": 3511
+        },
+        {
+            "name": "F7397787-B2",
+            "project": "BCT",
+            "targetTime": 1510
+        },
+        {
+            "name": "F7398403-C",
+            "project": "BCT",
+            "targetTime": 4335
+        },
+        {
+            "name": "F7397991-0",
+            "project": "BCT",
+            "targetTime": 597
+        },
+        {
+            "name": "F7348880-A",
+            "project": "BCT",
+            "targetTime": 976
+        },
+        {
+            "name": "F7382590-C4",
+            "project": "BCT",
+            "targetTime": 498
+        },
+        {
+            "name": "F7386877-A",
+            "project": "BCT",
+            "targetTime": 126
+        },
+        {
+            "name": "F1001253787-C",
+            "project": "JLG",
+            "targetTime": 1382
+        },
+        {
+            "name": "F7357278-A8",
+            "project": "BCT",
+            "targetTime": 2731
+        },
+        {
+            "name": "F7372369-A6",
+            "project": "BCT",
+            "targetTime": 2454
+        },
+        {
+            "name": "F7417081-C",
+            "project": "BCT",
+            "targetTime": 396
+        },
+        {
+            "name": "F7426036-B",
+            "project": "BCT",
+            "targetTime": 629
+        },
+        {
+            "name": "F7442921-0",
+            "project": "BCT",
+            "targetTime": 266
+        },
+        {
+            "name": "F7442922-0",
+            "project": "BCT",
+            "targetTime": 1220
+        },
+        {
+            "name": "F7442923-0",
+            "project": "BCT",
+            "targetTime": 923
+        },
+        {
+            "name": "F7377477-A5",
+            "project": "BCT",
+            "targetTime": 1847
+        },
+        {
+            "name": "F7421932-B7",
+            "project": "BCT",
+            "targetTime": 67
+        },
+        {
+            "name": "F1685350-01",
+            "project": "CAT",
+            "targetTime": 1478
+        },
+        {
+            "name": "F2084540-01",
+            "project": "CAT",
+            "targetTime": 288
+        },
+        {
+            "name": "F3422990-03",
+            "project": "CAT",
+            "targetTime": 7627
+        },
+        {
+            "name": "F1186461-03",
+            "project": "CAT",
+            "targetTime": 4857
+        },
+        {
+            "name": "F7454717-0",
+            "project": "BCT",
+            "targetTime": 8444
+        },
+        {
+            "name": "F7444215-0",
+            "project": "BCT",
+            "targetTime": 8444
+        },
+        {
+            "name": "FS7443538-0",
+            "project": "BCT",
+            "targetTime": 1046
+        },
+        {
+            "name": "F7369886-A",
+            "project": "BCT",
+            "targetTime": 5040
+        },
+        {
+            "name": "F7151691-0",
+            "project": "BCT",
+            "targetTime": 657
+        },
+        {
+            "name": "F7388772-C8",
+            "project": "BCT",
+            "targetTime": 4429
+        },
+        {
+            "name": "F1001258159-ASP",
+            "project": "JLG",
+            "targetTime": 2824
+        },
+        {
+            "name": "F7444213-0",
+            "project": "BCT",
+            "targetTime": 1138
+        },
+        {
+            "name": "F7444214-0",
+            "project": "BCT",
+            "targetTime": 1128
+        },
+        {
+            "name": "F7441724-0",
+            "project": "BCT",
+            "targetTime": 5267
+        },
+        {
+            "name": "F7397787-C2",
+            "project": "BCT",
+            "targetTime": 1510
+        },
+        {
+            "name": "F7149164-D",
+            "project": "BCT",
+            "targetTime": 407
+        },
+        {
+            "name": "F7414689-B",
+            "project": "BCT",
+            "targetTime": 3414
+        },
+        {
+            "name": "F7414688-B",
+            "project": "BCT",
+            "targetTime": 3502
+        },
+        {
+            "name": "F9R9568-01",
+            "project": "CAT",
+            "targetTime": 394
+        },
+        {
+            "name": "F7397786-D10",
+            "project": "BCT",
+            "targetTime": 621
+        },
+        {
+            "name": "F7352478-C3",
+            "project": "BCT",
+            "targetTime": 1934
+        },
+        {
+            "name": "F7369885-D",
+            "project": "BCT",
+            "targetTime": 4044
+        },
+        {
+            "name": "F7421932-C2",
+            "project": "BCT",
+            "targetTime": 67
+        },
+        {
+            "name": "F7436937-0",
+            "project": "BCT",
+            "targetTime": 2330
+        },
+        {
+            "name": "F7348880-B",
+            "project": "BCT",
+            "targetTime": 976
+        },
+        {
+            "name": "F3544906-03",
+            "project": "CAT",
+            "targetTime": 478
+        },
+        {
+            "name": "F7454757-0",
+            "project": "BCT",
+            "targetTime": 171
+        },
+        {
+            "name": "F7437494-0",
+            "project": "BCT",
+            "targetTime": 186
+        },
+        {
+            "name": "F7354670-B",
+            "project": "BCT",
+            "targetTime": 5277
+        },
+        {
+            "name": "F7354671-B",
+            "project": "BCT",
+            "targetTime": 4990
+        },
+        {
+            "name": "F7398404-C12",
+            "project": "BCT",
+            "targetTime": 470
+        },
+        {
+            "name": "_Pojedyäczy",
+            "project": "CRIMP",
+            "targetTime": 3
+        },
+        {
+            "name": "_Dual",
+            "project": "CRIMP",
+            "targetTime": 4
+        },
+        {
+            "name": "_Pull-to-seat",
+            "project": "CRIMP",
+            "targetTime": 9
+        },
+        {
+            "name": "_Szufladka",
+            "project": "CRIMP",
+            "targetTime": 10
+        },
+        {
+            "name": "_Splice",
+            "project": "CRIMP",
+            "targetTime": 6
+        },
+        {
+            "name": "_Inne",
+            "project": "CRIMP",
+            "targetTime": 9
         }
     ]
 }

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.88">
+  <meta name="viewport" content="width=device-width, initial-scale=0.83">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>ECI MES</title>
@@ -222,6 +222,9 @@
               if (machineData.user == "")
                 window.location.reload();
 
+              let refNameAndString = machineData.reference.name
+              if(machineData.reference.description != "")
+                refNameAndString+=" - " + machineData.reference.description
               $('#referenceNameAndDescription').text(machineData.reference.name + " - " + machineData.reference.description)
 
               let stateToTime = new Date(machineData.machineStateToTime).getTime();

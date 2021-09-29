@@ -67,8 +67,8 @@
                             name="project">
                     </div>
                     <div class="input-group mb-3">
-                        <input id="referenceInput" style="display: none;"type="text" class="form-control input" placeholder="Nazwa referencji"
-                            name="reference">
+                        <input id="referenceInput" style="display: none;" type="text" class="form-control input"
+                            placeholder="Nazwa referencji" name="reference">
                     </div>
                     <!-- /.col -->
                     <div class="row">
@@ -101,22 +101,19 @@
             var references = []
             setInterval(() => {
                 inpVal = $("#projectInput").val();
-                if (inpVal == "")
-                {
+                if (inpVal == "") {
                     $("#referenceInput").fadeOut()
                     $("#referenceInput").val("")
                     return
                 }
                 const refForProject = references.filter((ref) => ref.project == inpVal)
-                const refNameForProject = refForProject.map(obj=>obj.name)
+                const refNameForProject = refForProject.map(obj => obj.name)
 
-                if (refForProject.length > 0)
-                {
+                if (refForProject.length > 0) {
                     $("#referenceInput").fadeIn()
                     autocomplete(document.getElementById("referenceInput"), refNameForProject)
                 }
-                else
-                {
+                else {
                     $("#referenceInput").val("")
                 }
 
@@ -191,10 +188,13 @@
             getReferences()
         </script>
         <style>
-            #referenceInputGroup {
-                visibility: hidden;
-                opacity: 0;
-                transition: visibility 0s, opacity 0.5s linear;
+            .autocomplete-items {
+                max-height: 300px;
+                overflow-y: auto;
+                /* prevent horizontal scrollbar */
+                overflow-x: hidden;
+                /* add padding to account for vertical scrollbar */
+                z-index: 1000 !important;
             }
         </style>
 </body>
